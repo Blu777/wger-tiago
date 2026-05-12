@@ -225,6 +225,9 @@ void showGeneralErrorDialog(dynamic error, StackTrace? stackTrace, {BuildContext
                 try {
                   await launchUrl(reportUri, mode: LaunchMode.externalApplication);
                 } catch (e) {
+                  if (!context.mounted) {
+                    return;
+                  }
                   if (kDebugMode) {
                     logger.warning('Error launching URL: $e');
                   }

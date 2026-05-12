@@ -552,6 +552,7 @@ enum GoalType {
   }
 }
 
+// ignore: must_be_immutable
 class PlanForm extends StatefulWidget {
   late NutritionalPlan _plan;
 

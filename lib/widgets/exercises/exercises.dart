@@ -37,7 +37,6 @@ import 'package:wger/widgets/exercises/videos.dart';
 
 class ExerciseDetail extends StatelessWidget {
   final Exercise _exercise;
-  late Translation _translation;
   static const PADDING = 9.0;
   final CarouselController carouselController = CarouselController();
 
@@ -45,7 +44,7 @@ class ExerciseDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _translation = _exercise.getTranslation(Localizations.localeOf(context).languageCode);
+    final translation = _exercise.getTranslation(Localizations.localeOf(context).languageCode);
 
     return SingleChildScrollView(
       child: Column(
@@ -56,7 +55,7 @@ class ExerciseDetail extends StatelessWidget {
           getCategoriesAndEquipment(context),
 
           // Alternative names
-          ...getAliases(context),
+          ...getAliases(context, translation),
 
           // Videos
           ...getVideos(),
@@ -65,10 +64,10 @@ class ExerciseDetail extends StatelessWidget {
           ...getImages(),
 
           // Description
-          ...getDescription(context),
+          ...getDescription(context, translation),
 
           // Notes
-          ...getNotes(context),
+          ...getNotes(context, translation),
 
           // Muscles
           ...getMuscles(context),
@@ -109,16 +108,16 @@ class ExerciseDetail extends StatelessWidget {
     return out;
   }
 
-  List<Widget> getNotes(BuildContext context) {
+  List<Widget> getNotes(BuildContext context, Translation translation) {
     final List<Widget> out = [];
-    if (_translation.notes.isNotEmpty) {
+    if (translation.notes.isNotEmpty) {
       out.add(
         Text(
           AppLocalizations.of(context).notes,
           style: Theme.of(context).textTheme.headlineSmall,
         ),
       );
-      for (final e in _translation.notes) {
+      for (final e in translation.notes) {
         out.add(Text(e.comment));
       }
       out.add(const SizedBox(height: PADDING));
@@ -189,7 +188,7 @@ class ExerciseDetail extends StatelessWidget {
     return out;
   }
 
-  List<Widget> getDescription(BuildContext context) {
+  List<Widget> getDescription(BuildContext context, Translation translation) {
     final List<Widget> out = [];
     out.add(
       Text(
@@ -197,7 +196,7 @@ class ExerciseDetail extends StatelessWidget {
         style: Theme.of(context).textTheme.headlineSmall,
       ),
     );
-    out.add(Html(data: _translation.description));
+    out.add(Html(data: translation.description));
 
     return out;
   }
@@ -266,13 +265,13 @@ class ExerciseDetail extends StatelessWidget {
     return out;
   }
 
-  List<Widget> getAliases(BuildContext context) {
+  List<Widget> getAliases(BuildContext context, Translation translation) {
     final List<Widget> out = [];
-    if (_translation.aliases.isNotEmpty) {
+    if (translation.aliases.isNotEmpty) {
       out.add(
         MutedText(
           AppLocalizations.of(context).alsoKnownAs(
-            _translation.aliases.map((e) => e.alias).toList().join(', '),
+            translation.aliases.map((e) => e.alias).toList().join(', '),
           ),
         ),
       );

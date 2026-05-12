@@ -1,3 +1,5 @@
+// ignore_for_file: scoped_providers_should_specify_dependencies
+
 /*
  * This file is part of wger Workout Manager <https://github.com/wger-project>.
  * Copyright (c)  2026 wger Team

@@ -41,8 +41,12 @@ class ReorderableDaysList extends StatefulWidget {
             ),
             TextButton(
               onPressed: () async {
+                final provider = context.read<RoutinesProvider>();
                 days.remove(day);
-                await context.read<RoutinesProvider>().deleteDay(day.id!);
+                await provider.deleteDay(day.id!);
+                if (!context.mounted) {
+                  return;
+                }
                 Navigator.of(context).pop();
               },
               child: const Text('Delete'),
@@ -236,7 +240,9 @@ class _DayFormWidgetState extends State<DayFormWidget> {
             decoration: InputDecoration(labelText: i18n.name),
             controller: nameController,
             onSaved: (value) {
-              widget.day.name = value!;
+              if (value != null) {
+                widget.day.name = value;
+              }
             },
             validator: (value) {
               if (widget.day.isRest) {
@@ -262,7 +268,9 @@ class _DayFormWidgetState extends State<DayFormWidget> {
             decoration: InputDecoration(labelText: i18n.description),
             controller: descriptionController,
             onSaved: (value) {
-              widget.day.description = value!;
+              if (value != null) {
+                widget.day.description = value;
+              }
             },
             minLines: 2,
             maxLines: 10,
@@ -292,9 +300,11 @@ class _DayFormWidgetState extends State<DayFormWidget> {
             onChanged: widget.day.isRest
                 ? null
                 : (value) {
-                    setState(() {
-                      widget.day.type = value!;
-                    });
+                    if (value != null) {
+                      setState(() {
+                        widget.day.type = value;
+                      });
+                    }
                   },
           ),
           SwitchListTile(

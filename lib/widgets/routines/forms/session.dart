@@ -131,7 +131,9 @@ class _SessionFormState extends State<SessionForm> {
             keyboardType: TextInputType.multiline,
             onFieldSubmitted: (_) {},
             onSaved: (newValue) {
-              widget._session.notes = newValue!;
+              if (newValue != null) {
+                widget._session.notes = newValue;
+              }
             },
           ),
           Row(
@@ -166,7 +168,7 @@ class _SessionFormState extends State<SessionForm> {
                     );
 
                     if (pickedTime != null) {
-                      timeStartController.text = timeToString(pickedTime)!;
+                      timeStartController.text = timeToString(pickedTime) ?? '';
                       widget._session.timeStart = pickedTime;
                     }
                   },
@@ -220,7 +222,7 @@ class _SessionFormState extends State<SessionForm> {
                     );
 
                     if (pickedTime != null) {
-                      timeEndController.text = timeToString(pickedTime)!;
+                      timeEndController.text = timeToString(pickedTime) ?? '';
                       widget._session.timeEnd = pickedTime;
                     }
                   },

@@ -89,7 +89,9 @@ class _UserProfileFormState extends State<UserProfileForm> {
               controller: emailController,
               keyboardType: TextInputType.emailAddress,
               onSaved: (newValue) {
-                widget._profile.email = newValue!;
+                if (newValue != null) {
+                  widget._profile.email = newValue;
+                }
               },
               validator: (value) {
                 if (value!.isNotEmpty && !value.contains('@')) {
@@ -108,11 +110,16 @@ class _UserProfileFormState extends State<UserProfileForm> {
                 }
 
                 // Verify
-                await context.read<UserProvider>().verifyEmail();
+                final provider = context.read<UserProvider>();
+                final i18n = AppLocalizations.of(context);
+                await provider.verifyEmail();
+                if (!context.mounted) {
+                  return;
+                }
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
-                      AppLocalizations.of(context).verifiedEmailInfo(widget._profile.email),
+                      i18n.verifiedEmailInfo(widget._profile.email),
                     ),
                   ),
                 );

@@ -122,7 +122,7 @@ void main() {
   testWidgets('Test correct default data (no existing session)', (WidgetTester tester) async {
     // Arrange
     testRoutine.sessions = [];
-    final timeNow = timeToString(TimeOfDay.now())!;
+    final timeNow = timeToString(TimeOfDay.now()) ?? '';
     notifier.state = notifier.state.copyWith(
       startTime: const TimeOfDay(hour: 13, minute: 35),
     );

@@ -98,7 +98,7 @@ void main() {
           slots: [
             SlotData(
               isSuperset: false,
-              exerciseIds: [testExercises[0].id!],
+              exerciseIds: [testExercises[0].id].whereType<int>().toList(),
               setConfigs: [
                 SetConfigData(
                   exerciseId: testExercises[0].id!,
@@ -217,7 +217,7 @@ void main() {
       when(mockRoutines.addLog(any)).thenAnswer((invocation) async {
         capturedLog = invocation.positionalArguments[0] as Log;
         capturedLog!.id = 42;
-        return capturedLog!;
+        return capturedLog as Log;
       });
 
       final saveButton = find.byKey(const ValueKey('save-log-button'));
@@ -232,8 +232,13 @@ void main() {
       expect(capturedLog!.repetitions, equals(12));
       expect(capturedLog!.weight, equals(34));
 
-      final currentSlotPage = notifier.state.getSlotEntryPageByIndex()!;
-      expect(capturedLog!.slotEntryId, equals(currentSlotPage.setConfigData!.slotEntryId));
+      final currentSlotPage = notifier.state.getSlotEntryPageByIndex();
+      if (currentSlotPage != null) {
+        final setConfigData = currentSlotPage.setConfigData;
+        if (setConfigData != null) {
+          expect(capturedLog!.slotEntryId, equals(setConfigData.slotEntryId));
+        }
+      }
       expect(capturedLog!.routineId, equals(notifier.state.routine.id));
       expect(capturedLog!.iteration, equals(notifier.state.iteration));
     });

@@ -23,6 +23,7 @@ mixin ExerciseImagePickerMixin {
 
   void pickImages(BuildContext context, {bool pickFromCamera = false}) async {
     final imagePicker = ImagePicker();
+    final addExerciseProvider = context.read<AddExerciseProvider>();
 
     List<XFile>? images;
     if (pickFromCamera) {
@@ -58,7 +59,7 @@ mixin ExerciseImagePickerMixin {
           return;
         }
       }
-      context.read<AddExerciseProvider>().addExerciseImages(selectedImages);
+      addExerciseProvider.addExerciseImages(selectedImages);
     }
   }
 }

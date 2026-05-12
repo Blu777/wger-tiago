@@ -57,5 +57,5 @@ class MeasurementCategory extends Equatable {
   List<Object?> get props => [id, name, unit, entries];
 
   // Helper function which makes the entries list of the toJson output null, as it isn't needed
-  static Null _nullValue(List<MeasurementEntry> _) => null;
+  static Object? _nullValue(List<MeasurementEntry> _) => null;
 }

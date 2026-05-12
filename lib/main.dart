@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' as riverpod;
@@ -142,7 +141,7 @@ void main() async {
   };
 
   // Application
-  runApp(const MainApp());
+  runApp(const riverpod.ProviderScope(child: MainApp()));
 }
 
 class MainApp extends StatelessWidget {

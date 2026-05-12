@@ -206,7 +206,9 @@ class Routine {
     for (final session in sessions) {
       for (final log in session.logs) {
         if (log.exerciseId == oldExerciseId) {
-          log.exerciseId = newExercise.id!;
+          if (newExercise.id != null) {
+            log.exerciseId = newExercise.id!;
+          }
           log.exercise = newExercise;
         }
       }
@@ -216,7 +218,9 @@ class Routine {
       for (final slot in day.slots) {
         for (final config in slot.setConfigs) {
           if (config.exerciseId == oldExerciseId) {
-            config.exerciseId = newExercise.id!;
+            if (newExercise.id != null) {
+              config.exerciseId = newExercise.id!;
+            }
             config.exercise = newExercise;
           }
         }
@@ -227,7 +231,9 @@ class Routine {
       for (final slot in day.slots) {
         for (final config in slot.setConfigs) {
           if (config.exerciseId == oldExerciseId) {
-            config.exerciseId = newExercise.id!;
+            if (newExercise.id != null) {
+              config.exerciseId = newExercise.id!;
+            }
             config.exercise = newExercise;
           }
         }

@@ -58,7 +58,10 @@ void main() {
     await tester.pump();
 
     final tf = tester.widget<TextFormField>(textFieldFinder);
-    final controller = tf.controller!;
+    final controller = tf.controller;
+    if (controller == null) {
+      throw StateError('Controller is null');
+    }
 
     expect(controller.text, '****');
     expect(controller.selection.isCollapsed, isTrue);
@@ -81,7 +84,10 @@ void main() {
     await tester.pump();
 
     final tf = tester.widget<TextFormField>(textFieldFinder);
-    final controller = tf.controller!;
+    final controller = tf.controller;
+    if (controller == null) {
+      throw StateError('Controller is null');
+    }
 
     // select whole text
     controller.selection = const TextSelection(baseOffset: 0, extentOffset: 5);
@@ -95,7 +101,8 @@ void main() {
 
     expect(controller.text, '**hello**');
     // selection should cover the inner text (shifted by left.length)
-    expect(controller.selection.baseOffset, 2);
-    expect(controller.selection.extentOffset, 7);
+    final selection = controller.selection;
+    expect(selection.baseOffset, 2);
+    expect(selection.extentOffset, 7);
   });
 }

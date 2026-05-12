@@ -180,10 +180,13 @@ class _AuthCardState extends State<AuthCard> {
     });
 
     try {
+      final authProvider = context.read<AuthProvider>();
+      final locale = Localizations.localeOf(context).languageCode;
+
       // Login existing user
       late LoginActions res;
       if (_authMode == AuthMode.Login) {
-        res = await context.read<AuthProvider>().login(
+        res = await authProvider.login(
           _authData['username']!,
           _authData['password']!,
           _authData['serverUrl']!,
@@ -192,18 +195,22 @@ class _AuthCardState extends State<AuthCard> {
 
         // Register new user
       } else {
-        res = await Provider.of<AuthProvider>(context, listen: false).register(
+        res = await authProvider.register(
           username: _authData['username']!,
           password: _authData['password']!,
           email: _authData['email']!,
           serverUrl: _authData['serverUrl']!,
-          locale: Localizations.localeOf(context).languageCode,
+          locale: locale,
         );
       }
 
+      if (!context.mounted) {
+        return;
+      }
+
       // Navigate to the appropriate "update required" screen.
-      if (res == LoginActions.update && mounted) {
-        final authState = context.read<AuthProvider>().state;
+      if (res == LoginActions.update) {
+        final authState = authProvider.state;
         if (authState == AuthState.updateRequired) {
           Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => const UpdateAppScreen()),
@@ -217,13 +224,10 @@ class _AuthCardState extends State<AuthCard> {
         }
       }
 
-      if (context.mounted && res == LoginActions.proceed) {
-        final authProvider = context.read<AuthProvider>();
+      if (res == LoginActions.proceed) {
         if (authProvider.serverConfigWarning) {
-          if (context.mounted) {
-            showServerConfigWarning(context);
-            authProvider.clearServerConfigWarning();
-          }
+          showServerConfigWarning(context);
+          authProvider.clearServerConfigWarning();
         }
       }
 

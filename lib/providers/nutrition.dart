@@ -285,7 +285,10 @@ class NutritionPlansProvider with ChangeNotifier {
   /// Deletes a meal
   Future<void> deleteMealItem(MealItem mealItem) async {
     // Get the meal
-    final meal = findMealById(mealItem.mealId)!;
+    final meal = findMealById(mealItem.mealId);
+    if (meal == null) {
+      throw StateError('Meal ${mealItem.mealId} not found');
+    }
     final mealItemIndex = meal.mealItems.indexWhere((e) => e.id == mealItem.id);
     final existingMealItem = meal.mealItems[mealItemIndex];
     meal.mealItems.removeAt(mealItemIndex);

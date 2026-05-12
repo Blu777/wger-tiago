@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 /*
  * This file is part of wger Workout Manager <https://github.com/wger-project>.
  * Copyright (C) 2020, 2021 wger Team

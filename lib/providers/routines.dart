@@ -195,7 +195,11 @@ class RoutinesProvider with ChangeNotifier {
           final exerciseId = setConfig.exerciseId;
           if (!exercises.containsKey(exerciseId)) {
             _logger.fine('Fetching exercise $exerciseId for routine set config');
-            exercises[exerciseId] = (await _exerciseProvider.fetchAndSetExercise(exerciseId))!;
+            final exercise = await _exerciseProvider.fetchAndSetExercise(exerciseId);
+            if (exercise == null) {
+              throw StateError('Exercise $exerciseId not found');
+            }
+            exercises[exerciseId] = exercise;
           }
           setConfig.exercise = exercises[exerciseId]!;
 
@@ -288,7 +292,11 @@ class RoutinesProvider with ChangeNotifier {
         for (final slotEntry in slot.entries) {
           final exerciseId = slotEntry.exerciseId;
           if (!exercises.containsKey(exerciseId)) {
-            exercises[exerciseId] = (await _exerciseProvider.fetchAndSetExercise(exerciseId))!;
+            final exercise = await _exerciseProvider.fetchAndSetExercise(exerciseId);
+            if (exercise == null) {
+              throw StateError('Exercise $exerciseId not found');
+            }
+            exercises[exerciseId] = exercise;
           }
           slotEntry.exerciseObj = exercises[exerciseId]!;
 
@@ -323,9 +331,11 @@ class RoutinesProvider with ChangeNotifier {
         }
 
         if (!exercises.containsKey(log.exerciseId)) {
-          exercises[log.exerciseId] = (await _exerciseProvider.fetchAndSetExercise(
-            log.exerciseId,
-          ))!;
+          final exercise = await _exerciseProvider.fetchAndSetExercise(log.exerciseId);
+          if (exercise == null) {
+            throw StateError('Exercise ${log.exerciseId} not found');
+          }
+          exercises[log.exerciseId] = exercise;
         }
 
         log.exerciseBase = exercises[log.exerciseId]!;
@@ -602,9 +612,9 @@ class RoutinesProvider with ChangeNotifier {
       // Value removed, delete entry
       configs.removeWhere((c) => c.id! == config.id!);
       await deleteConfig(config.id!, type);
-    } else if (config != null) {
+    } else if (config != null && value != null) {
       // Update existing value
-      configs.first.value = value!;
+      configs.first.value = value;
       await editConfig(configs.first, type);
     } else if (value != null && config == null) {
       // Create new config
@@ -669,7 +679,11 @@ class RoutinesProvider with ChangeNotifier {
 
     newLog.weightUnit = _weightUnits.firstWhere((e) => e.id == log.weightUnitId);
     newLog.repetitionUnit = _repetitionUnits.firstWhere((e) => e.id == log.repetitionsUnitId);
-    newLog.exerciseBase = (await _exerciseProvider.fetchAndSetExercise(log.exerciseId))!;
+    final exercise = await _exerciseProvider.fetchAndSetExercise(log.exerciseId);
+    if (exercise == null) {
+      throw StateError('Exercise ${log.exerciseId} not found');
+    }
+    newLog.exerciseBase = exercise;
 
     final plan = findById(newLog.routineId);
 

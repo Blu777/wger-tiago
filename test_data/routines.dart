@@ -221,7 +221,7 @@ Routine getTestRoutine({List<Exercise>? exercises}) {
         SlotData(
           comment: 'Make sure to warm up',
           isSuperset: false,
-          exerciseIds: [testExercises[0].id!],
+          exerciseIds: [testExercises[0].id].whereType<int>().toList(),
           setConfigs: [
             SetConfigData(
               exerciseId: 1,
@@ -270,7 +270,7 @@ Routine getTestRoutine({List<Exercise>? exercises}) {
         SlotData(
           comment: 'Side rises',
           isSuperset: false,
-          exerciseIds: [testExercises[5].id!],
+          exerciseIds: [testExercises[5].id].whereType<int>().toList(),
           setConfigs: [
             SetConfigData(
               exerciseId: testExercises[5].id!,
@@ -327,7 +327,7 @@ Routine getTestRoutine({List<Exercise>? exercises}) {
         SlotData(
           comment: 'Squats',
           isSuperset: false,
-          exerciseIds: [testExercises[4].id!],
+          exerciseIds: [testExercises[4].id].whereType<int>().toList(),
           setConfigs: [
             SetConfigData(
               exerciseId: 8,

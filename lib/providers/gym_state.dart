@@ -585,7 +585,9 @@ class GymStateNotifier extends _$GymStateNotifier {
     }
 
     final log = Log.fromSetConfigData(slotEntryPage.setConfigData!);
-    log.routineId = state.routine.id!;
+    if (state.routine.id != null) {
+      log.routineId = state.routine.id!;
+    }
     log.iteration = state.iteration;
     ref.read(gymLogProvider.notifier).setLog(log);
   }
@@ -691,7 +693,11 @@ class GymStateNotifier extends _$GymStateNotifier {
       pages.add(page);
 
       if (page.uuid == pageEntryUUID) {
-        final setConfigData = page.slotPages.first.setConfigData!;
+        final firstSlotPage = page.slotPages.first;
+        if (firstSlotPage.setConfigData == null) {
+          continue;
+        }
+        final setConfigData = firstSlotPage.setConfigData!;
 
         final List<SlotPageEntry> newSlotPages = [];
         for (var i = 1; i <= 4; i++) {
@@ -702,7 +708,7 @@ class GymStateNotifier extends _$GymStateNotifier {
               setIndex: 0,
               setConfigData: SetConfigData(
                 textRepr: '-/-',
-                exerciseId: newExercise.id!,
+                exerciseId: newExercise.id ?? 0,
                 exercise: newExercise,
                 slotEntryId: setConfigData.slotEntryId,
               ),

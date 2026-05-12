@@ -118,7 +118,7 @@ class TrophyRepository {
       list.where((t) => t.type == type).toList();
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 TrophyRepository trophyRepository(Ref ref) {
   final base = ref.read(wgerBaseProvider);
   return TrophyRepository(base);

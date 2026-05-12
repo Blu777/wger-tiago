@@ -109,6 +109,9 @@ class WeightForm extends StatelessWidget {
                 initialTime: TimeOfDay.fromDateTime(_weightEntry.date),
               );
 
+              if (!context.mounted) {
+                return;
+              }
               if (pickedTime != null) {
                 timeController.text = pickedTime.format(context);
               }

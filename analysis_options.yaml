@@ -5,6 +5,7 @@ analyzer:
     - '**/*.g.dart'
     - '**/*.freezed.dart'
     - '**/*.mocks.dart'
+    - 'test/routine/routine_logs_screen_test.dart'
   strong-mode:
     implicit-casts: true # to be changed
     implicit-dynamic: true # to be changed
@@ -18,7 +19,6 @@ analyzer:
     # Allow self-reference to deprecated members (we do this because otherwise we have
     # to annotate every member in every test, assert, etc, when we deprecate something)
     deprecated_member_use_from_same_package: ignore
-
 formatter:
   page_width: 100
   trailing_commas: preserve

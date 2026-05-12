@@ -164,24 +164,28 @@ class _LogFormWidgetState extends ConsumerState<LogFormWidget> {
                       final gymProvider = ref.read(gymStateProvider.notifier);
 
                       final logToSave = ref.read(gymLogProvider);
-                      await provider.Provider.of<RoutinesProvider>(
+                      final routinesProvider = provider.Provider.of<RoutinesProvider>(
                         context,
                         listen: false,
-                      ).addLog(logToSave!);
-                      final page = gymState.getSlotEntryPageByIndex()!;
-                      gymProvider.markSlotPageAsDone(page.uuid, isDone: true);
-
-                      if (mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            duration: const Duration(seconds: 2),
-                            content: Text(
-                              i18n.successfullySaved,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        );
+                      );
+                      await routinesProvider.addLog(logToSave!);
+                      final page = gymState.getSlotEntryPageByIndex();
+                      if (!context.mounted) {
+                        return;
                       }
+                      if (page != null) {
+                        gymProvider.markSlotPageAsDone(page.uuid, isDone: true);
+                      }
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          duration: const Duration(seconds: 2),
+                          content: Text(
+                            i18n.successfullySaved,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      );
                       widget.controller.nextPage(
                         duration: DEFAULT_ANIMATION_DURATION,
                         curve: DEFAULT_ANIMATION_CURVE,

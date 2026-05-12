@@ -51,7 +51,7 @@ class _LogMealScreenState extends State<LogMealScreen> {
   void initState() {
     super.initState();
 
-    _timeController.text = timeToString(TimeOfDay.now())!;
+    _timeController.text = timeToString(TimeOfDay.now()) ?? '';
   }
 
   @override
@@ -137,7 +137,9 @@ class _LogMealScreenState extends State<LogMealScreen> {
                           }
                         },
                         onSaved: (newValue) {
-                          _dateController.text = newValue!;
+                          if (newValue != null) {
+                            _dateController.text = newValue;
+                          }
                         },
                       ),
                     ),

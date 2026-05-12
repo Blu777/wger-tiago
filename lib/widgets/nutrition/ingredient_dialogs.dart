@@ -131,19 +131,24 @@ class IngredientDetails extends StatelessWidget {
                     showGperKg: false,
                   ),
                 ),
-              if (snapshot.hasData) ...[
+              if (snapshot.hasData && ingredient != null) ...[
                 const SizedBox(height: 12),
-                _DietaryInfoSection(ingredient: ingredient!),
+                _DietaryInfoSection(ingredient: ingredient),
               ],
-              if (snapshot.hasData && ingredient!.licenseObjectURl == null)
+              if (snapshot.hasData && ingredient != null && ingredient.licenseObjectURl == null)
                 Text('Source: ${source!}'),
-              if (snapshot.hasData && ingredient!.licenseObjectURl != null)
-                Padding(
-                  padding: const EdgeInsets.only(top: 12),
-                  child: InkWell(
-                    child: Text('Source: ${source!}'),
-                    onTap: () => launchURL(ingredient!.licenseObjectURl!, context),
-                  ),
+              if (snapshot.hasData && ingredient != null && ingredient.licenseObjectURl != null)
+                Builder(
+                  builder: (context) {
+                    final localIngredient = ingredient!;
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 12),
+                      child: InkWell(
+                        child: Text('Source: ${source!}'),
+                        onTap: () => launchURL(localIngredient.licenseObjectURl!, context),
+                      ),
+                    );
+                  },
                 ),
             ],
           ),
