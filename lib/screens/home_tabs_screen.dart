@@ -84,7 +84,7 @@ class _HomeTabsScreenState extends ConsumerState<HomeTabsScreen>
   Future<void> _loadEntries() async {
     final languageCode = Localizations.localeOf(context).languageCode;
     final authProvider = context.read<AuthProvider>();
-    final trophyNotifier = ref.read(trophyStateProvider.notifier);
+    final trophyNotifier = ProviderScope.containerOf(context).read(trophyStateProvider.notifier);
 
     if (!authProvider.dataInit) {
       final routinesProvider = context.read<RoutinesProvider>();
