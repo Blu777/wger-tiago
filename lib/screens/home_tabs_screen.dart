@@ -262,12 +262,21 @@ class LoadingWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Center(
+          Center(
             child: SizedBox(
               height: 70,
-              child: RiveAnimation.asset(
-                'assets/animations/wger_logo.riv',
-                animations: ['idle_loop2'],
+              child: RiveWidgetBuilder(
+                fileLoader: FileLoader.fromAsset(
+                  'assets/animations/wger_logo.riv',
+                  riveFactory: Factory.flutter,
+                ),
+                builder: (context, state) {
+                  return switch (state) {
+                    RiveLoaded(:final controller) => RiveWidget(controller: controller),
+                    RiveFailed() => const SizedBox.shrink(),
+                    RiveLoading() => const SizedBox.shrink(),
+                  };
+                },
               ),
             ),
           ),

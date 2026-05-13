@@ -97,6 +97,10 @@ class _DashboardCalendarWidgetState extends State<DashboardCalendarWidget>
   /// **Note**: This method checks if the widget is still mounted before updating
   /// the state after the async workout session fetch operation.
   void loadEvents() async {
+    if (!mounted) {
+      return;
+    }
+
     final numberFormat = NumberFormat.decimalPattern(Localizations.localeOf(context).toString());
     final i18n = AppLocalizations.of(context);
 

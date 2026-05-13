@@ -73,8 +73,8 @@ class Slot {
     config = null;
     exercisesObj = exercises ?? [];
     exercisesIds = exercisesObj
-        .where((e) => e.id != null)
-        .map((e) => e.id!)
+        .map((e) => e.id)
+        .whereType<int>()
         .toList();
     entries = entries ?? [];
     if (day != null) {

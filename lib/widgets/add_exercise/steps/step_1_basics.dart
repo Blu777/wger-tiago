@@ -78,7 +78,7 @@ class Step1Basics extends StatelessWidget {
               validator: (name) => validateAuthorName(name, context),
               initialValue: addExerciseProvider.author,
               onChange: (v) => addExerciseProvider.author = v,
-              onSaved: (String? author) => addExerciseProvider.author = author!,
+              onSaved: (String? author) => addExerciseProvider.author = author ?? '',
             ),
             ExerciseCategoryInputWidget<ExerciseCategory>(
               key: const Key('category-dropdown'),

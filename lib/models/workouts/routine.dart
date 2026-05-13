@@ -203,12 +203,15 @@ class Routine {
   }
 
   void replaceExercise(int oldExerciseId, Exercise newExercise) {
+    final newExerciseId = newExercise.id;
+    if (newExerciseId == null) {
+      return;
+    }
+
     for (final session in sessions) {
       for (final log in session.logs) {
         if (log.exerciseId == oldExerciseId) {
-          if (newExercise.id != null) {
-            log.exerciseId = newExercise.id!;
-          }
+          log.exerciseId = newExerciseId;
           log.exercise = newExercise;
         }
       }
@@ -218,9 +221,7 @@ class Routine {
       for (final slot in day.slots) {
         for (final config in slot.setConfigs) {
           if (config.exerciseId == oldExerciseId) {
-            if (newExercise.id != null) {
-              config.exerciseId = newExercise.id!;
-            }
+            config.exerciseId = newExerciseId;
             config.exercise = newExercise;
           }
         }
@@ -231,9 +232,7 @@ class Routine {
       for (final slot in day.slots) {
         for (final config in slot.setConfigs) {
           if (config.exerciseId == oldExerciseId) {
-            if (newExercise.id != null) {
-              config.exerciseId = newExercise.id!;
-            }
+            config.exerciseId = newExerciseId;
             config.exercise = newExercise;
           }
         }

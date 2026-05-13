@@ -129,7 +129,10 @@ class _GymModeState extends ConsumerState<GymMode> {
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}: ${snapshot.stackTrace}'));
         } else if (snapshot.connectionState == ConnectionState.done) {
-          final initialPage = snapshot.data!;
+          final initialPage = snapshot.data;
+          if (initialPage == null) {
+            return const BoxedProgressIndicator();
+          }
 
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (!_initialPageJumped && _controller.hasClients) {

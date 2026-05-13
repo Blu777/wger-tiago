@@ -158,11 +158,11 @@ class _LogMealScreenState extends State<LogMealScreen> {
                           );
 
                           if (pickedTime != null) {
-                            _timeController.text = timeToString(pickedTime)!;
+                            _timeController.text = timeToString(pickedTime) ?? '';
                           }
                         },
                         onSaved: (newValue) {
-                          _timeController.text = newValue!;
+                          _timeController.text = newValue ?? '';
                         },
                       ),
                     ),

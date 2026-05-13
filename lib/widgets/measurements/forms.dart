@@ -44,8 +44,8 @@ class MeasurementCategoryForm extends StatelessWidget {
       categoryData['name'] = category.name;
     }
 
-    unitController.text = categoryData['unit']!;
-    nameController.text = categoryData['name']!;
+    unitController.text = categoryData['unit'];
+    nameController.text = categoryData['name'];
   }
 
   @override
@@ -159,7 +159,7 @@ class MeasurementEntryForm extends StatelessWidget {
     }
 
     _valueController.text = '';
-    _notesController.text = _entryData['notes']!;
+    _notesController.text = _entryData['notes'];
   }
 
   @override

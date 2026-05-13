@@ -201,7 +201,11 @@ class RoutinesProvider with ChangeNotifier {
             }
             exercises[exerciseId] = exercise;
           }
-          setConfig.exercise = exercises[exerciseId]!;
+          final setConfigExercise = exercises[exerciseId];
+          if (setConfigExercise == null) {
+            throw StateError('Exercise $exerciseId not found');
+          }
+          setConfig.exercise = setConfigExercise;
 
           setConfig.repetitionsUnit = _repetitionUnits.firstWhere(
             (e) => e.id == setConfig.repetitionsUnitId,
@@ -298,7 +302,11 @@ class RoutinesProvider with ChangeNotifier {
             }
             exercises[exerciseId] = exercise;
           }
-          slotEntry.exerciseObj = exercises[exerciseId]!;
+          final slotEntryExercise = exercises[exerciseId];
+          if (slotEntryExercise == null) {
+            throw StateError('Exercise $exerciseId not found');
+          }
+          slotEntry.exerciseObj = slotEntryExercise;
 
           if (slotEntry.repetitionUnitId != null) {
             slotEntry.repetitionUnitObj = _repetitionUnits.firstWhere(
@@ -338,7 +346,11 @@ class RoutinesProvider with ChangeNotifier {
           exercises[log.exerciseId] = exercise;
         }
 
-        log.exerciseBase = exercises[log.exerciseId]!;
+        final logExercise = exercises[log.exerciseId];
+        if (logExercise == null) {
+          throw StateError('Exercise ${log.exerciseId} not found');
+        }
+        log.exerciseBase = logExercise;
       }
     }
 

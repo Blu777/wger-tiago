@@ -585,8 +585,9 @@ class GymStateNotifier extends _$GymStateNotifier {
     }
 
     final log = Log.fromSetConfigData(slotEntryPage.setConfigData!);
-    if (state.routine.id != null) {
-      log.routineId = state.routine.id!;
+    final routineId = state.routine.id;
+    if (routineId != null) {
+      log.routineId = routineId;
     }
     log.iteration = state.iteration;
     ref.read(gymLogProvider.notifier).setLog(log);
@@ -665,7 +666,7 @@ class GymStateNotifier extends _$GymStateNotifier {
         if (slotPage.setConfigData != null &&
             slotPage.setConfigData!.exercise.id == originalExerciseId) {
           final updatedSetConfigData = slotPage.setConfigData!.copyWith(
-            exerciseId: newExercise.id,
+            exerciseId: newExercise.id ?? slotPage.setConfigData!.exerciseId,
             exercise: newExercise,
           );
           return slotPage.copyWith(setConfigData: updatedSetConfigData);
