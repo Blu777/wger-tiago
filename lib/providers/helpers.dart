@@ -24,7 +24,7 @@ Uri makeUri(
   String? objectMethod,
   Map<String, dynamic>? query,
 ]) {
-  final Uri uriServer = Uri.parse(serverUrl);
+  final Uri uriServer = Uri.parse(serverUrl.replaceAll(RegExp(r'\s+'), ''));
 
   final pathList = [uriServer.path, 'api', 'v2', path];
   if (id != null) {

@@ -349,8 +349,9 @@ class _AuthCardState extends State<AuthCard> {
                     child: ServerField(
                       controller: _serverUrlController,
                       onSaved: (value) {
+                        value = value!.replaceAll(RegExp(r'\s+'), '');
                         // Remove any trailing slash
-                        if (value!.lastIndexOf('/') == (value.length - 1)) {
+                        if (value.lastIndexOf('/') == (value.length - 1)) {
                           value = value.substring(0, value.lastIndexOf('/'));
                         }
                         _authData['serverUrl'] = value;
