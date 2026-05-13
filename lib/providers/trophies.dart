@@ -133,29 +133,32 @@ final class TrophyStateNotifier extends _$TrophyStateNotifier {
     return TrophyState();
   }
 
-  Future<void> fetchAll({String? language}) async {
+  Future<void> fetchAll({required TrophyRepository repository, String? language}) async {
     await Future.wait([
-      fetchTrophies(language: language),
-      fetchUserTrophies(language: language),
-      fetchTrophyProgression(language: language),
+      fetchTrophies(repository: repository, language: language),
+      fetchUserTrophies(repository: repository, language: language),
+      fetchTrophyProgression(repository: repository, language: language),
     ]);
   }
 
   /// Fetch all available trophies
-  Future<List<Trophy>> fetchTrophies({String? language}) async {
+  Future<List<Trophy>> fetchTrophies({TrophyRepository? repository, String? language}) async {
     _logger.finer('Fetching trophies');
 
-    final repo = ref.read(trophyRepositoryProvider);
+    final TrophyRepository repo = repository ?? ref.read(trophyRepositoryProvider);
     final result = await repo.fetchTrophies(language: language);
     state = state.copyWith(trophies: result);
     return result;
   }
 
   /// Fetch trophies awarded to the user, excludes hidden trophies
-  Future<List<UserTrophy>> fetchUserTrophies({String? language}) async {
+  Future<List<UserTrophy>> fetchUserTrophies({
+    TrophyRepository? repository,
+    String? language,
+  }) async {
     _logger.finer('Fetching user trophies');
 
-    final repo = ref.read(trophyRepositoryProvider);
+    final TrophyRepository repo = repository ?? ref.read(trophyRepositoryProvider);
     final result = await repo.fetchUserTrophies(
       filterQuery: {'trophy__is_hidden': 'false'}, //'trophy__is_repeatable': 'false'
       language: language,
@@ -165,11 +168,14 @@ final class TrophyStateNotifier extends _$TrophyStateNotifier {
   }
 
   /// Fetch trophy progression for the user
-  Future<List<UserTrophyProgression>> fetchTrophyProgression({String? language}) async {
+  Future<List<UserTrophyProgression>> fetchTrophyProgression({
+    TrophyRepository? repository,
+    String? language,
+  }) async {
     _logger.finer('Fetching user trophy progression');
 
     // Note that repeatable trophies are filtered out in the backend
-    final repo = ref.read(trophyRepositoryProvider);
+    final TrophyRepository repo = repository ?? ref.read(trophyRepositoryProvider);
     final result = await repo.fetchProgression(language: language);
     state = state.copyWith(trophyProgression: result);
     return result;

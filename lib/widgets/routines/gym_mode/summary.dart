@@ -27,6 +27,8 @@ import 'package:wger/l10n/generated/app_localizations.dart';
 import 'package:wger/models/trophies/user_trophy.dart';
 import 'package:wger/models/workouts/routine.dart';
 import 'package:wger/models/workouts/session_api.dart';
+import 'package:wger/providers/auth.dart';
+import 'package:wger/providers/base_provider.dart';
 import 'package:wger/providers/gym_state.dart';
 import 'package:wger/providers/routines.dart';
 import 'package:wger/providers/trophies.dart';
@@ -69,13 +71,15 @@ class _WorkoutSummaryState extends ConsumerState<WorkoutSummary> {
   Future<void> _reloadRoutineData(String languageCode) async {
     widget._logger.fine('Loading routine data');
     final gymState = ref.read(gymStateProvider);
+    final authProvider = context.read<AuthProvider>();
 
     _routine = await context.read<RoutinesProvider>().fetchAndSetRoutineFull(
       gymState.routine.id!,
     );
 
     final trophyNotifier = ref.read(trophyStateProvider.notifier);
-    await trophyNotifier.fetchUserTrophies(language: languageCode);
+    final trophyRepository = TrophyRepository(WgerBaseProvider(authProvider));
+    await trophyNotifier.fetchUserTrophies(repository: trophyRepository, language: languageCode);
   }
 
   @override

@@ -25,6 +25,7 @@ import 'package:rive/rive.dart';
 import 'package:wger/helpers/material.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
 import 'package:wger/providers/auth.dart';
+import 'package:wger/providers/base_provider.dart';
 import 'package:wger/providers/body_weight.dart';
 import 'package:wger/providers/exercises.dart';
 import 'package:wger/providers/gallery.dart';
@@ -85,6 +86,7 @@ class _HomeTabsScreenState extends ConsumerState<HomeTabsScreen>
     final languageCode = Localizations.localeOf(context).languageCode;
     final authProvider = context.read<AuthProvider>();
     final trophyNotifier = ProviderScope.containerOf(context).read(trophyStateProvider.notifier);
+    final trophyRepository = TrophyRepository(WgerBaseProvider(authProvider));
 
     if (!authProvider.dataInit) {
       final routinesProvider = context.read<RoutinesProvider>();
@@ -126,7 +128,7 @@ class _HomeTabsScreenState extends ConsumerState<HomeTabsScreen>
         // routinesProvider.fetchAndSetAllRoutinesFull(),
         weightProvider.fetchAndSetEntries(),
         measurementProvider.fetchAndSetAllCategoriesAndEntries(),
-        trophyNotifier.fetchAll(language: languageCode),
+        trophyNotifier.fetchAll(repository: trophyRepository, language: languageCode),
       ]);
 
       //

@@ -19,10 +19,13 @@
 import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:wger/helpers/consts.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
 import 'package:wger/models/workouts/routine.dart';
+import 'package:wger/providers/auth.dart';
+import 'package:wger/providers/base_provider.dart';
 import 'package:wger/providers/trophies.dart';
 import 'package:wger/theme/theme.dart';
 import 'package:wger/widgets/routines/logs/day_logs_container.dart';
@@ -36,7 +39,8 @@ class WorkoutLogs extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final languageCode = Localizations.localeOf(context).languageCode;
     final trophyNotifier = ref.read(trophyStateProvider.notifier);
-    trophyNotifier.fetchUserTrophies(language: languageCode);
+    final trophyRepository = TrophyRepository(WgerBaseProvider(context.read<AuthProvider>()));
+    trophyNotifier.fetchUserTrophies(repository: trophyRepository, language: languageCode);
 
     return ListView(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),

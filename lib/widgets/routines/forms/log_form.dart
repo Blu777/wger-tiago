@@ -50,6 +50,15 @@ class _LogFormWidgetState extends ConsumerState<LogFormWidget> {
   var _detailed = false;
   bool _isSaving = false;
 
+  void _setSaving(bool value) {
+    if (!mounted) {
+      return;
+    }
+    setState(() {
+      _isSaving = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final i18n = AppLocalizations.of(context);
@@ -156,7 +165,7 @@ class _LogFormWidgetState extends ConsumerState<LogFormWidget> {
                     if (!isValid) {
                       return;
                     }
-                    _isSaving = true;
+                    _setSaving(true);
                     _form.currentState!.save();
 
                     try {
@@ -190,18 +199,10 @@ class _LogFormWidgetState extends ConsumerState<LogFormWidget> {
                         duration: DEFAULT_ANIMATION_DURATION,
                         curve: DEFAULT_ANIMATION_CURVE,
                       );
-                      setState(() {
-                        _isSaving = false;
-                      });
                     } on WgerHttpException {
-                      setState(() {
-                        _isSaving = false;
-                      });
                       rethrow;
                     } finally {
-                      setState(() {
-                        _isSaving = false;
-                      });
+                      _setSaving(false);
                     }
                   },
             child: _isSaving ? const FormProgressIndicator() : Text(i18n.save),
