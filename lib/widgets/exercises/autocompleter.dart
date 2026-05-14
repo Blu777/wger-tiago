@@ -45,6 +45,12 @@ class _ExerciseAutocompleterState extends ConsumerState<ExerciseAutocompleter> {
   final _exercisesController = TextEditingController();
 
   @override
+  void dispose() {
+    _exercisesController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final exerciseFilters = ref.watch(exerciseFiltersSyncProvider);
 

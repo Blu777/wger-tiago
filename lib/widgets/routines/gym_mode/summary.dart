@@ -84,6 +84,7 @@ class _WorkoutSummaryState extends ConsumerState<WorkoutSummary> {
 
   @override
   Widget build(BuildContext context) {
+    final i18n = AppLocalizations.of(context);
     final trophyState = ref.watch(trophyStateProvider);
 
     return Column(
@@ -117,7 +118,7 @@ class _WorkoutSummaryState extends ConsumerState<WorkoutSummary> {
                 );
               }
 
-              return const Center(child: Text('Unexpected state!'));
+              return Center(child: Text(i18n.unexpectedState));
             },
           ),
         ),

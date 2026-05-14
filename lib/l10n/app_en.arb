@@ -1,6 +1,7 @@
 {
   "@@last_modified": "2020-11-11T15:04:05.523531",
   "userProfile": "Your profile",
+  "@userProfile": {},
   "login": "Log in",
   "@login": {
     "description": "Text for login button"
@@ -38,8 +39,11 @@
     "description": "Error message when the user a password that is too short"
   },
   "selectAvailablePlates": "Select available plates",
+  "@selectAvailablePlates": {},
   "barWeight": "Bar weight",
+  "@barWeight": {},
   "useColors": "Use colors",
+  "@useColors": {},
   "password": "Password",
   "@password": {},
   "confirmPassword": "Confirm password",
@@ -57,7 +61,9 @@
     "description": "Error message when the user enters an invalid username"
   },
   "useApiToken": "Use API Token",
+  "@useApiToken": {},
   "useUsernameAndPassword": "Use username and password",
+  "@useUsernameAndPassword": {},
   "apiToken": "API Token",
   "@apiToken": {},
   "invalidApiToken": "Please enter a valid API key",
@@ -101,6 +107,7 @@
     "description": "Title for screen workout plan"
   },
   "dashboardWidgets": "Dashboard widgets",
+  "@dashboardWidgets": {},
   "labelDashboard": "Dashboard",
   "@labelDashboard": {
     "description": "Title for screen dashboard"
@@ -118,6 +125,7 @@
     "description": "Message when an item was successfully saved"
   },
   "exerciseList": "Exercise list",
+  "@exerciseList": {},
   "exercise": "Exercise",
   "@exercise": {
     "description": "An exercise for a workout"
@@ -135,11 +143,13 @@
     "description": "Label on set form. Selected exercises are added to the set"
   },
   "noIngredientsDefined": "No ingredients defined yet",
+  "@noIngredientsDefined": {},
   "noMatchingExerciseFound": "No matching exercises found",
   "@noMatchingExerciseFound": {
     "description": "Message returned if no exercises match the searched string"
   },
   "searchNamesInEnglish": "Also search for names in English",
+  "@searchNamesInEnglish": {},
   "equipment": "Equipment",
   "@equipment": {
     "description": "Equipment needed to perform an exercise"
@@ -161,31 +171,53 @@
     "description": "The start date of a nutritional plan or routine"
   },
   "dayTypeCustom": "Custom",
+  "@dayTypeCustom": {},
   "dayTypeEnom": "Every minute on the minute",
+  "@dayTypeEnom": {},
   "dayTypeAmrap": "As many rounds as possible",
+  "@dayTypeAmrap": {},
   "dayTypeHiit": "High intensity interval training",
+  "@dayTypeHiit": {},
   "dayTypeTabata": "Tabata",
+  "@dayTypeTabata": {},
   "dayTypeEdt": "Escalating density training",
+  "@dayTypeEdt": {},
   "dayTypeRft": "Rounds for time",
+  "@dayTypeRft": {},
   "dayTypeAfap": "As fast as possible",
+  "@dayTypeAfap": {},
   "slotEntryTypeNormal": "Normal",
+  "@slotEntryTypeNormal": {},
   "slotEntryTypeDropset": "Dropset",
+  "@slotEntryTypeDropset": {},
   "slotEntryTypeMyo": "Myo",
+  "@slotEntryTypeMyo": {},
   "slotEntryTypeWarmup": "Warmup",
+  "@slotEntryTypeWarmup": {},
   "slotEntryTypePartial": "Partial",
+  "@slotEntryTypePartial": {},
   "slotEntryTypeForced": "Forced",
+  "@slotEntryTypeForced": {},
   "slotEntryTypeTut": "Time under Tension",
+  "@slotEntryTypeTut": {},
   "slotEntryTypeIso": "Isometric hold",
+  "@slotEntryTypeIso": {},
   "slotEntryTypeJump": "Jump",
+  "@slotEntryTypeJump": {},
   "trophies": "Trophies",
+  "@trophies": {},
   "routines": "Routines",
+  "@routines": {},
   "newRoutine": "New routine",
+  "@newRoutine": {},
   "noRoutines": "You have no routines",
+  "@noRoutines": {},
   "reps": "Reps",
   "@reps": {
     "description": "Shorthand for repetitions, used when space constraints are tighter"
   },
   "restTime": "Rest time",
+  "@restTime": {},
   "sets": "Sets",
   "@sets": {
     "description": "The number of sets to be done for one exercise"
@@ -199,6 +231,7 @@
     "description": "Label used in RiR slider when the RiR value is not used/saved for the current setting or log"
   },
   "useMetric": "Use metric units for body weight",
+  "@useMetric": {},
   "weightUnit": "Weight unit",
   "@weightUnit": {},
   "repetitionUnit": "Repetition unit",
@@ -256,8 +289,11 @@
     }
   },
   "impressionGood": "Good",
+  "@impressionGood": {},
   "impressionNeutral": "Neutral",
+  "@impressionNeutral": {},
   "impressionBad": "Bad",
+  "@impressionBad": {},
   "impression": "Impression",
   "@impression": {
     "description": "General impression (e.g. for a workout session) such as good, bad, etc."
@@ -271,12 +307,19 @@
     "description": "A (logged) workout session"
   },
   "restDay": "Rest day",
+  "@restDay": {},
   "isRestDay": "Is rest day",
+  "@isRestDay": {},
   "isRestDayHelp": "Please note that all sets and exercises will be removed when you mark a day as a rest day.",
+  "@isRestDayHelp": {},
   "needsLogsToAdvance": "Needs logs to advance",
+  "@needsLogsToAdvance": {},
   "needsLogsToAdvanceHelp": "Select if you want the routine to progress to the next scheduled day only if you've logged a workout for the day",
+  "@needsLogsToAdvanceHelp": {},
   "routineDays": "Days in routine",
+  "@routineDays": {},
   "resultingRoutine": "Resulting routine",
+  "@resultingRoutine": {},
   "newDay": "New day",
   "@newDay": {},
   "newSet": "New set",
@@ -286,19 +329,29 @@
   "selectExercises": "If you want to do a superset you can search for several exercises, they will be grouped together",
   "@selectExercises": {},
   "personalRecords": "Personal records",
+  "@personalRecords": {},
   "gymMode": "Gym mode",
   "@gymMode": {
     "description": "Label when starting the gym mode"
   },
   "gymModeShowExercises": "Show exercise overview pages",
+  "@gymModeShowExercises": {},
   "gymModeShowTimer": "Show timer between sets",
+  "@gymModeShowTimer": {},
   "gymModeTimerType": "Timer type",
+  "@gymModeTimerType": {},
   "gymModeTimerTypeHelText": "If a set has pause time, a countdown is always used.",
+  "@gymModeTimerTypeHelText": {},
   "countdown": "Countdown",
+  "@countdown": {},
   "stopwatch": "Stopwatch",
+  "@stopwatch": {},
   "gymModeDefaultCountdownTime": "Default countdown time, in seconds",
+  "@gymModeDefaultCountdownTime": {},
   "gymModeNotifyOnCountdownFinish": "Notify on countdown end",
+  "@gymModeNotifyOnCountdownFinish": {},
   "duration": "Duration",
+  "@duration": {},
   "durationHoursMinutes": "{hours}h {minutes}m",
   "@durationHoursMinutes": {
     "description": "A duration, in hours and minutes",
@@ -317,6 +370,7 @@
     "description": "The volume of a workout or set, i.e. weight x reps"
   },
   "workoutCompleted": "Workout completed",
+  "@workoutCompleted": {},
   "plateCalculator": "Plates",
   "@plateCalculator": {
     "description": "Label used for the plate calculator in the gym mode"
@@ -358,6 +412,7 @@
   "mealLogged": "Meal logged to diary",
   "@mealLogged": {},
   "ingredientLogged": "Ingredient logged to diary",
+  "@ingredientLogged": {},
   "logMeal": "Log meal to nutrition diary",
   "@logMeal": {},
   "addIngredient": "Add ingredient",
@@ -379,12 +434,15 @@
     "description": "Message shown when the user has no nutritional plans"
   },
   "onlyLogging": "Only track calories",
+  "@onlyLogging": {},
   "onlyLoggingHelpText": "Check the box if you only want to log your calories and don't want to setup a detailed nutritional plan with specific meals",
+  "@onlyLoggingHelpText": {},
   "goalMacro": "Macro goals",
   "@goalMacro": {
     "description": "The goal for macronutrients"
   },
   "selectMealToLog": "Select a meal to log to diary",
+  "@selectMealToLog": {},
   "yourCurrentNutritionPlanHasNoMealsDefinedYet": "Your current nutrition plan has no meals defined",
   "@yourCurrentNutritionPlanHasNoMealsDefinedYet": {
     "description": "Message shown when a nutrition plan doesn't have any meals"
@@ -394,21 +452,36 @@
     "description": "Message shown to guide users to the nutritional plan details page to add meals"
   },
   "goalEnergy": "Energy goal",
+  "@goalEnergy": {},
   "goalProtein": "Protein goal",
+  "@goalProtein": {},
   "goalCarbohydrates": "Carbohydrates goal",
+  "@goalCarbohydrates": {},
   "goalFat": "Fat goal",
+  "@goalFat": {},
   "goalFiber": "Fiber goal",
+  "@goalFiber": {},
   "anErrorOccurred": "An Error Occurred!",
+  "@anErrorOccurred": {},
   "errorInfoDescription": "We're sorry, but something went wrong. You can help us fix this by reporting the issue on GitHub.",
+  "@errorInfoDescription": {},
   "errorInfoDescription2": "You can continue using the app, but some features may not work.",
+  "@errorInfoDescription2": {},
   "errorViewDetails": "Technical details",
+  "@errorViewDetails": {},
   "applicationLogs": "Application logs",
+  "@applicationLogs": {},
   "errorCouldNotConnectToServer": "Couldn't connect to server",
+  "@errorCouldNotConnectToServer": {},
   "errorCouldNotConnectToServerDetails": "The application could not connect to the server. Please check your internet connection or the server URL and try again. If the problem persists, contact the server administrator.",
+  "@errorCouldNotConnectToServerDetails": {},
   "copyToClipboard": "Copy to clipboard",
+  "@copyToClipboard": {},
   "weight": "Weight",
   "min": "Min",
+  "@min": {},
   "max": "Max",
+  "@max": {},
   "@weight": {
     "description": "The weight of a workout log or body weight entry"
   },
@@ -510,7 +583,9 @@
     "description": "Header for the column of 'logged' nutritional values, i.e. what was eaten"
   },
   "today": "Today",
+  "@today": {},
   "loggedToday": "Logged today",
+  "@loggedToday": {},
   "weekAverage": "7 day average",
   "@weekAverage": {
     "description": "Header for the column of '7 day average' nutritional values, i.e. what was logged last week"
@@ -600,6 +675,7 @@
   "saturatedFat": "Saturated fat",
   "@saturatedFat": {},
   "fiber": "Fibers",
+  "@fiber": {},
   "sodium": "Sodium",
   "@sodium": {},
   "amount": "Amount",
@@ -615,12 +691,13 @@
     "description": "Title when adding a new entry such as a weight or log entry"
   },
   "noTrophies": "You have no trophies yet",
+  "@noTrophies": {},
   "noWeightEntries": "You have no weight entries",
   "@noWeightEntries": {
     "description": "Message shown when the user has no logged weight entries"
   },
   "noMeasurementEntries": "You have no measurement entries",
-  "@noMeasurementntries": {
+  "@noMeasurementEntries": {
     "description": "Message shown when the user has no logged measurement entries"
   },
   "moreMeasurementEntries": "Add new measurement",
@@ -630,6 +707,7 @@
   "edit": "Edit",
   "@edit": {},
   "preview": "Preview",
+  "@preview": {},
   "loadingText": "Loading...",
   "@loadingText": {
     "description": "Text to show when entries are being loaded in the background: Loading..."
@@ -649,6 +727,7 @@
   "newNutritionalPlan": "New nutritional plan",
   "@newNutritionalPlan": {},
   "overview": "Overview",
+  "@overview": {},
   "toggleDetails": "Toggle details",
   "@toggleDetails": {
     "description": "Switch to toggle detail / overview"
@@ -656,21 +735,33 @@
   "goToDetailPage": "Go to detail page",
   "@goToDetailPage": {},
   "aboutWhySupportTitle": "Open Source & free to use ❤️",
+  "@aboutWhySupportTitle": {},
   "aboutDescription": "Thank you for using wger! wger is a collaborative open source project, made by fitness enthusiasts from around the world.",
   "@aboutDescription": {
     "description": "Text in the about dialog"
   },
   "aboutDonateTitle": "Make a donation",
+  "@aboutDonateTitle": {},
   "aboutDonateText": "While the project is free and will always remain it, running the server isn’t! Development also takes significant time and effort from volunteers. Your contribution directly supports these costs, helping to keep the service reliable.",
+  "@aboutDonateText": {},
   "aboutContributeTitle": "Contribute",
+  "@aboutContributeTitle": {},
   "aboutContributeText": "All types of contributions are encouraged. Whether you're a developer, a translator, or just passionate about fitness, every bit of support is appreciated!",
+  "@aboutContributeText": {},
   "aboutBugsListTitle": "Report a problem or suggest a feature",
+  "@aboutBugsListTitle": {},
   "aboutTranslationListTitle": "Translate the application",
+  "@aboutTranslationListTitle": {},
   "aboutSourceListTitle": "View source code",
+  "@aboutSourceListTitle": {},
   "aboutJoinCommunityTitle": "Join the community",
+  "@aboutJoinCommunityTitle": {},
   "aboutMastodonTitle": "Mastodon",
+  "@aboutMastodonTitle": {},
   "aboutDiscordTitle": "Discord",
+  "@aboutDiscordTitle": {},
   "others": "Others",
+  "@others": {},
   "calendar": "Calendar",
   "@calendar": {},
   "goToToday": "Go to today",
@@ -682,6 +773,7 @@
     "description": "Error message when the user hasn't entered a value on a required field"
   },
   "selectEntry": "Please select an entry",
+  "@selectEntry": {},
   "selectExercise": "Please select an exercise",
   "@selectExercise": {
     "description": "Error message when the user hasn't selected an exercise in the form"
@@ -723,6 +815,7 @@
     }
   },
   "baseNameEnglish": "All exercises need a base name in English",
+  "@baseNameEnglish": {},
   "nrOfSets": "Sets per exercise: {nrOfSets}",
   "@nrOfSets": {
     "description": "Label shown on the slider where the user selects the nr of sets",
@@ -823,8 +916,11 @@
     "description": "Translation for close"
   },
   "identicalExercisePleaseDiscard": "If you notice an exercise that is identical to the one you're adding, please discard your draft and edit that exercise instead.",
+  "@identicalExercisePleaseDiscard": {},
   "checkInformationBeforeSubmitting": "Please check that the information you entered is correct before submitting the exercise",
+  "@checkInformationBeforeSubmitting": {},
   "add_exercise_image_license": "Images must be compatible with the CC BY SA license. If in doubt, upload only photos you've taken yourself.",
+  "@add_exercise_image_license": {},
   "imageDetailsTitle": "Image details",
   "@imageDetailsTitle": {
     "description": "Title for image details form"
@@ -842,7 +938,7 @@
     "description": "Label for source link field"
   },
   "author": "Author(s)",
-  "@Author": {
+  "@author": {
     "description": "Label for author field"
   },
   "authorHint": "Enter author name",
@@ -866,7 +962,9 @@
     "description": "Label for image type selector"
   },
   "imageDetailsLicenseNotice": "By submitting this image, you agree to release it under the CC-BY-SA-4. The image must be either your own work or the author must have released it under a license compatible with it.",
+  "@imageDetailsLicenseNotice": {},
   "imageDetailsLicenseNoticeLinkToLicense": "See license text.",
+  "@imageDetailsLicenseNoticeLinkToLicense": {},
   "imageFormatNotSupported": "{imageFormat} not supported",
   "@imageFormatNotSupported": {
       "description": "Label shown on the error container when image format is not supported",
@@ -905,8 +1003,11 @@
     "description": "List of alternative names for an exercise"
   },
   "verifiedEmail": "Verified email",
+  "@verifiedEmail": {},
   "unVerifiedEmail": "Unverified email",
+  "@unVerifiedEmail": {},
   "verifiedEmailReason": "You need to verify your email to contribute exercises",
+  "@verifiedEmailReason": {},
   "verifiedEmailInfo": "A verification email was sent to {email}",
   "@verifiedEmailInfo": {
     "placeholders": {
@@ -916,41 +1017,69 @@
     }
   },
   "alternativeNames": "Alternative names",
+  "@alternativeNames": {},
   "oneNamePerLine": "One name per line",
+  "@oneNamePerLine": {},
   "whatVariationsExist": "What variations of this exercise exist, if any?",
+  "@whatVariationsExist": {},
   "previous": "Previous",
+  "@previous": {},
   "next": "Next",
+  "@next": {},
   "images": "Images",
+  "@images": {},
   "language": "Language",
+  "@language": {},
   "addExercise": "Add exercise",
+  "@addExercise": {},
   "fitInWeek": "Fixed weekly schedule",
+  "@fitInWeek": {},
   "fitInWeekHelp": "If enabled, the days will repeat in a weekly cycle, otherwise the days will follow sequentially without regards to the start of a new week.",
+  "@fitInWeekHelp": {},
   "addSuperset": "Add superset",
+  "@addSuperset": {},
   "superset": "Superset",
+  "@superset": {},
   "setHasProgression": "Set has progression",
+  "@setHasProgression": {},
   "setHasProgressionWarning": "Please note that at the moment it is not possible to edit all settings for a set on the mobile application or configure automatic progression. For now, please use the web application.",
+  "@setHasProgressionWarning": {},
   "setHasNoExercises": "This set has no exercises yet!",
+  "@setHasNoExercises": {},
   "contributeExercise": "Contribute an exercise",
+  "@contributeExercise": {},
   "translation": "Translation",
+  "@translation": {},
   "translateExercise": "Translate this exercise now",
+  "@translateExercise": {},
   "baseData": "Basics in English",
   "@baseData": {
     "description": "The base data for an exercise such as category, trained muscles, etc."
   },
   "useBasicMarkdown": "You can use basic Markdown to format the text",
+  "@useBasicMarkdown": {},
   "editorBold": "Bold",
   "@editorBold": {
     "description": "Label for bold formatting"
   },
   "editorItalic": "Italic",
+  "@editorItalic": {},
   "editorList": "List",
+  "@editorList": {},
   "enterTextInLanguage": "Please enter the text in the correct language!",
+  "@enterTextInLanguage": {},
   "settingsTitle": "Settings",
+  "@settingsTitle": {},
   "settingsCacheTitle": "Cache",
+  "@settingsCacheTitle": {},
   "settingsExerciseCacheDescription": "Exercise cache",
+  "@settingsExerciseCacheDescription": {},
   "settingsIngredientCacheDescription": "Ingredient cache",
+  "@settingsIngredientCacheDescription": {},
   "settingsCacheDeletedSnackbar": "Cache successfully cleared",
+  "@settingsCacheDeletedSnackbar": {},
   "aboutPageTitle": "About us & Support",
+  "@aboutPageTitle": {},
   "contributeExerciseWarning": "You can only contribute exercises if your account is older than {days} days and have verified your email",
   "@contributeExerciseWarning": {
     "description": "Number of days before which a person can add exercise",
@@ -962,11 +1091,17 @@
     }
   },
   "simpleMode": "Simple mode",
+  "@simpleMode": {},
   "simpleModeHelp": "Hide some of the more advanced settings when editing exercises",
+  "@simpleModeHelp": {},
   "progressionRules": "This exercise has progression rules and can't be edited on the mobile app. Please use the web application to edit this exercise.",
+  "@progressionRules": {},
   "cacheWarning": "Due to caching it might take some time till the changes are visible throughout the application.",
+  "@cacheWarning": {},
   "textPromptTitle": "Ready to start?",
+  "@textPromptTitle": {},
   "textPromptSubheading": "Press the action button to begin",
+  "@textPromptSubheading": {},
   "abs": "Abs",
   "@abs": {
     "description": "Generated entry for translation for server strings"
@@ -1128,6 +1263,7 @@
     "description": "Log a specific meal (imperative form)"
   },
   "done": "Done",
+  "@done": {},
   "overallChangeWeight": "Overall change",
   "@overallChangeWeight": {
     "description": "Overall change in weight, added for localization"
@@ -1157,9 +1293,13 @@
     "description": "Use the imperative, label on button to finish the current workout in gym mode"
   },
   "themeMode": "Theme mode",
+  "@themeMode": {},
   "darkMode": "Always dark mode",
+  "@darkMode": {},
   "lightMode": "Always light mode",
+  "@lightMode": {},
   "systemMode": "System settings",
+  "@systemMode": {},
   "productNotFoundOpenFoodFacts": "You can add this product to Open Food Facts to help the community!",
   "@productNotFoundOpenFoodFacts": {
   "description": "Label shown when product is not found to encourage users to go on Open Food Facts and add it themselves"
@@ -1254,5 +1394,76 @@
    "viewDocumentation": "View documentation",
    "@viewDocumentation": {
    "description": "Button label to open the documentation about server configuration"
+   },
+   "buyMeACoffee": "Buy me a coffee",
+   "@buyMeACoffee": {
+     "description": "Button label for the Buy Me a Coffee donation link"
+   },
+   "liberapay": "Liberapay",
+   "@liberapay": {
+     "description": "Button label for the Liberapay donation link"
+   },
+   "githubSponsors": "GitHub Sponsors",
+   "@githubSponsors": {
+     "description": "Button label for the GitHub Sponsors donation link"
+   },
+   "viewLicenses": "View Licenses",
+   "@viewLicenses": {
+     "description": "Button label to open the license page"
+   },
+   "nutriScore": "Nutri-Score",
+   "@nutriScore": {
+     "description": "Label for the Nutri-Score rating"
+   },
+   "notApplicable": "N/A",
+   "@notApplicable": {
+     "description": "Short label shown when a value is not available"
+   },
+   "ingredientSource": "Source: {sourceValue}",
+   "@ingredientSource": {
+     "description": "Source attribution for an ingredient",
+     "placeholders": {
+       "sourceValue": {}
+     }
+   },
+   "cancel": "Cancel",
+   "@cancel": {
+     "description": "Button label to cancel an action"
+   },
+   "multiplicationSign": "\u00D7",
+   "@multiplicationSign": {
+     "description": "Mathematical multiplication sign used in plate calculator"
+   },
+   "unexpectedState": "Unexpected state",
+   "@unexpectedState": {
+     "description": "Message shown when an unexpected UI state occurs"
+   },
+   "noLogsAvailable": "No logs available.",
+   "@noLogsAvailable": {
+     "description": "Message shown when there are no application logs to display"
+   },
+   "detailsCopiedToClipboard": "Details copied to clipboard!",
+   "@detailsCopiedToClipboard": {
+     "description": "Confirmation message after copying details to clipboard"
+   },
+   "couldNotCopyDetails": "Could not copy details.",
+   "@couldNotCopyDetails": {
+     "description": "Error message shown when copying to clipboard fails"
+   },
+   "reportIssue": "Report issue",
+   "@reportIssue": {
+     "description": "Button label to report an issue on GitHub"
+   },
+   "networkError": "Network error",
+   "@networkError": {
+     "description": "Error message shown when a network image fails to load due to network issues"
+   },
+   "httpError": "Http error",
+   "@httpError": {
+     "description": "Error message shown when a network image fails to load due to an HTTP error"
+   },
+   "otherException": "Other exception",
+   "@otherException": {
+     "description": "Generic error message shown when an unexpected image loading error occurs"
    }
 }

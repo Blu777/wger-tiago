@@ -22,6 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
+import 'package:wger/l10n/generated/app_localizations.dart';
 import 'package:wger/providers/gym_state.dart';
 import 'package:wger/providers/routines.dart';
 import 'package:wger/screens/gym_mode.dart';
@@ -161,7 +162,7 @@ class _GymModeState extends ConsumerState<GymMode> {
           );
         }
 
-        return const Center(child: Text('Unexpected state'));
+        return Center(child: Text(AppLocalizations.of(context).unexpectedState));
       },
     );
   }

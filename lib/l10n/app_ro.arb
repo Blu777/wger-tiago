@@ -1,284 +1,71 @@
 {
-    "comment": "Comentariu",
-    "@comment": {
-        "description": "Comment, additional information"
+    "@@locale": "ro",
+    "userProfile": "Profilul tău",
+    "@userProfile": {},
+    "login": "Autentificare",
+    "@login": {
+        "description": "Text for login button"
     },
-    "equipment": "Echipament",
-    "@equipment": {
-        "description": "Equipment needed to perform an exercise"
-    },
-    "useDefaultServer": "Folosește serverul implicit",
-    "@useDefaultServer": {
-        "description": "Toggle button allowing users to switch between the default and a custom wger server"
-    },
-    "successfullyDeleted": "Șters cu succes",
-    "@successfullyDeleted": {
-        "description": "Message when an item was successfully deleted"
-    },
-    "set": "Serie",
-    "@set": {
-        "description": "A set in a workout plan"
-    },
-    "labelBottomNavWorkout": "Antrenament",
-    "@labelBottomNavWorkout": {
-        "description": "Label used in bottom navigation, use a short word"
-    },
-    "reset": "Resetează",
-    "@reset": {
-        "description": "Button text allowing the user to reset the entered values to the default"
-    },
-    "password": "Parolă",
-    "invalidUsername": "Te rugăm să introduci un nume de utilizator valid",
-    "@invalidUsername": {
-        "description": "Error message when the user enters an invalid username"
-    },
-    "impression": "Impresie",
-    "@impression": {
-        "description": "General impression (e.g. for a workout session) such as good, bad, etc."
-    },
-    "setNr": "Seria {nr}",
-    "@setNr": {
-        "description": "Header in form indicating the number of the current set. Can also be translated as something like 'Set Nr. xy'.",
-        "type": "text",
-        "placeholders": {
-            "nr": {
-                "type": "String"
-            }
-        }
-    },
-    "muscles": "Mușchi",
-    "@muscles": {
-        "description": "(main) muscles trained by an exercise"
-    },
-    "dayDescriptionHelp": "O descriere a ceea ce se face în această zi (ex: 'zi de tras') sau ce părți ale corpului sunt antrenate (ex: 'piept și umeri')",
-    "loginInstead": "Ai deja un cont? Autentifică-te",
-    "success": "Succes",
-    "@success": {
-        "description": "Message when an action completed successfully, usually used as a heading"
-    },
-    "passwordTooShort": "Parola este prea scurtă",
-    "@passwordTooShort": {
-        "description": "Error message when the user a password that is too short"
-    },
-    "repetitionUnit": "Unitate pentru repetări",
-    "weightUnit": "Unitate de greutate",
-    "email": "Adresă de e-mail",
-    "searchNamesInEnglish": "Caută nume și în engleză",
-    "username": "Nume de utilizator",
-    "exercise": "Exercițiu",
-    "@exercise": {
-        "description": "An exercise for a workout"
-    },
-    "customServerHint": "Introdu adresa propriului server, altfel va fi folosit cel implicit",
-    "@customServerHint": {
-        "description": "Hint text for the form where the users can enter their own wger instance"
-    },
-    "useCustomServer": "Folosește un server personalizat",
-    "@useCustomServer": {
-        "description": "Toggle button allowing users to switch between the default and a custom wger server"
-    },
-    "notes": "Note",
-    "@notes": {
-        "description": "Personal notes, e.g. for a workout session"
+    "logout": "Deconectare",
+    "@logout": {
+        "description": "Text for logout button"
     },
     "register": "Înregistrare",
     "@register": {
         "description": "Text for registration button"
     },
-    "searchExercise": "Caută exercițiul de adăugat",
-    "@searchExercise": {
-        "description": "Label on set form. Selected exercises are added to the set"
+    "useDefaultServer": "Folosește serverul implicit",
+    "@useDefaultServer": {
+        "description": "Toggle button allowing users to switch between the default and a custom wger server"
     },
-    "registerInstead": "Nu ai un cont? Înregistrează-te acum",
-    "usernameValidChars": "Un nume de utilizator poate conține doar litere, cifre și caracterele @, +, ., -, și _",
-    "@usernameValidChars": {
-        "description": "Error message when the user tries to register a username with forbidden characters"
-    },
-    "proteinShort": "P",
-    "@proteinShort": {
-        "description": "The first letter or short name of the word 'Protein', used in overviews"
-    },
-    "userProfile": "Profilul tău",
-    "labelWorkoutLogs": "Jurnale de antrenament",
-    "@labelWorkoutLogs": {
-        "description": "(Workout) logs"
-    },
-    "rirNotUsed": "RiR nefolosit",
-    "@rirNotUsed": {
-        "description": "Label used in RiR slider when the RiR value is not used/saved for the current setting or log"
-    },
-    "successfullySaved": "Salvat cu succes",
-    "@successfullySaved": {
-        "description": "Message when an item was successfully saved"
-    },
-    "exerciseList": "Lista de exerciții",
-    "musclesSecondary": "Mușchi secundari",
-    "@musclesSecondary": {
-        "description": "secondary muscles trained by an exercise"
-    },
-    "labelDashboard": "Panou de control",
-    "@labelDashboard": {
-        "description": "Title for screen dashboard"
-    },
-    "exerciseName": "Numele exercițiului",
-    "@exerciseName": {
-        "description": "Label for the name of a workout exercise"
-    },
-    "labelBottomNavNutrition": "Nutriție",
-    "@labelBottomNavNutrition": {
-        "description": "Label used in bottom navigation, use a short word"
+    "useCustomServer": "Folosește un server personalizat",
+    "@useCustomServer": {
+        "description": "Toggle button allowing users to switch between the default and a custom wger server"
     },
     "invalidUrl": "Te rugăm să introduci un URL valid",
     "@invalidUrl": {
         "description": "Error message when the user enters an invalid URL, e.g. in the login form"
     },
-    "sameRepetitions": "Dacă faci aceleași repetări și aceeași greutate pentru toate seriile, poți completa doar un rând. De exemplu, pentru 4 serii introdu doar 10 la repetări, iar acest lucru devine automat \"4 x 10\".",
-    "logout": "Deconectare",
-    "@logout": {
-        "description": "Text for logout button"
-    },
-    "customServerUrl": "URL-ul instanței wger",
-    "@customServerUrl": {
-        "description": "Label in the form where the users can enter their own wger instance"
-    },
-    "login": "Autentificare",
-    "@login": {
-        "description": "Text for login button"
-    },
-    "reps": "Repetări",
-    "@reps": {
-        "description": "Shorthand for repetitions, used when space constraints are tighter"
+    "usernameValidChars": "Un nume de utilizator poate conține doar litere, cifre și caracterele @, +, ., -, și _",
+    "@usernameValidChars": {
+        "description": "Error message when the user tries to register a username with forbidden characters"
     },
     "passwordsDontMatch": "Parolele nu coincid",
     "@passwordsDontMatch": {
         "description": "Error message when the user enters two different passwords during registration"
     },
+    "passwordTooShort": "Parola este prea scurtă",
+    "@passwordTooShort": {
+        "description": "Error message when the user a password that is too short"
+    },
+    "selectAvailablePlates": "Selectează discurile disponibile",
+    "@selectAvailablePlates": {},
+    "barWeight": "Greutatea barei",
+    "@barWeight": {},
+    "useColors": "Folosește culori",
+    "@useColors": {},
+    "password": "Parolă",
+    "@password": {},
+    "confirmPassword": "Confirmă parola",
+    "@confirmPassword": {},
     "invalidEmail": "Te rugăm să introduci o adresă de e-mail validă",
     "@invalidEmail": {
         "description": "Error message when the user enters an invalid email"
     },
-    "labelWorkoutPlan": "Plan de antrenament",
-    "@labelWorkoutPlan": {
-        "description": "Title for screen workout plan"
-    },
-    "category": "Categorie",
-    "@category": {
-        "description": "Category for an exercise, ingredient, etc."
-    },
-    "rir": "RiR",
-    "@rir": {
-        "description": "Shorthand for Repetitions In Reserve"
-    },
-    "exercises": "Exerciții",
-    "@exercises": {
-        "description": "Multiple exercises for a workout"
-    },
-    "workoutSession": "Sesiune de antrenament",
-    "@workoutSession": {
-        "description": "A (logged) workout session"
-    },
-    "confirmPassword": "Confirmă parola",
-    "newDay": "Zi nouă",
-    "selectExercises": "Dacă vrei să faci un superset, poți căuta mai multe exerciții, ele vor fi grupate împreună",
-    "logHelpEntries": "Dacă într-o singură zi există mai mult de o înregistrare cu același număr de repetări, dar cu greutăți diferite, doar înregistrarea cu greutatea mai mare este afișată în grafic.",
-    "description": "Descriere",
-    "name": "Nume",
-    "@name": {
-        "description": "Name for a workout or nutritional plan"
-    },
-    "measurements": "Măsurători",
-    "@measurements": {
-        "description": "Categories for the measurements such as biceps size, body fat, etc."
-    },
-    "measurementEntriesHelpText": "Unitatea folosită pentru a măsura categoria, cum ar fi 'cm' sau '%'",
-    "useMetric": "Folosește unități metrice pentru greutatea corpului",
-    "plateCalculator": "Discuri",
-    "@plateCalculator": {
-        "description": "Label used for the plate calculator in the gym mode"
-    },
-    "jumpTo": "Sari la",
-    "@jumpTo": {
-        "description": "Imperative. Label used in popup allowing the user to jump to a specific exercise while in the gym mode"
-    },
-    "logHelpEntriesUnits": "Reține că doar înregistrările care au o unitate de greutate (kg sau lb) și un număr de repetări sunt reprezentate grafic, alte combinații cum ar fi timpul sau 'până la epuizare' sunt ignorate aici.",
-    "save": "Salvează",
-    "verify": "Verifică",
-    "addIngredient": "Adaugă ingredient",
-    "logIngredient": "Înregistrează ingredientul în jurnalul de nutriție",
-    "nutritionalDiary": "Jurnal de nutriție",
-    "nutritionalPlans": "Planuri nutriționale",
-    "weight": "Greutate",
-    "@weight": {
-        "description": "The weight of a workout log or body weight entry"
-    },
-    "timeStart": "Ora de începere",
-    "@timeStart": {
-        "description": "The starting time of a workout"
-    },
-    "timeEnd": "Ora de finalizare",
-    "@timeEnd": {
-        "description": "The end time of a workout"
-    },
-    "noMatchingExerciseFound": "Nu a fost găsit niciun exercițiu",
-    "@noMatchingExerciseFound": {
-        "description": "Message returned if no exercises match the searched string"
-    },
-    "gymMode": "Mod sală",
-    "@gymMode": {
-        "description": "Label when starting the gym mode"
-    },
-    "plateCalculatorNotDivisible": "Nu este posibil să atingi greutatea cu discurile disponibile",
-    "@plateCalculatorNotDivisible": {
-        "description": "Error message when the current weight is not reachable with plates (e.g. 33.1 kg)"
-    },
-    "pause": "Pauză",
-    "@pause": {
-        "description": "Noun, not an imperative! Label used for the pause when using the gym mode"
-    },
-    "todaysWorkout": "Antrenamentul tău de azi",
-    "addSet": "Adaugă serie",
-    "@addSet": {
-        "description": "Label for the button that adds a set (to a workout day)"
-    },
-    "addMeal": "Adaugă masă",
-    "mealLogged": "Masă adăugată în jurnal",
-    "logMeal": "Înregistrează masa în jurnalul de nutriție",
-    "searchIngredient": "Caută ingredient",
-    "@searchIngredient": {
-        "description": "Label on ingredient search form"
-    },
-    "nutritionalPlan": "Plan nutrițional",
-    "noNutritionalPlans": "Nu ai planuri nutriționale",
-    "@noNutritionalPlans": {
-        "description": "Message shown when the user has no nutritional plans"
-    },
-    "anErrorOccurred": "A apărut o eroare!",
-    "timeStartAhead": "Ora de începere nu poate fi după ora de finalizare",
-    "newSet": "Serie nouă",
-    "@newSet": {
-        "description": "Header when adding a new set to a workout day"
-    },
-    "measurement": "Măsurătoare",
-    "measurementCategoriesHelpText": "Categoria de măsurătoare, cum ar fi 'biceps' sau 'grăsime corporală'",
-    "date": "Dată",
-    "@date": {
-        "description": "The date of a workout log or body weight entry"
-    },
-    "value": "Valoare",
-    "@value": {
-        "description": "The value of a measurement entry"
-    },
-    "start": "Start",
-    "@start": {
-        "description": "Label on button to start the gym mode (i.e., an imperative)"
-    },
-    "time": "Timp",
-    "@time": {
-        "description": "The time of a meal or workout"
+    "email": "Adresă de e-mail",
+    "@email": {},
+    "username": "Nume de utilizator",
+    "@username": {},
+    "invalidUsername": "Te rugăm să introduci un nume de utilizator valid",
+    "@invalidUsername": {
+        "description": "Error message when the user enters an invalid username"
     },
     "useApiToken": "Folosește Token API",
+    "@useApiToken": {},
     "useUsernameAndPassword": "Folosește numele de utilizator și parola",
+    "@useUsernameAndPassword": {},
     "apiToken": "Token API",
+    "@apiToken": {},
     "invalidApiToken": "Te rugăm să introduci o cheie API validă",
     "@invalidApiToken": {
         "description": "Error message when the user enters an invalid API key"
@@ -287,40 +74,174 @@
     "@apiTokenValidChars": {
         "description": "Error message when the user tries to input a API key with forbidden characters"
     },
-    "noIngredientsDefined": "Nu au fost definite ingrediente încă",
-    "selectAvailablePlates": "Selectează discurile disponibile",
-    "barWeight": "Greutatea barei",
-    "useColors": "Folosește culori",
+    "customServerUrl": "URL-ul instanței wger",
+    "@customServerUrl": {
+        "description": "Label in the form where the users can enter their own wger instance"
+    },
+    "customServerHint": "Introdu adresa propriului server, altfel va fi folosit cel implicit",
+    "@customServerHint": {
+        "description": "Hint text for the form where the users can enter their own wger instance"
+    },
+    "reset": "Resetează",
+    "@reset": {
+        "description": "Button text allowing the user to reset the entered values to the default"
+    },
+    "registerInstead": "Nu ai un cont? Înregistrează-te acum",
+    "@registerInstead": {},
+    "loginInstead": "Ai deja un cont? Autentifică-te",
+    "@loginInstead": {},
+    "labelBottomNavWorkout": "Antrenament",
+    "@labelBottomNavWorkout": {
+        "description": "Label used in bottom navigation, use a short word"
+    },
+    "labelBottomNavNutrition": "Nutriție",
+    "@labelBottomNavNutrition": {
+        "description": "Label used in bottom navigation, use a short word"
+    },
+    "labelWorkoutLogs": "Jurnale de antrenament",
+    "@labelWorkoutLogs": {
+        "description": "(Workout) logs"
+    },
+    "labelWorkoutPlan": "Plan de antrenament",
+    "@labelWorkoutPlan": {
+        "description": "Title for screen workout plan"
+    },
     "dashboardWidgets": "Widget-uri panou de control",
+    "@dashboardWidgets": {},
+    "labelDashboard": "Panou de control",
+    "@labelDashboard": {
+        "description": "Title for screen dashboard"
+    },
+    "success": "Succes",
+    "@success": {
+        "description": "Message when an action completed successfully, usually used as a heading"
+    },
+    "successfullyDeleted": "Șters cu succes",
+    "@successfullyDeleted": {
+        "description": "Message when an item was successfully deleted"
+    },
+    "successfullySaved": "Salvat cu succes",
+    "@successfullySaved": {
+        "description": "Message when an item was successfully saved"
+    },
+    "exerciseList": "Lista de exerciții",
+    "@exerciseList": {},
+    "exercise": "Exercițiu",
+    "@exercise": {
+        "description": "An exercise for a workout"
+    },
+    "exercises": "Exerciții",
+    "@exercises": {
+        "description": "Multiple exercises for a workout"
+    },
+    "exerciseName": "Numele exercițiului",
+    "@exerciseName": {
+        "description": "Label for the name of a workout exercise"
+    },
+    "searchExercise": "Caută exercițiul de adăugat",
+    "@searchExercise": {
+        "description": "Label on set form. Selected exercises are added to the set"
+    },
+    "noIngredientsDefined": "Nu au fost definite ingrediente încă",
+    "@noIngredientsDefined": {},
+    "noMatchingExerciseFound": "Nu a fost găsit niciun exercițiu",
+    "@noMatchingExerciseFound": {
+        "description": "Message returned if no exercises match the searched string"
+    },
+    "searchNamesInEnglish": "Caută nume și în engleză",
+    "@searchNamesInEnglish": {},
+    "equipment": "Echipament",
+    "@equipment": {
+        "description": "Equipment needed to perform an exercise"
+    },
+    "muscles": "Mușchi",
+    "@muscles": {
+        "description": "(main) muscles trained by an exercise"
+    },
+    "musclesSecondary": "Mușchi secundari",
+    "@musclesSecondary": {
+        "description": "secondary muscles trained by an exercise"
+    },
+    "category": "Categorie",
+    "@category": {
+        "description": "Category for an exercise, ingredient, etc."
+    },
     "startDate": "Data de început",
     "@startDate": {
         "description": "The start date of a nutritional plan or routine"
     },
     "dayTypeCustom": "Personalizat",
+    "@dayTypeCustom": {},
     "dayTypeEnom": "EMOM (Every minute on the minute)",
+    "@dayTypeEnom": {},
     "dayTypeAmrap": "AMRAP (Cât mai multe runde/repetări)",
+    "@dayTypeAmrap": {},
     "dayTypeHiit": "HIIT (Antrenament pe intervale de intensitate ridicată)",
+    "@dayTypeHiit": {},
     "dayTypeTabata": "Tabata",
+    "@dayTypeTabata": {},
     "dayTypeEdt": "EDT (Escalating density training)",
+    "@dayTypeEdt": {},
     "dayTypeRft": "RFT (Rounds for time)",
+    "@dayTypeRft": {},
     "dayTypeAfap": "AFAP (As fast as possible)",
+    "@dayTypeAfap": {},
     "slotEntryTypeNormal": "Normal",
+    "@slotEntryTypeNormal": {},
     "slotEntryTypeDropset": "Drop set",
+    "@slotEntryTypeDropset": {},
     "slotEntryTypeMyo": "Myo",
+    "@slotEntryTypeMyo": {},
+    "slotEntryTypeWarmup": "Warmup",
+    "@slotEntryTypeWarmup": {},
     "slotEntryTypePartial": "Repetări parțiale",
+    "@slotEntryTypePartial": {},
     "slotEntryTypeForced": "Repetări forțate",
+    "@slotEntryTypeForced": {},
     "slotEntryTypeTut": "Timp sub tensiune (TUT)",
+    "@slotEntryTypeTut": {},
     "slotEntryTypeIso": "Menținere izometrică",
+    "@slotEntryTypeIso": {},
     "slotEntryTypeJump": "Săritură",
+    "@slotEntryTypeJump": {},
     "trophies": "Trofee",
+    "@trophies": {},
     "routines": "Rutine",
+    "@routines": {},
     "newRoutine": "Rutină nouă",
+    "@newRoutine": {},
     "noRoutines": "Nu ai nicio rutină",
+    "@noRoutines": {},
+    "reps": "Repetări",
+    "@reps": {
+        "description": "Shorthand for repetitions, used when space constraints are tighter"
+    },
     "restTime": "Timp de pauză",
+    "@restTime": {},
     "sets": "Serii",
     "@sets": {
         "description": "The number of sets to be done for one exercise"
     },
+    "rir": "RiR",
+    "@rir": {
+        "description": "Shorthand for Repetitions In Reserve"
+    },
+    "rirNotUsed": "RiR nefolosit",
+    "@rirNotUsed": {
+        "description": "Label used in RiR slider when the RiR value is not used/saved for the current setting or log"
+    },
+    "useMetric": "Folosește unități metrice pentru greutatea corpului",
+    "@useMetric": {},
+    "weightUnit": "Unitate de greutate",
+    "@weightUnit": {},
+    "repetitionUnit": "Unitate pentru repetări",
+    "@repetitionUnit": {},
+    "set": "Serie",
+    "@set": {
+        "description": "A set in a workout plan"
+    },
+    "dayDescriptionHelp": "O descriere a ceea ce se face în această zi (ex: 'zi de tras') sau ce părți ale corpului sunt antrenate (ex: 'piept și umeri')",
+    "@dayDescriptionHelp": {},
     "exerciseNr": "Exercițiul {nr}",
     "@exerciseNr": {
         "description": "Header in form indicating the number of the current exercise. Can also be translated as something like 'Set Nr. xy'.",
@@ -341,6 +262,22 @@
             }
         }
     },
+    "setNr": "Seria {nr}",
+    "@setNr": {
+        "description": "Header in form indicating the number of the current set. Can also be translated as something like 'Set Nr. xy'.",
+        "type": "text",
+        "placeholders": {
+            "nr": {
+                "type": "String"
+            }
+        }
+    },
+    "sameRepetitions": "Dacă faci aceleași repetări și aceeași greutate pentru toate seriile, poți completa doar un rând. De exemplu, pentru 4 serii introdu doar 10 la repetări, iar acest lucru devine automat \"4 x 10\".",
+    "@sameRepetitions": {},
+    "comment": "Comentariu",
+    "@comment": {
+        "description": "Comment, additional information"
+    },
     "topSet": "Setul principal: {value}",
     "@topSet": {
         "description": "Value is a representation of the set, like '10 x 80kg'",
@@ -352,25 +289,69 @@
         }
     },
     "impressionGood": "Bună",
+    "@impressionGood": {},
     "impressionNeutral": "Neutră",
+    "@impressionNeutral": {},
     "impressionBad": "Rea",
+    "@impressionBad": {},
+    "impression": "Impresie",
+    "@impression": {
+        "description": "General impression (e.g. for a workout session) such as good, bad, etc."
+    },
+    "notes": "Note",
+    "@notes": {
+        "description": "Personal notes, e.g. for a workout session"
+    },
+    "workoutSession": "Sesiune de antrenament",
+    "@workoutSession": {
+        "description": "A (logged) workout session"
+    },
     "restDay": "Zi de pauză",
+    "@restDay": {},
     "isRestDay": "Este zi de pauză",
+    "@isRestDay": {},
     "isRestDayHelp": "Te rugăm să reții că toate seriile și exercițiile vor fi eliminate când marchezi o zi ca zi de pauză.",
+    "@isRestDayHelp": {},
     "needsLogsToAdvance": "Necesită înregistrări pentru a avansa",
+    "@needsLogsToAdvance": {},
     "needsLogsToAdvanceHelp": "Bifează dacă vrei ca rutina să avanseze la următoarea zi programată doar dacă ai înregistrat un antrenament pentru ziua respectivă",
+    "@needsLogsToAdvanceHelp": {},
     "routineDays": "Zile în rutină",
+    "@routineDays": {},
     "resultingRoutine": "Rutina rezultată",
+    "@resultingRoutine": {},
+    "newDay": "Zi nouă",
+    "@newDay": {},
+    "newSet": "Serie nouă",
+    "@newSet": {
+        "description": "Header when adding a new set to a workout day"
+    },
+    "selectExercises": "Dacă vrei să faci un superset, poți căuta mai multe exerciții, ele vor fi grupate împreună",
+    "@selectExercises": {},
     "personalRecords": "Recorduri personale",
+    "@personalRecords": {},
+    "gymMode": "Mod sală",
+    "@gymMode": {
+        "description": "Label when starting the gym mode"
+    },
     "gymModeShowExercises": "Arată paginile de prezentare generală a exercițiilor",
+    "@gymModeShowExercises": {},
     "gymModeShowTimer": "Arată cronometrul între serii",
+    "@gymModeShowTimer": {},
     "gymModeTimerType": "Tip cronometru",
+    "@gymModeTimerType": {},
     "gymModeTimerTypeHelText": "Dacă o serie are timp de pauză, se folosește întotdeauna o numărătoare inversă.",
+    "@gymModeTimerTypeHelText": {},
     "countdown": "Numărătoare inversă",
+    "@countdown": {},
     "stopwatch": "Cronometru",
+    "@stopwatch": {},
     "gymModeDefaultCountdownTime": "Timp implicit pentru numărătoare inversă, în secunde",
+    "@gymModeDefaultCountdownTime": {},
     "gymModeNotifyOnCountdownFinish": "Notifică la finalul numărătorii inverse",
+    "@gymModeNotifyOnCountdownFinish": {},
     "duration": "Durată",
+    "@duration": {},
     "durationHoursMinutes": "{hours}h {minutes}m",
     "@durationHoursMinutes": {
         "description": "A duration, in hours and minutes",
@@ -389,14 +370,79 @@
         "description": "The volume of a workout or set, i.e. weight x reps"
     },
     "workoutCompleted": "Antrenament finalizat",
+    "@workoutCompleted": {},
+    "plateCalculator": "Discuri",
+    "@plateCalculator": {
+        "description": "Label used for the plate calculator in the gym mode"
+    },
+    "plateCalculatorNotDivisible": "Nu este posibil să atingi greutatea cu discurile disponibile",
+    "@plateCalculatorNotDivisible": {
+        "description": "Error message when the current weight is not reachable with plates (e.g. 33.1 kg)"
+    },
+    "pause": "Pauză",
+    "@pause": {
+        "description": "Noun, not an imperative! Label used for the pause when using the gym mode"
+    },
+    "jumpTo": "Sari la",
+    "@jumpTo": {
+        "description": "Imperative. Label used in popup allowing the user to jump to a specific exercise while in the gym mode"
+    },
+    "todaysWorkout": "Antrenamentul tău de azi",
+    "@todaysWorkout": {},
+    "logHelpEntries": "Dacă într-o singură zi există mai mult de o înregistrare cu același număr de repetări, dar cu greutăți diferite, doar înregistrarea cu greutatea mai mare este afișată în grafic.",
+    "@logHelpEntries": {},
+    "logHelpEntriesUnits": "Reține că doar înregistrările care au o unitate de greutate (kg sau lb) și un număr de repetări sunt reprezentate grafic, alte combinații cum ar fi timpul sau 'până la epuizare' sunt ignorate aici.",
+    "@logHelpEntriesUnits": {},
+    "description": "Descriere",
+    "@description": {},
+    "name": "Nume",
+    "@name": {
+        "description": "Name for a workout or nutritional plan"
+    },
+    "save": "Salvează",
+    "@save": {},
+    "verify": "Verifică",
+    "@verify": {},
+    "addSet": "Adaugă serie",
+    "@addSet": {
+        "description": "Label for the button that adds a set (to a workout day)"
+    },
+    "addMeal": "Adaugă masă",
+    "@addMeal": {},
+    "mealLogged": "Masă adăugată în jurnal",
+    "@mealLogged": {},
     "ingredientLogged": "Ingredient adăugat în jurnal",
+    "@ingredientLogged": {},
+    "logMeal": "Înregistrează masa în jurnalul de nutriție",
+    "@logMeal": {},
+    "addIngredient": "Adaugă ingredient",
+    "@addIngredient": {},
+    "logIngredient": "Înregistrează ingredientul în jurnalul de nutriție",
+    "@logIngredient": {},
+    "searchIngredient": "Caută ingredient",
+    "@searchIngredient": {
+        "description": "Label on ingredient search form"
+    },
+    "nutritionalPlan": "Plan nutrițional",
+    "@nutritionalPlan": {},
+    "nutritionalDiary": "Jurnal de nutriție",
+    "@nutritionalDiary": {},
+    "nutritionalPlans": "Planuri nutriționale",
+    "@nutritionalPlans": {},
+    "noNutritionalPlans": "Nu ai planuri nutriționale",
+    "@noNutritionalPlans": {
+        "description": "Message shown when the user has no nutritional plans"
+    },
     "onlyLogging": "Doar monitorizează caloriile",
+    "@onlyLogging": {},
     "onlyLoggingHelpText": "Bifează căsuța dacă vrei doar să îți înregistrezi caloriile și nu vrei să configurezi un plan nutrițional detaliat cu mese specifice",
+    "@onlyLoggingHelpText": {},
     "goalMacro": "Obiective macro",
     "@goalMacro": {
         "description": "The goal for macronutrients"
     },
     "selectMealToLog": "Selectează o masă pentru a o înregistra în jurnal",
+    "@selectMealToLog": {},
     "yourCurrentNutritionPlanHasNoMealsDefinedYet": "Planul tău nutrițional curent nu are mese definite",
     "@yourCurrentNutritionPlanHasNoMealsDefinedYet": {
         "description": "Message shown when a nutrition plan doesn't have any meals"
@@ -406,19 +452,39 @@
         "description": "Message shown to guide users to the nutritional plan details page to add meals"
     },
     "goalEnergy": "Obiectiv calorii",
+    "@goalEnergy": {},
     "goalProtein": "Obiectiv proteine",
+    "@goalProtein": {},
     "goalCarbohydrates": "Obiectiv carbohidrați",
+    "@goalCarbohydrates": {},
     "goalFat": "Obiectiv grăsimi",
+    "@goalFat": {},
     "goalFiber": "Obiectiv fibre",
+    "@goalFiber": {},
+    "anErrorOccurred": "A apărut o eroare!",
+    "@anErrorOccurred": {},
     "errorInfoDescription": "Ne pare rău, dar ceva nu a funcționat. Ne poți ajuta să rezolvăm asta raportând problema pe GitHub.",
+    "@errorInfoDescription": {},
     "errorInfoDescription2": "Poți continua să folosești aplicația, dar s-ar putea ca unele funcții să nu meargă.",
+    "@errorInfoDescription2": {},
     "errorViewDetails": "Detalii tehnice",
+    "@errorViewDetails": {},
     "applicationLogs": "Jurnalele aplicației",
+    "@applicationLogs": {},
     "errorCouldNotConnectToServer": "Nu ne-am putut conecta la server",
+    "@errorCouldNotConnectToServer": {},
     "errorCouldNotConnectToServerDetails": "Aplicația nu s-a putut conecta la server. Te rugăm să îți verifici conexiunea la internet sau URL-ul serverului și să încerci din nou. Dacă problema persistă, contactează administratorul serverului.",
+    "@errorCouldNotConnectToServerDetails": {},
     "copyToClipboard": "Copiază în clipboard",
+    "@copyToClipboard": {},
+    "weight": "Greutate",
     "min": "Min",
+    "@min": {},
     "max": "Max",
+    "@max": {},
+    "@weight": {
+        "description": "The weight of a workout log or body weight entry"
+    },
     "chartAllTimeTitle": "{name} dintotdeauna",
     "@chartAllTimeTitle": {
         "description": "All-time chart of 'name' (e.g. 'weight', 'body fat' etc.)",
@@ -452,6 +518,20 @@
             }
         }
     },
+    "measurement": "Măsurătoare",
+    "@measurement": {},
+    "measurements": "Măsurători",
+    "@measurements": {
+        "description": "Categories for the measurements such as biceps size, body fat, etc."
+    },
+    "measurementCategoriesHelpText": "Categoria de măsurătoare, cum ar fi 'biceps' sau 'grăsime corporală'",
+    "@measurementCategoriesHelpText": {},
+    "measurementEntriesHelpText": "Unitatea folosită pentru a măsura categoria, cum ar fi 'cm' sau '%'",
+    "@measurementEntriesHelpText": {},
+    "date": "Dată",
+    "@date": {
+        "description": "The date of a workout log or body weight entry"
+    },
     "endDate": "Data de sfârșit",
     "@endDate": {
         "description": "The End date of a nutritional plan or routine"
@@ -460,7 +540,30 @@
     "@openEnded": {
         "description": "When a nutrition plan has no pre-defined end date"
     },
+    "value": "Valoare",
+    "@value": {
+        "description": "The value of a measurement entry"
+    },
+    "start": "Start",
+    "@start": {
+        "description": "Label on button to start the gym mode (i.e., an imperative)"
+    },
+    "time": "Timp",
+    "@time": {
+        "description": "The time of a meal or workout"
+    },
+    "timeStart": "Ora de începere",
+    "@timeStart": {
+        "description": "The starting time of a workout"
+    },
+    "timeEnd": "Ora de finalizare",
+    "@timeEnd": {
+        "description": "The end time of a workout"
+    },
+    "timeStartAhead": "Ora de începere nu poate fi după ora de finalizare",
+    "@timeStartAhead": {},
     "ingredient": "Ingredient",
+    "@ingredient": {},
     "energy": "Energie",
     "@energy": {
         "description": "Energy in a meal, ingredient etc. e.g. in kJ"
@@ -470,6 +573,7 @@
         "description": "The first letter or short name of the word 'Energy', used in overviews"
     },
     "macronutrients": "Macronutrienți",
+    "@macronutrients": {},
     "planned": "Planificat",
     "@planned": {
         "description": "Header for the column of 'planned' nutritional values, i.e. what should be eaten"
@@ -479,7 +583,9 @@
         "description": "Header for the column of 'logged' nutritional values, i.e. what was eaten"
     },
     "today": "Azi",
+    "@today": {},
     "loggedToday": "Înregistrat azi",
+    "@loggedToday": {},
     "weekAverage": "Media pe 7 zile",
     "@weekAverage": {
         "description": "Header for the column of '7 day average' nutritional values, i.e. what was logged last week"
@@ -493,7 +599,9 @@
         "description": "Caloric deficit (either planned or unplanned)"
     },
     "difference": "Diferență",
+    "@difference": {},
     "percentEnergy": "Procentaj din energie",
+    "@percentEnergy": {},
     "gPerBodyKg": "g per kg-corp",
     "@gPerBodyKg": {
         "description": "Label used for total sums of e.g. calories or similar in grams per Kg of body weight"
@@ -545,20 +653,31 @@
         }
     },
     "protein": "Proteine",
+    "@protein": {},
+    "proteinShort": "P",
+    "@proteinShort": {
+        "description": "The first letter or short name of the word 'Protein', used in overviews"
+    },
     "carbohydrates": "Carbohidrați",
+    "@carbohydrates": {},
     "carbohydratesShort": "C",
     "@carbohydratesShort": {
         "description": "The first letter or short name of the word 'Carbohydrates', used in overviews"
     },
     "sugars": "Zaharuri",
+    "@sugars": {},
     "fat": "Grăsimi",
+    "@fat": {},
     "fatShort": "G",
     "@fatShort": {
         "description": "The first letter or short name of the word 'Fat', used in overviews"
     },
     "saturatedFat": "Grăsimi saturate",
+    "@saturatedFat": {},
     "fiber": "Fibre",
+    "@fiber": {},
     "sodium": "Sodiu",
+    "@sodium": {},
     "amount": "Cantitate",
     "@amount": {
         "description": "The amount (e.g. in grams) of an ingredient in a meal"
@@ -572,21 +691,27 @@
         "description": "Title when adding a new entry such as a weight or log entry"
     },
     "noTrophies": "Nu ai niciun trofeu încă",
+    "@noTrophies": {},
     "noWeightEntries": "Nu ai înregistrări de greutate",
     "@noWeightEntries": {
         "description": "Message shown when the user has no logged weight entries"
     },
     "noMeasurementEntries": "Nu ai înregistrări de măsurători",
+    "@noMeasurementEntries": {},
     "moreMeasurementEntries": "Adaugă măsurătoare nouă",
     "@moreMeasurementEntries": {
         "description": "Message shown when the user wants to add new measurement"
     },
     "edit": "Editează",
+    "@edit": {},
+    "preview": "Preview",
+    "@preview": {},
     "loadingText": "Se încarcă...",
     "@loadingText": {
         "description": "Text to show when entries are being loaded in the background: Loading..."
     },
     "delete": "Șterge",
+    "@delete": {},
     "confirmDelete": "Ești sigur că vrei să ștergi '{toDelete}'?",
     "@confirmDelete": {
         "description": "Confirmation text before the user deletes an object",
@@ -598,29 +723,45 @@
         }
     },
     "newNutritionalPlan": "Plan nutrițional nou",
+    "@newNutritionalPlan": {},
     "overview": "Prezentare generală",
+    "@overview": {},
     "toggleDetails": "Afișează/Ascunde detaliile",
     "@toggleDetails": {
         "description": "Switch to toggle detail / overview"
     },
     "goToDetailPage": "Mergi la pagina de detalii",
+    "@goToDetailPage": {},
     "aboutWhySupportTitle": "Open Source și gratuit de utilizat ❤️",
+    "@aboutWhySupportTitle": {},
     "aboutDescription": "Îți mulțumim că folosești wger! wger este un proiect open source colaborativ, creat de pasionați de fitness din întreaga lume.",
     "@aboutDescription": {
         "description": "Text in the about dialog"
     },
     "aboutDonateTitle": "Fă o donație",
+    "@aboutDonateTitle": {},
     "aboutDonateText": "Deși proiectul este gratuit și va rămâne mereu așa, menținerea serverului costă! Dezvoltarea necesită, de asemenea, timp și efort semnificativ din partea voluntarilor. Contribuția ta susține direct aceste costuri, ajutând la menținerea fiabilității serviciului.",
+    "@aboutDonateText": {},
     "aboutContributeTitle": "Contribuie",
+    "@aboutContributeTitle": {},
     "aboutContributeText": "Orice tip de contribuție este încurajată. Indiferent dacă ești dezvoltator, traducător sau doar pasionat de fitness, fiecare mic sprijin este apreciat!",
+    "@aboutContributeText": {},
     "aboutBugsListTitle": "Raportează o problemă sau sugerează o funcție",
+    "@aboutBugsListTitle": {},
     "aboutTranslationListTitle": "Tradu aplicația",
+    "@aboutTranslationListTitle": {},
     "aboutSourceListTitle": "Vezi codul sursă",
+    "@aboutSourceListTitle": {},
     "aboutJoinCommunityTitle": "Alătură-te comunității",
+    "@aboutJoinCommunityTitle": {},
     "aboutMastodonTitle": "Mastodon",
+    "@aboutMastodonTitle": {},
     "aboutDiscordTitle": "Discord",
+    "@aboutDiscordTitle": {},
     "others": "Altele",
+    "@others": {},
     "calendar": "Calendar",
+    "@calendar": {},
     "goToToday": "Mergi la ziua de azi",
     "@goToToday": {
         "description": "Label on button to jump back to 'today' in the calendar widget"
@@ -630,6 +771,7 @@
         "description": "Error message when the user hasn't entered a value on a required field"
     },
     "selectEntry": "Te rugăm să selectezi o înregistrare",
+    "@selectEntry": {},
     "selectExercise": "Te rugăm să selectezi un exercițiu",
     "@selectExercise": {
         "description": "Error message when the user hasn't selected an exercise in the form"
@@ -671,6 +813,7 @@
         }
     },
     "baseNameEnglish": "Toate exercițiile necesită un nume de bază în engleză",
+    "@baseNameEnglish": {},
     "nrOfSets": "Serii per exercițiu: {nrOfSets}",
     "@nrOfSets": {
         "description": "Label shown on the slider where the user selects the nr of sets",
@@ -707,15 +850,25 @@
         "description": "Label for the popup with general app options"
     },
     "takePicture": "Fă o fotografie",
+    "@takePicture": {},
     "chooseFromLibrary": "Alege din galeria foto",
+    "@chooseFromLibrary": {},
     "gallery": "Galerie",
+    "@gallery": {},
     "addImage": "Adaugă imagine",
+    "@addImage": {},
     "dataCopied": "Datele au fost copiate în noua înregistrare",
     "@dataCopied": {
         "description": "Snackbar message to show on copying data to a new log entry"
     },
     "appUpdateTitle": "Actualizare necesară",
+    "@appUpdateTitle": {},
     "appUpdateContent": "Această versiune a aplicației nu este compatibilă cu serverul, te rugăm să actualizezi aplicația.",
+    "@appUpdateContent": {},
+    "serverUpdateTitle": "Server update required",
+    "@serverUpdateTitle": {},
+    "serverUpdateContent": "The connected server is too old for this version of the app. Please ask the server administrator to update to at least version {minVersion}.",
+    "@serverUpdateContent": {},
     "productFound": "Produs găsit",
     "@productFound": {
         "description": "Header label for dialog when product is found with barcode"
@@ -753,8 +906,11 @@
         "description": "Translation for close"
     },
     "identicalExercisePleaseDiscard": "Dacă observi un exercițiu identic cu cel pe care îl adaugi, te rugăm să renunți la ciornă și să editezi acel exercițiu în schimb.",
+    "@identicalExercisePleaseDiscard": {},
     "checkInformationBeforeSubmitting": "Te rugăm să verifici corectitudinea informațiilor introduse înainte de a trimite exercițiul",
+    "@checkInformationBeforeSubmitting": {},
     "add_exercise_image_license": "Imaginile trebuie să fie compatibile cu licența CC BY SA. Dacă ai dubii, încarcă doar fotografii făcute de tine.",
+    "@add_exercise_image_license": {},
     "imageDetailsTitle": "Detalii imagine",
     "@imageDetailsTitle": {
         "description": "Title for image details form"
@@ -772,6 +928,7 @@
         "description": "Label for source link field"
     },
     "author": "Autor(i)",
+    "@author": {},
     "authorHint": "Introdu numele autorului",
     "@authorHint": {
         "description": "Hint text for author field"
@@ -793,7 +950,9 @@
         "description": "Label for image type selector"
     },
     "imageDetailsLicenseNotice": "Prin trimiterea acestei imagini, ești de acord să o lansezi sub licența CC-BY-SA-4. Imaginea trebuie să fie munca ta proprie sau autorul trebuie să o fi lansat sub o licență compatibilă cu aceasta.",
+    "@imageDetailsLicenseNotice": {},
     "imageDetailsLicenseNoticeLinkToLicense": "Vezi textul licenței.",
+    "@imageDetailsLicenseNoticeLinkToLicense": {},
     "imageFormatNotSupported": "Formatul {imageFormat} nu este acceptat",
     "@imageFormatNotSupported": {
         "description": "Label shown on the error container when image format is not supported",
@@ -832,8 +991,11 @@
         "description": "List of alternative names for an exercise"
     },
     "verifiedEmail": "E-mail verificat",
+    "@verifiedEmail": {},
     "unVerifiedEmail": "E-mail neverificat",
+    "@unVerifiedEmail": {},
     "verifiedEmailReason": "Trebuie să îți verifici adresa de e-mail pentru a contribui cu exerciții",
+    "@verifiedEmailReason": {},
     "verifiedEmailInfo": "Un e-mail de verificare a fost trimis la {email}",
     "@verifiedEmailInfo": {
         "placeholders": {
@@ -843,34 +1005,67 @@
         }
     },
     "alternativeNames": "Nume alternative",
+    "@alternativeNames": {},
     "oneNamePerLine": "Un nume pe rând",
+    "@oneNamePerLine": {},
     "whatVariationsExist": "Ce variații ale acestui exercițiu există, dacă e cazul?",
+    "@whatVariationsExist": {},
     "previous": "Anterior",
+    "@previous": {},
     "next": "Următorul",
+    "@next": {},
     "images": "Imagini",
+    "@images": {},
     "language": "Limbă",
+    "@language": {},
     "addExercise": "Adaugă exercițiu",
+    "@addExercise": {},
     "fitInWeek": "Program săptămânal fix",
+    "@fitInWeek": {},
     "fitInWeekHelp": "Dacă este activată, zilele se vor repeta într-un ciclu săptămânal, altfel zilele vor urma secvențial, fără a ține cont de începutul unei noi săptămâni.",
+    "@fitInWeekHelp": {},
     "addSuperset": "Adaugă superset",
+    "@addSuperset": {},
     "superset": "Superset",
+    "@superset": {},
     "setHasProgression": "Seria are progresie",
+    "@setHasProgression": {},
     "setHasProgressionWarning": "Te rugăm să reții că în acest moment nu este posibil să editezi toate setările pentru o serie în aplicația de mobil sau să configurezi progresia automată. Pentru moment, te rugăm să folosești aplicația web.",
+    "@setHasProgressionWarning": {},
     "setHasNoExercises": "Această serie nu are exerciții încă!",
+    "@setHasNoExercises": {},
     "contributeExercise": "Contribuie cu un exercițiu",
+    "@contributeExercise": {},
     "translation": "Traducere",
+    "@translation": {},
     "translateExercise": "Tradu acest exercițiu acum",
+    "@translateExercise": {},
     "baseData": "Informații de bază în engleză",
     "@baseData": {
         "description": "The base data for an exercise such as category, trained muscles, etc."
     },
+    "useBasicMarkdown": "You can use basic Markdown to format the text",
+    "@useBasicMarkdown": {},
+    "editorBold": "Bold",
+    "@editorBold": {},
+    "editorItalic": "Italic",
+    "@editorItalic": {},
+    "editorList": "List",
+    "@editorList": {},
     "enterTextInLanguage": "Te rugăm să introduci textul în limba corectă!",
+    "@enterTextInLanguage": {},
     "settingsTitle": "Setări",
+    "@settingsTitle": {},
     "settingsCacheTitle": "Memorie cache",
+    "@settingsCacheTitle": {},
     "settingsExerciseCacheDescription": "Memorie cache pentru exerciții",
+    "@settingsExerciseCacheDescription": {},
     "settingsIngredientCacheDescription": "Memorie cache pentru ingrediente",
+    "@settingsIngredientCacheDescription": {},
     "settingsCacheDeletedSnackbar": "Memoria cache a fost ștearsă cu succes",
+    "@settingsCacheDeletedSnackbar": {},
     "aboutPageTitle": "Despre noi și Suport",
+    "@aboutPageTitle": {},
     "contributeExerciseWarning": "Poți contribui cu exerciții doar dacă contul tău este mai vechi de {days} zile și ți-ai verificat adresa de e-mail",
     "@contributeExerciseWarning": {
         "description": "Number of days before which a person can add exercise",
@@ -882,11 +1077,17 @@
         }
     },
     "simpleMode": "Mod simplu",
+    "@simpleMode": {},
     "simpleModeHelp": "Ascunde o parte dintre setările mai avansate la editarea exercițiilor",
+    "@simpleModeHelp": {},
     "progressionRules": "Acest exercițiu are reguli de progresie și nu poate fi editat în aplicația de mobil. Te rugăm să folosești aplicația web pentru a edita acest exercițiu.",
+    "@progressionRules": {},
     "cacheWarning": "Din cauza memoriei cache, s-ar putea să dureze puțin până când modificările vor fi vizibile în toată aplicația.",
+    "@cacheWarning": {},
     "textPromptTitle": "Gata de începere?",
+    "@textPromptTitle": {},
     "textPromptSubheading": "Apasă butonul de acțiune pentru a începe",
+    "@textPromptSubheading": {},
     "abs": "Abdomen",
     "@abs": {
         "description": "Generated entry for translation for server strings"
@@ -1048,6 +1249,7 @@
         "description": "Log a specific meal (imperative form)"
     },
     "done": "Terminat",
+    "@done": {},
     "overallChangeWeight": "Schimbare totală",
     "@overallChangeWeight": {
         "description": "Overall change in weight, added for localization"
@@ -1077,9 +1279,13 @@
         "description": "Use the imperative, label on button to finish the current workout in gym mode"
     },
     "themeMode": "Tema aplicației",
+    "@themeMode": {},
     "darkMode": "Întotdeauna modul întunecat",
+    "@darkMode": {},
     "lightMode": "Întotdeauna modul luminos",
+    "@lightMode": {},
     "systemMode": "Setările sistemului",
+    "@systemMode": {},
     "productNotFoundOpenFoodFacts": "Poți adăuga acest produs pe Open Food Facts pentru a ajuta comunitatea!",
     "@productNotFoundOpenFoodFacts": {
         "description": "Label shown when product is not found to encourage users to go on Open Food Facts and add it themselves"
@@ -1087,5 +1293,73 @@
     "addToOpenFoodFacts": "Adaugă pe Open Food Facts",
     "@addToOpenFoodFacts": {
         "description": "Label shown as the clickable link to go on Open Food Facts"
-    }
+    },
+    "isVegan": "Vegan",
+    "@isVegan": {},
+    "isVegetarian": "Vegetarian",
+    "@isVegetarian": {},
+    "filter": "Filter",
+    "@filter": {},
+    "searchLanguageCurrent": "Only in current language ({lang})",
+    "@searchLanguageCurrent": {},
+    "searchLanguageEnglish": "Current language ({lang}) & English",
+    "@searchLanguageEnglish": {},
+    "searchLanguageAll": "All languages",
+    "@searchLanguageAll": {},
+    "exerciseSearchMode": "Search mode",
+    "@exerciseSearchMode": {},
+    "searchModeFuzzy": "Fuzzy",
+    "@searchModeFuzzy": {},
+    "searchModeExact": "Exact",
+    "@searchModeExact": {},
+    "filterNutriscore": "Nutri-Score filter",
+    "@filterNutriscore": {},
+    "filterNutriscoreOff": "Off",
+    "@filterNutriscoreOff": {},
+    "filterNutriscoreNoFilter": "No filter",
+    "@filterNutriscoreNoFilter": {},
+    "filterNutriscoreOrBetter": "{grade} or better",
+    "@filterNutriscoreOrBetter": {},
+    "serverConfigIssueTitle": "Server Configuration Issue",
+    "@serverConfigIssueTitle": {},
+    "serverConfigIssueMessage": "Server misconfiguration detected, headers are not being passed correctly, please consult the documentation.",
+    "@serverConfigIssueMessage": {},
+    "understand": "I understand",
+    "@understand": {},
+    "viewDocumentation": "View documentation",
+    "@viewDocumentation": {},
+    "buyMeACoffee": "Buy me a coffee",
+    "@buyMeACoffee": {},
+    "liberapay": "Liberapay",
+    "@liberapay": {},
+    "githubSponsors": "GitHub Sponsors",
+    "@githubSponsors": {},
+    "viewLicenses": "View Licenses",
+    "@viewLicenses": {},
+    "nutriScore": "Nutri-Score",
+    "@nutriScore": {},
+    "notApplicable": "N/A",
+    "@notApplicable": {},
+    "ingredientSource": "Source: {sourceValue}",
+    "@ingredientSource": {},
+    "cancel": "Cancel",
+    "@cancel": {},
+    "multiplicationSign": "×",
+    "@multiplicationSign": {},
+    "unexpectedState": "Unexpected state",
+    "@unexpectedState": {},
+    "noLogsAvailable": "No logs available.",
+    "@noLogsAvailable": {},
+    "detailsCopiedToClipboard": "Details copied to clipboard!",
+    "@detailsCopiedToClipboard": {},
+    "couldNotCopyDetails": "Could not copy details.",
+    "@couldNotCopyDetails": {},
+    "reportIssue": "Report issue",
+    "@reportIssue": {},
+    "networkError": "Network error",
+    "@networkError": {},
+    "httpError": "Http error",
+    "@httpError": {},
+    "otherException": "Other exception",
+    "@otherException": {}
 }

@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wger/helpers/material.dart';
@@ -108,10 +109,10 @@ class _TrophyCardImage extends StatelessWidget {
                     width: 70,
                     height: 70,
                     child: ClipOval(
-                      child: Image.network(
-                        userProgression.trophy.image,
+                      child: CachedNetworkImage(
+                        imageUrl: userProgression.trophy.image,
                         fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) => Center(
+                        errorWidget: (context, url, error) => Center(
                           child: Icon(Icons.emoji_events, size: 28, color: colorScheme.primary),
                         ),
                       ),

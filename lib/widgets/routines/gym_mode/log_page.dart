@@ -174,7 +174,7 @@ class LogsPlatesWidget extends ConsumerWidget {
                           (entry) => Row(
                             children: [
                               Text(entry.value.toString()),
-                              const Text('×'),
+                              Text(AppLocalizations.of(context).multiplicationSign),
                               PlateWeight(
                                 value: entry.key,
                                 size: 37,

@@ -1,5 +1,7 @@
 {
+    "@@locale": "mk",
     "userProfile": "Твој Профил",
+    "@userProfile": {},
     "login": "Логирај се",
     "@login": {
         "description": "Text for login button"
@@ -11,6 +13,14 @@
     "register": "Регистрирај се",
     "@register": {
         "description": "Text for registration button"
+    },
+    "useDefaultServer": "Користи стандарден сервер",
+    "@useDefaultServer": {
+        "description": "Toggle button allowing users to switch between the default and a custom wger server"
+    },
+    "useCustomServer": "Користи свои сервер",
+    "@useCustomServer": {
+        "description": "Toggle button allowing users to switch between the default and a custom wger server"
     },
     "invalidUrl": "Ве молиме внесете валиден URL",
     "@invalidUrl": {
@@ -28,22 +38,34 @@
     "@passwordTooShort": {
         "description": "Error message when the user a password that is too short"
     },
+    "selectAvailablePlates": "Избери достапни планови",
+    "@selectAvailablePlates": {},
+    "barWeight": "Тежина на шипката",
+    "@barWeight": {},
     "useColors": "Користи бои",
+    "@useColors": {},
     "password": "Лозинка",
+    "@password": {},
     "confirmPassword": "Потврди Лозинка",
+    "@confirmPassword": {},
     "invalidEmail": "Ве молиме внесете валидна е-маил адреса",
     "@invalidEmail": {
         "description": "Error message when the user enters an invalid email"
     },
     "email": "Е-маил адреса",
+    "@email": {},
     "username": "Корисничко име",
+    "@username": {},
     "invalidUsername": "Ве молиме внесете валидно корисничко име",
     "@invalidUsername": {
         "description": "Error message when the user enters an invalid username"
     },
     "useApiToken": "Користи API токен",
+    "@useApiToken": {},
     "useUsernameAndPassword": "Користи корисничко име и лозинка",
+    "@useUsernameAndPassword": {},
     "apiToken": "API токен",
+    "@apiToken": {},
     "invalidApiToken": "Ве молиме внесете валиден API клуч",
     "@invalidApiToken": {
         "description": "Error message when the user enters an invalid API key"
@@ -65,12 +87,9 @@
         "description": "Button text allowing the user to reset the entered values to the default"
     },
     "registerInstead": "Немаш сеуште акаунт? Регистрирај се",
+    "@registerInstead": {},
     "loginInstead": "Веќе си корисник? Најави се",
-    "jumpTo": "Оди до",
-    "@jumpTo": {
-        "description": "Imperative. Label used in popup allowing the user to jump to a specific exercise while in the gym mode"
-    },
-    "todaysWorkout": "Вашиот тренинг денес",
+    "@loginInstead": {},
     "labelBottomNavWorkout": "Тренинг",
     "@labelBottomNavWorkout": {
         "description": "Label used in bottom navigation, use a short word"
@@ -87,6 +106,14 @@
     "@labelWorkoutPlan": {
         "description": "Title for screen workout plan"
     },
+    "dashboardWidgets": "Dashboard widgets",
+    "@dashboardWidgets": {},
+    "labelDashboard": "Dashboard",
+    "@labelDashboard": {},
+    "success": "Успешно",
+    "@success": {
+        "description": "Message when an action completed successfully, usually used as a heading"
+    },
     "successfullyDeleted": "Избришано",
     "@successfullyDeleted": {
         "description": "Message when an item was successfully deleted"
@@ -96,6 +123,7 @@
         "description": "Message when an item was successfully saved"
     },
     "exerciseList": "Листа со вежби",
+    "@exerciseList": {},
     "exercise": "Вежба",
     "@exercise": {
         "description": "An exercise for a workout"
@@ -113,11 +141,13 @@
         "description": "Label on set form. Selected exercises are added to the set"
     },
     "noIngredientsDefined": "Сеуште не дефинирани состојки",
+    "@noIngredientsDefined": {},
     "noMatchingExerciseFound": "Не се пронајдени вежби",
     "@noMatchingExerciseFound": {
         "description": "Message returned if no exercises match the searched string"
     },
     "searchNamesInEnglish": "Исто така, пребарувај имиња на Англииски",
+    "@searchNamesInEnglish": {},
     "equipment": "Опрема",
     "@equipment": {
         "description": "Equipment needed to perform an exercise"
@@ -138,16 +168,315 @@
     "@startDate": {
         "description": "The start date of a nutritional plan or routine"
     },
+    "dayTypeCustom": "Custom",
+    "@dayTypeCustom": {},
     "dayTypeEnom": "Секоја минута по минута",
+    "@dayTypeEnom": {},
     "dayTypeAmrap": "Што е можно повеќе рунди",
+    "@dayTypeAmrap": {},
+    "dayTypeHiit": "High intensity interval training",
+    "@dayTypeHiit": {},
+    "dayTypeTabata": "Tabata",
+    "@dayTypeTabata": {},
+    "dayTypeEdt": "Escalating density training",
+    "@dayTypeEdt": {},
+    "dayTypeRft": "Rounds for time",
+    "@dayTypeRft": {},
     "dayTypeAfap": "Најбрзо возможно",
+    "@dayTypeAfap": {},
     "slotEntryTypeNormal": "Нормала",
+    "@slotEntryTypeNormal": {},
+    "slotEntryTypeDropset": "Dropset",
+    "@slotEntryTypeDropset": {},
+    "slotEntryTypeMyo": "Myo",
+    "@slotEntryTypeMyo": {},
+    "slotEntryTypeWarmup": "Warmup",
+    "@slotEntryTypeWarmup": {},
     "slotEntryTypePartial": "Делумно",
+    "@slotEntryTypePartial": {},
+    "slotEntryTypeForced": "Forced",
+    "@slotEntryTypeForced": {},
+    "slotEntryTypeTut": "Time under Tension",
+    "@slotEntryTypeTut": {},
+    "slotEntryTypeIso": "Isometric hold",
+    "@slotEntryTypeIso": {},
     "slotEntryTypeJump": "Скок",
+    "@slotEntryTypeJump": {},
+    "trophies": "Trophies",
+    "@trophies": {},
     "routines": "Рутини",
+    "@routines": {},
     "newRoutine": "Нова рутина",
+    "@newRoutine": {},
     "noRoutines": "Сеуште немаш рутини",
+    "@noRoutines": {},
+    "reps": "Reps",
+    "@reps": {},
     "restTime": "Време за одмор",
+    "@restTime": {},
+    "sets": "Sets",
+    "@sets": {},
+    "rir": "RiR",
+    "@rir": {},
+    "rirNotUsed": "RiR not used",
+    "@rirNotUsed": {},
+    "useMetric": "Use metric units for body weight",
+    "@useMetric": {},
+    "weightUnit": "Weight unit",
+    "@weightUnit": {},
+    "repetitionUnit": "Repetition unit",
+    "@repetitionUnit": {},
+    "set": "Set",
+    "@set": {},
+    "dayDescriptionHelp": "A description of what is done on this day (e.g. 'pull day') or what body parts are trained (e.g. 'chest and shoulders')",
+    "@dayDescriptionHelp": {},
+    "exerciseNr": "Exercise {nr}",
+    "@exerciseNr": {},
+    "supersetNr": "Superset {nr}",
+    "@supersetNr": {},
+    "setNr": "Set {nr}",
+    "@setNr": {},
+    "sameRepetitions": "If you do the same repetitions and weight for all sets you can just fill in one row. For example for 4 sets just enter 10 for the repetitions, this automatically becomes \"4 x 10\".",
+    "@sameRepetitions": {},
+    "comment": "Коментар",
+    "@comment": {
+        "description": "Comment, additional information"
+    },
+    "topSet": "Топ сет {value}",
+    "@topSet": {
+        "description": "Value is a representation of the set, like '10 x 80kg'",
+        "type": "text",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "impressionGood": "Добро",
+    "@impressionGood": {},
+    "impressionNeutral": "Негативно",
+    "@impressionNeutral": {},
+    "impressionBad": "Лошо",
+    "@impressionBad": {},
+    "impression": "Impression",
+    "@impression": {},
+    "notes": "Белешки",
+    "@notes": {
+        "description": "Personal notes, e.g. for a workout session"
+    },
+    "workoutSession": "Workout session",
+    "@workoutSession": {},
+    "restDay": "Ден за одмор",
+    "@restDay": {},
+    "isRestDay": "Дали е ден за одмор",
+    "@isRestDay": {},
+    "isRestDayHelp": "Запомнете дека сите сетови и вежби ќе бидат избришани ако го означите денот како ден за одмор.",
+    "@isRestDayHelp": {},
+    "needsLogsToAdvance": "Needs logs to advance",
+    "@needsLogsToAdvance": {},
+    "needsLogsToAdvanceHelp": "Select if you want the routine to progress to the next scheduled day only if you've logged a workout for the day",
+    "@needsLogsToAdvanceHelp": {},
+    "routineDays": "Денови во рутина",
+    "@routineDays": {},
+    "resultingRoutine": "Resulting routine",
+    "@resultingRoutine": {},
+    "newDay": "Нов ден",
+    "@newDay": {},
+    "newSet": "New set",
+    "@newSet": {},
+    "selectExercises": "If you want to do a superset you can search for several exercises, they will be grouped together",
+    "@selectExercises": {},
+    "personalRecords": "Personal records",
+    "@personalRecords": {},
+    "gymMode": "Gym mode",
+    "@gymMode": {},
+    "gymModeShowExercises": "Show exercise overview pages",
+    "@gymModeShowExercises": {},
+    "gymModeShowTimer": "Прикажи тајмер измеѓу сетови",
+    "@gymModeShowTimer": {},
+    "gymModeTimerType": "Тип на тајмер",
+    "@gymModeTimerType": {},
+    "gymModeTimerTypeHelText": "If a set has pause time, a countdown is always used.",
+    "@gymModeTimerTypeHelText": {},
+    "countdown": "Одбројување",
+    "@countdown": {},
+    "stopwatch": "Штоперица",
+    "@stopwatch": {},
+    "gymModeDefaultCountdownTime": "Стандардно време на одбројување, во секунди",
+    "@gymModeDefaultCountdownTime": {},
+    "gymModeNotifyOnCountdownFinish": "Извести на крајот од одбројувањето",
+    "@gymModeNotifyOnCountdownFinish": {},
+    "duration": "Времетраење",
+    "@duration": {},
+    "durationHoursMinutes": "{hours}ч {minutes}м",
+    "@durationHoursMinutes": {
+        "description": "A duration, in hours and minutes",
+        "type": "text",
+        "placeholders": {
+            "hours": {
+                "type": "int"
+            },
+            "minutes": {
+                "type": "int"
+            }
+        }
+    },
+    "volume": "Количина",
+    "@volume": {
+        "description": "The volume of a workout or set, i.e. weight x reps"
+    },
+    "workoutCompleted": "Крај на тренинг",
+    "@workoutCompleted": {},
+    "plateCalculator": "Plates",
+    "@plateCalculator": {},
+    "plateCalculatorNotDivisible": "Не е можно да се достигне тежина со достапните плочи",
+    "@plateCalculatorNotDivisible": {
+        "description": "Error message when the current weight is not reachable with plates (e.g. 33.1 kg)"
+    },
+    "pause": "Пауза",
+    "@pause": {
+        "description": "Noun, not an imperative! Label used for the pause when using the gym mode"
+    },
+    "jumpTo": "Оди до",
+    "@jumpTo": {
+        "description": "Imperative. Label used in popup allowing the user to jump to a specific exercise while in the gym mode"
+    },
+    "todaysWorkout": "Вашиот тренинг денес",
+    "@todaysWorkout": {},
+    "logHelpEntries": "If on a single day there is more than one entry with the same number of repetitions, but different weights, only the entry with the higher weight is shown in the diagram.",
+    "@logHelpEntries": {},
+    "logHelpEntriesUnits": "Note that only entries with a weight unit (kg or lb) and repetitions are charted, other combinations such as time or until failure are ignored here.",
+    "@logHelpEntriesUnits": {},
+    "description": "Опис",
+    "@description": {},
+    "name": "Име",
+    "@name": {
+        "description": "Name for a workout or nutritional plan"
+    },
+    "save": "Зачувај",
+    "@save": {},
+    "verify": "Потврди",
+    "@verify": {},
+    "addSet": "Додај сет",
+    "@addSet": {
+        "description": "Label for the button that adds a set (to a workout day)"
+    },
+    "addMeal": "Додај оброк",
+    "@addMeal": {},
+    "mealLogged": "Meal logged to diary",
+    "@mealLogged": {},
+    "ingredientLogged": "Ingredient logged to diary",
+    "@ingredientLogged": {},
+    "logMeal": "Log meal to nutrition diary",
+    "@logMeal": {},
+    "addIngredient": "Додај состојки",
+    "@addIngredient": {},
+    "logIngredient": "Log ingredient to nutrition diary",
+    "@logIngredient": {},
+    "searchIngredient": "Пребарувај состојки",
+    "@searchIngredient": {
+        "description": "Label on ingredient search form"
+    },
+    "nutritionalPlan": "Nutritional plan",
+    "@nutritionalPlan": {},
+    "nutritionalDiary": "Nutritional diary",
+    "@nutritionalDiary": {},
+    "nutritionalPlans": "Нутритивни планови",
+    "@nutritionalPlans": {},
+    "noNutritionalPlans": "Немате нутритивни планови",
+    "@noNutritionalPlans": {
+        "description": "Message shown when the user has no nutritional plans"
+    },
+    "onlyLogging": "Следи само калории",
+    "@onlyLogging": {},
+    "onlyLoggingHelpText": "Штиклирајте го полето ако сакате само да ги евидентирате вашите калории и не сакате да поставите детален план за исхрана со специфични оброци",
+    "@onlyLoggingHelpText": {},
+    "goalMacro": "Macro goals",
+    "@goalMacro": {},
+    "selectMealToLog": "Select a meal to log to diary",
+    "@selectMealToLog": {},
+    "yourCurrentNutritionPlanHasNoMealsDefinedYet": "Your current nutrition plan has no meals defined",
+    "@yourCurrentNutritionPlanHasNoMealsDefinedYet": {},
+    "toAddMealsToThePlanGoToNutritionalPlanDetails": "To add meals to the plan, go to the nutritional plan details",
+    "@toAddMealsToThePlanGoToNutritionalPlanDetails": {},
+    "goalEnergy": "Energy goal",
+    "@goalEnergy": {},
+    "goalProtein": "Цел на протеини",
+    "@goalProtein": {},
+    "goalCarbohydrates": "Carbohydrates goal",
+    "@goalCarbohydrates": {},
+    "goalFat": "Fat goal",
+    "@goalFat": {},
+    "goalFiber": "Fiber goal",
+    "@goalFiber": {},
+    "anErrorOccurred": "Настана Грешка!",
+    "@anErrorOccurred": {},
+    "errorInfoDescription": "Жал ни е, но нешто тргна наопаку. Можете да ни помогнете да го решиме ова со тоа што ќе го пријавите проблемот на GitHub.",
+    "@errorInfoDescription": {},
+    "errorInfoDescription2": "Можете да продолжите да ја користите апликацијата, но некои функции може да не работат.",
+    "@errorInfoDescription2": {},
+    "errorViewDetails": "Технички детали",
+    "@errorViewDetails": {},
+    "applicationLogs": "Логови на апликација",
+    "@applicationLogs": {},
+    "errorCouldNotConnectToServer": "Не може да се поврзе до сервер",
+    "@errorCouldNotConnectToServer": {},
+    "errorCouldNotConnectToServerDetails": "Апликацијата не можеше да се поврзе со серверот. Проверете ја вашата интернет-врска или URL-адресата на серверот и обидете се повторно. Ако проблемот продолжи, контактирајте го администраторот на серверот.",
+    "@errorCouldNotConnectToServerDetails": {},
+    "copyToClipboard": "Копирај",
+    "@copyToClipboard": {},
+    "weight": "Тежина",
+    "min": "Минимум",
+    "@min": {},
+    "max": "Максимум",
+    "@max": {},
+    "@weight": {
+        "description": "The weight of a workout log or body weight entry"
+    },
+    "chartAllTimeTitle": "{name} цело време",
+    "@chartAllTimeTitle": {
+        "description": "All-time chart of 'name' (e.g. 'weight', 'body fat' etc.)",
+        "type": "text",
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "chart30DaysTitle": "{name} последни 30 дена",
+    "@chart30DaysTitle": {
+        "description": "last 30 days chart of 'name' (e.g. 'weight', 'body fat' etc.)",
+        "type": "text",
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "chartDuringPlanTitle": "{chartName} during nutritional plan {planName}",
+    "@chartDuringPlanTitle": {},
+    "measurement": "Мерење",
+    "@measurement": {},
+    "measurements": "Мерења",
+    "@measurements": {
+        "description": "Categories for the measurements such as biceps size, body fat, etc."
+    },
+    "measurementCategoriesHelpText": "Мерна категорија, како 'бицепс' или 'масти'",
+    "@measurementCategoriesHelpText": {},
+    "measurementEntriesHelpText": "The unit used to measure the category such as 'cm' or '%'",
+    "@measurementEntriesHelpText": {},
+    "date": "Дата",
+    "@date": {
+        "description": "The date of a workout log or body weight entry"
+    },
+    "endDate": "Краен датум",
+    "@endDate": {
+        "description": "The End date of a nutritional plan or routine"
+    },
+    "openEnded": "Open ended",
+    "@openEnded": {},
+    "value": "Value",
+    "@value": {},
     "start": "Започни",
     "@start": {
         "description": "Label on button to start the gym mode (i.e., an imperative)"
@@ -165,35 +494,97 @@
         "description": "The end time of a workout"
     },
     "timeStartAhead": "Почетното време не може да биде после крајното време",
+    "@timeStartAhead": {},
     "ingredient": "Состојки",
+    "@ingredient": {},
+    "energy": "Energy",
+    "@energy": {},
     "energyShort": "Е",
     "@energyShort": {
         "description": "The first letter or short name of the word 'Energy', used in overviews"
     },
+    "macronutrients": "Macronutrients",
+    "@macronutrients": {},
+    "planned": "Planned",
+    "@planned": {},
     "logged": "Логиран",
     "@logged": {
         "description": "Header for the column of 'logged' nutritional values, i.e. what was eaten"
     },
     "today": "Денес",
+    "@today": {},
     "loggedToday": "Логиран денес",
+    "@loggedToday": {},
     "weekAverage": "7 дена просек",
     "@weekAverage": {
         "description": "Header for the column of '7 day average' nutritional values, i.e. what was logged last week"
     },
+    "surplus": "surplus",
+    "@surplus": {},
     "deficit": "дефицит",
     "@deficit": {
         "description": "Caloric deficit (either planned or unplanned)"
     },
     "difference": "Разлика",
+    "@difference": {},
     "percentEnergy": "Процент на енергија",
+    "@percentEnergy": {},
+    "gPerBodyKg": "g per body kg",
+    "@gPerBodyKg": {},
     "total": "Вкупно",
     "@total": {
         "description": "Label used for total sums of e.g. calories or similar"
     },
+    "kcal": "kcal",
+    "@kcal": {},
+    "kcalValue": "{value} kcal",
+    "@kcalValue": {},
+    "kJ": "kJ",
+    "@kJ": {},
+    "g": "г",
+    "@g": {
+        "description": "Abbreviation for gram"
+    },
+    "gValue": "{value} г",
+    "@gValue": {
+        "description": "A value in grams, e.g. 5 g",
+        "type": "text",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "percentValue": "{value} %",
+    "@percentValue": {
+        "description": "A value in percent, e.g. 10 %",
+        "type": "text",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
     "protein": "Протеин",
+    "@protein": {},
+    "proteinShort": "P",
+    "@proteinShort": {},
+    "carbohydrates": "Carbohydrates",
+    "@carbohydrates": {},
+    "carbohydratesShort": "C",
+    "@carbohydratesShort": {},
     "sugars": "Шеќери",
+    "@sugars": {},
     "fat": "Масти",
+    "@fat": {},
+    "fatShort": "F",
+    "@fatShort": {},
+    "saturatedFat": "Saturated fat",
+    "@saturatedFat": {},
     "fiber": "Влакна",
+    "@fiber": {},
+    "sodium": "Sodium",
+    "@sodium": {},
     "amount": "Количина",
     "@amount": {
         "description": "The amount (e.g. in grams) of an ingredient in a meal"
@@ -202,16 +593,28 @@
     "@unit": {
         "description": "The unit used for a repetition (kg, time, etc.)"
     },
+    "newEntry": "New entry",
+    "@newEntry": {},
+    "noTrophies": "You have no trophies yet",
+    "@noTrophies": {},
     "noWeightEntries": "Немаш внесено тежина",
     "@noWeightEntries": {
         "description": "Message shown when the user has no logged weight entries"
     },
+    "noMeasurementEntries": "You have no measurement entries",
+    "@noMeasurementEntries": {},
+    "moreMeasurementEntries": "Add new measurement",
+    "@moreMeasurementEntries": {},
     "edit": "Измени",
+    "@edit": {},
+    "preview": "Preview",
+    "@preview": {},
     "loadingText": "Се вчитува...",
     "@loadingText": {
         "description": "Text to show when entries are being loaded in the background: Loading..."
     },
     "delete": "Избриши",
+    "@delete": {},
     "confirmDelete": "Дали сте сигурни дека сакате да го избришите '{toDelete}'?",
     "@confirmDelete": {
         "description": "Confirmation text before the user deletes an object",
@@ -223,16 +626,43 @@
         }
     },
     "newNutritionalPlan": "Нов план за исхрана",
+    "@newNutritionalPlan": {},
     "overview": "Преглед",
+    "@overview": {},
     "toggleDetails": "Вклучи/исклучи детали",
     "@toggleDetails": {
         "description": "Switch to toggle detail / overview"
     },
     "goToDetailPage": "Оди до страната за детали",
+    "@goToDetailPage": {},
     "aboutWhySupportTitle": "Open Source & бесплатно за употреба ❤️",
+    "@aboutWhySupportTitle": {},
+    "aboutDescription": "Thank you for using wger! wger is a collaborative open source project, made by fitness enthusiasts from around the world.",
+    "@aboutDescription": {},
     "aboutDonateTitle": "Направи донација",
+    "@aboutDonateTitle": {},
+    "aboutDonateText": "While the project is free and will always remain it, running the server isn’t! Development also takes significant time and effort from volunteers. Your contribution directly supports these costs, helping to keep the service reliable.",
+    "@aboutDonateText": {},
+    "aboutContributeTitle": "Contribute",
+    "@aboutContributeTitle": {},
+    "aboutContributeText": "All types of contributions are encouraged. Whether you're a developer, a translator, or just passionate about fitness, every bit of support is appreciated!",
+    "@aboutContributeText": {},
+    "aboutBugsListTitle": "Report a problem or suggest a feature",
+    "@aboutBugsListTitle": {},
+    "aboutTranslationListTitle": "Translate the application",
+    "@aboutTranslationListTitle": {},
+    "aboutSourceListTitle": "View source code",
+    "@aboutSourceListTitle": {},
+    "aboutJoinCommunityTitle": "Join the community",
+    "@aboutJoinCommunityTitle": {},
+    "aboutMastodonTitle": "Mastodon",
+    "@aboutMastodonTitle": {},
+    "aboutDiscordTitle": "Discord",
+    "@aboutDiscordTitle": {},
     "others": "Други",
+    "@others": {},
     "calendar": "Календар",
+    "@calendar": {},
     "goToToday": "Оди до денес",
     "@goToToday": {
         "description": "Label on button to jump back to 'today' in the calendar widget"
@@ -241,6 +671,8 @@
     "@enterValue": {
         "description": "Error message when the user hasn't entered a value on a required field"
     },
+    "selectEntry": "Please select an entry",
+    "@selectEntry": {},
     "selectExercise": "Ве молиме изберете вежба",
     "@selectExercise": {
         "description": "Error message when the user hasn't selected an exercise in the form"
@@ -281,6 +713,12 @@
             }
         }
     },
+    "baseNameEnglish": "Првичното име на вежбата мора да биде на Англики",
+    "@baseNameEnglish": {},
+    "nrOfSets": "Sets per exercise: {nrOfSets}",
+    "@nrOfSets": {},
+    "setUnitsAndRir": "Set units and RiR",
+    "@setUnitsAndRir": {},
     "enterValidNumber": "Ве милиме внесете валиден број",
     "@enterValidNumber": {
         "description": "Error message when the user has submitted an invalid number (e.g. '3,.,.,.')"
@@ -301,22 +739,38 @@
     "@optionsLabel": {
         "description": "Label for the popup with general app options"
     },
+    "takePicture": "Направи слика",
+    "@takePicture": {},
+    "chooseFromLibrary": "Choose from photo library",
+    "@chooseFromLibrary": {},
     "gallery": "Галерија",
+    "@gallery": {},
     "addImage": "Додади слика",
+    "@addImage": {},
     "dataCopied": "Податоците се копирани во нов запис",
     "@dataCopied": {
         "description": "Snackbar message to show on copying data to a new log entry"
     },
     "appUpdateTitle": "Потребно е ажурирање",
+    "@appUpdateTitle": {},
     "appUpdateContent": "Оваа верзија не е компатибилна со овој сервер, ве молиме ажурирајте ја вашата апликација.",
+    "@appUpdateContent": {},
+    "serverUpdateTitle": "Server update required",
+    "@serverUpdateTitle": {},
+    "serverUpdateContent": "The connected server is too old for this version of the app. Please ask the server administrator to update to at least version {minVersion}.",
+    "@serverUpdateContent": {},
     "productFound": "Пронајден продукт",
     "@productFound": {
         "description": "Header label for dialog when product is found with barcode"
     },
+    "productFoundDescription": "The barcode corresponds to this product: {productName}. Do you want to continue?",
+    "@productFoundDescription": {},
     "productNotFound": "Продуктот не е пронајден",
     "@productNotFound": {
         "description": "Header label for dialog when product is not found with barcode"
     },
+    "productNotFoundDescription": "The product with the scanned barcode {barcode} was not found in the wger database",
+    "@productNotFoundDescription": {},
     "scanBarcode": "Скенирај баркод",
     "@scanBarcode": {
         "description": "Label for scan barcode button"
@@ -326,7 +780,11 @@
         "description": "Translation for close"
     },
     "identicalExercisePleaseDiscard": "Ако забележите вежба што е идентична со онаа што ја додавате, тогаш отфрлете го вашиот нацрт и наместо тоа уредете ја таа постоечка вежба.",
+    "@identicalExercisePleaseDiscard": {},
     "checkInformationBeforeSubmitting": "Ве молиме проверете дали информацијата што ја внесовте е точна пред да ја зачувате вежбата",
+    "@checkInformationBeforeSubmitting": {},
+    "add_exercise_image_license": "Images must be compatible with the CC BY SA license. If in doubt, upload only photos you've taken yourself.",
+    "@add_exercise_image_license": {},
     "imageDetailsTitle": "Детали за слика",
     "@imageDetailsTitle": {
         "description": "Title for image details form"
@@ -339,7 +797,10 @@
     "@imageDetailsLicenseTitleHint": {
         "description": "Hint text for image title field"
     },
+    "imageDetailsSourceLink": "Link to the source website",
+    "@imageDetailsSourceLink": {},
     "author": "Автор(и)",
+    "@author": {},
     "authorHint": "Внеси име на автор",
     "@authorHint": {
         "description": "Hint text for author field"
@@ -348,11 +809,18 @@
     "@imageDetailsAuthorLink": {
         "description": "Label for author link field"
     },
+    "imageDetailsDerivativeSource": "Link to the original source, if this is a derivative work",
+    "@imageDetailsDerivativeSource": {},
+    "imageDetailsDerivativeHelp": "A derivative work is based on a previous work but contains sufficient new, creative content to entitle it to its own copyright.",
+    "@imageDetailsDerivativeHelp": {},
     "imageDetailsImageType": "Тип на слика",
     "@imageDetailsImageType": {
         "description": "Label for image type selector"
     },
+    "imageDetailsLicenseNotice": "By submitting this image, you agree to release it under the CC-BY-SA-4. The image must be either your own work or the author must have released it under a license compatible with it.",
+    "@imageDetailsLicenseNotice": {},
     "imageDetailsLicenseNoticeLinkToLicense": "Види лиценца.",
+    "@imageDetailsLicenseNoticeLinkToLicense": {},
     "imageFormatNotSupported": "{imageFormat} не е поддржан",
     "@imageFormatNotSupported": {
         "description": "Label shown on the error container when image format is not supported",
@@ -391,18 +859,87 @@
         "description": "List of alternative names for an exercise"
     },
     "verifiedEmail": "Верифициран е-маил",
+    "@verifiedEmail": {},
     "unVerifiedEmail": "Не верифициран е-маил",
-    "language": "Јазик",
-    "addExercise": "Додади вежба",
-    "fitInWeek": "Фиксен неделен план",
-    "next": "Следно",
-    "images": "Слики",
-    "previous": "Претходно",
-    "oneNamePerLine": "Едно име по линија",
-    "whatVariationsExist": "Какви варијации од оваа вежба постојат, ако има?",
+    "@unVerifiedEmail": {},
+    "verifiedEmailReason": "You need to verify your email to contribute exercises",
+    "@verifiedEmailReason": {},
+    "verifiedEmailInfo": "A verification email was sent to {email}",
+    "@verifiedEmailInfo": {},
     "alternativeNames": "Алтернативни имиња",
+    "@alternativeNames": {},
+    "oneNamePerLine": "Едно име по линија",
+    "@oneNamePerLine": {},
+    "whatVariationsExist": "Какви варијации од оваа вежба постојат, ако има?",
+    "@whatVariationsExist": {},
+    "previous": "Претходно",
+    "@previous": {},
+    "next": "Следно",
+    "@next": {},
+    "images": "Слики",
+    "@images": {},
+    "language": "Јазик",
+    "@language": {},
+    "addExercise": "Додади вежба",
+    "@addExercise": {},
+    "fitInWeek": "Фиксен неделен план",
+    "@fitInWeek": {},
+    "fitInWeekHelp": "If enabled, the days will repeat in a weekly cycle, otherwise the days will follow sequentially without regards to the start of a new week.",
+    "@fitInWeekHelp": {},
+    "addSuperset": "Add superset",
+    "@addSuperset": {},
+    "superset": "Superset",
+    "@superset": {},
+    "setHasProgression": "Set has progression",
+    "@setHasProgression": {},
+    "setHasProgressionWarning": "Please note that at the moment it is not possible to edit all settings for a set on the mobile application or configure automatic progression. For now, please use the web application.",
+    "@setHasProgressionWarning": {},
+    "setHasNoExercises": "This set has no exercises yet!",
+    "@setHasNoExercises": {},
+    "contributeExercise": "Contribute an exercise",
+    "@contributeExercise": {},
     "translation": "Превод",
+    "@translation": {},
+    "translateExercise": "Преведи ја вежбата сега",
+    "@translateExercise": {},
+    "baseData": "Basics in English",
+    "@baseData": {},
+    "useBasicMarkdown": "You can use basic Markdown to format the text",
+    "@useBasicMarkdown": {},
+    "editorBold": "Bold",
+    "@editorBold": {},
+    "editorItalic": "Italic",
+    "@editorItalic": {},
+    "editorList": "List",
+    "@editorList": {},
+    "enterTextInLanguage": "Please enter the text in the correct language!",
+    "@enterTextInLanguage": {},
+    "settingsTitle": "Settings",
+    "@settingsTitle": {},
+    "settingsCacheTitle": "Cache",
+    "@settingsCacheTitle": {},
+    "settingsExerciseCacheDescription": "Exercise cache",
+    "@settingsExerciseCacheDescription": {},
+    "settingsIngredientCacheDescription": "Ingredient cache",
+    "@settingsIngredientCacheDescription": {},
+    "settingsCacheDeletedSnackbar": "Cache successfully cleared",
+    "@settingsCacheDeletedSnackbar": {},
+    "aboutPageTitle": "About us & Support",
+    "@aboutPageTitle": {},
+    "contributeExerciseWarning": "You can only contribute exercises if your account is older than {days} days and have verified your email",
+    "@contributeExerciseWarning": {},
+    "simpleMode": "Simple mode",
+    "@simpleMode": {},
+    "simpleModeHelp": "Hide some of the more advanced settings when editing exercises",
+    "@simpleModeHelp": {},
+    "progressionRules": "This exercise has progression rules and can't be edited on the mobile app. Please use the web application to edit this exercise.",
+    "@progressionRules": {},
+    "cacheWarning": "Due to caching it might take some time till the changes are visible throughout the application.",
+    "@cacheWarning": {},
     "textPromptTitle": "Спремен си да започнеш?",
+    "@textPromptTitle": {},
+    "textPromptSubheading": "Press the action button to begin",
+    "@textPromptSubheading": {},
     "abs": "Стомачни",
     "@abs": {
         "description": "Generated entry for translation for server strings"
@@ -413,6 +950,14 @@
     },
     "back": "Грб",
     "@back": {
+        "description": "Generated entry for translation for server strings"
+    },
+    "barbell": "Шипка",
+    "@barbell": {
+        "description": "Generated entry for translation for server strings"
+    },
+    "bench": "Клупа",
+    "@bench": {
         "description": "Generated entry for translation for server strings"
     },
     "biceps": "Бицепс",
@@ -435,6 +980,18 @@
     "@chest": {
         "description": "Generated entry for translation for server strings"
     },
+    "dumbbell": "Dumbbell",
+    "@dumbbell": {},
+    "glutes": "Glutes",
+    "@glutes": {},
+    "gym_mat": "Gym mat",
+    "@gym_mat": {},
+    "hamstrings": "Hamstrings",
+    "@hamstrings": {},
+    "incline_bench": "Incline bench",
+    "@incline_bench": {},
+    "kettlebell": "Kettlebell",
+    "@kettlebell": {},
     "kilometers": "Километри",
     "@kilometers": {
         "description": "Generated entry for translation for server strings"
@@ -443,22 +1000,42 @@
     "@kilometers_per_hour": {
         "description": "Generated entry for translation for server strings"
     },
+    "lats": "Lats",
+    "@lats": {},
     "legs": "Нозе",
     "@legs": {
         "description": "Generated entry for translation for server strings"
     },
+    "lower_back": "Lower back",
+    "@lower_back": {},
     "max_reps": "Максимум Повторувања",
     "@max_reps": {
         "description": "Generated entry for translation for server strings"
     },
+    "miles": "Miles",
+    "@miles": {},
+    "miles_per_hour": "Miles Per Hour",
+    "@miles_per_hour": {},
     "minutes": "Минути",
     "@minutes": {
         "description": "Generated entry for translation for server strings"
     },
+    "plates": "Чинии",
+    "@plates": {
+        "description": "Generated entry for translation for server strings"
+    },
+    "pull_up_bar": "Pull-up bar",
+    "@pull_up_bar": {},
+    "quads": "Quads",
+    "@quads": {},
     "repetitions": "Повторувања",
     "@repetitions": {
         "description": "Generated entry for translation for server strings"
     },
+    "resistance_band": "Resistance band",
+    "@resistance_band": {},
+    "sz_bar": "SZ-Bar",
+    "@sz_bar": {},
     "seconds": "Секунди",
     "@seconds": {
         "description": "Generated entry for translation for server strings"
@@ -467,6 +1044,8 @@
     "@shoulders": {
         "description": "Generated entry for translation for server strings"
     },
+    "swiss_ball": "Swiss Ball",
+    "@swiss_ball": {},
     "triceps": "Трицепс",
     "@triceps": {
         "description": "Generated entry for translation for server strings"
@@ -479,7 +1058,20 @@
     "@kg": {
         "description": "Generated entry for translation for server strings"
     },
+    "lb": "lb",
+    "@lb": {},
+    "none__bodyweight_exercise_": "none (bodyweight exercise)",
+    "@none__bodyweight_exercise_": {},
+    "log": "Log",
+    "@log": {},
     "done": "Готово",
+    "@done": {},
+    "overallChangeWeight": "Целокупна промена",
+    "@overallChangeWeight": {
+        "description": "Overall change in weight, added for localization"
+    },
+    "goalTypeMeals": "From meals",
+    "@goalTypeMeals": {},
     "goalTypeBasic": "Основно",
     "@goalTypeBasic": {
         "description": "added for localization of Class GoalType's filed basic"
@@ -488,199 +1080,92 @@
     "@goalTypeAdvanced": {
         "description": "added for localization of Class GoalType's filed advanced"
     },
+    "indicatorRaw": "raw",
+    "@indicatorRaw": {},
+    "indicatorAvg": "avg",
+    "@indicatorAvg": {},
     "endWorkout": "Крја на тренинг",
     "@endWorkout": {
         "description": "Use the imperative, label on button to finish the current workout in gym mode"
     },
+    "themeMode": "Theme mode",
+    "@themeMode": {},
     "darkMode": "Секогаш темен мод",
+    "@darkMode": {},
     "lightMode": "Секогаш светол мод",
-    "useDefaultServer": "Користи стандарден сервер",
-    "@useDefaultServer": {
-        "description": "Toggle button allowing users to switch between the default and a custom wger server"
-    },
-    "useCustomServer": "Користи свои сервер",
-    "@useCustomServer": {
-        "description": "Toggle button allowing users to switch between the default and a custom wger server"
-    },
-    "selectAvailablePlates": "Избери достапни планови",
-    "barWeight": "Тежина на шипката",
-    "translateExercise": "Преведи ја вежбата сега",
-    "anErrorOccurred": "Настана Грешка!",
-    "endDate": "Краен датум",
-    "@endDate": {
-        "description": "The End date of a nutritional plan or routine"
-    },
-    "percentValue": "{value} %",
-    "@percentValue": {
-        "description": "A value in percent, e.g. 10 %",
-        "type": "text",
-        "placeholders": {
-            "value": {
-                "type": "String"
-            }
-        }
-    },
-    "plates": "Чинии",
-    "@plates": {
-        "description": "Generated entry for translation for server strings"
-    },
-    "overallChangeWeight": "Целокупна промена",
-    "@overallChangeWeight": {
-        "description": "Overall change in weight, added for localization"
-    },
-    "g": "г",
-    "@g": {
-        "description": "Abbreviation for gram"
-    },
-    "gValue": "{value} г",
-    "@gValue": {
-        "description": "A value in grams, e.g. 5 g",
-        "type": "text",
-        "placeholders": {
-            "value": {
-                "type": "String"
-            }
-        }
-    },
-    "save": "Зачувај",
-    "volume": "Количина",
-    "@volume": {
-        "description": "The volume of a workout or set, i.e. weight x reps"
-    },
-    "workoutCompleted": "Крај на тренинг",
-    "pause": "Пауза",
-    "@pause": {
-        "description": "Noun, not an imperative! Label used for the pause when using the gym mode"
-    },
-    "isRestDay": "Дали е ден за одмор",
-    "isRestDayHelp": "Запомнете дека сите сетови и вежби ќе бидат избришани ако го означите денот како ден за одмор.",
-    "routineDays": "Денови во рутина",
-    "newDay": "Нов ден",
-    "gymModeShowTimer": "Прикажи тајмер измеѓу сетови",
-    "gymModeTimerType": "Тип на тајмер",
-    "countdown": "Одбројување",
-    "stopwatch": "Штоперица",
-    "gymModeDefaultCountdownTime": "Стандардно време на одбројување, во секунди",
-    "gymModeNotifyOnCountdownFinish": "Извести на крајот од одбројувањето",
-    "duration": "Времетраење",
-    "durationHoursMinutes": "{hours}ч {minutes}м",
-    "@durationHoursMinutes": {
-        "description": "A duration, in hours and minutes",
-        "type": "text",
-        "placeholders": {
-            "hours": {
-                "type": "int"
-            },
-            "minutes": {
-                "type": "int"
-            }
-        }
-    },
-    "plateCalculatorNotDivisible": "Не е можно да се достигне тежина со достапните плочи",
-    "@plateCalculatorNotDivisible": {
-        "description": "Error message when the current weight is not reachable with plates (e.g. 33.1 kg)"
-    },
-    "name": "Име",
-    "@name": {
-        "description": "Name for a workout or nutritional plan"
-    },
-    "verify": "Потврди",
-    "addSet": "Додај сет",
-    "@addSet": {
-        "description": "Label for the button that adds a set (to a workout day)"
-    },
-    "addMeal": "Додај оброк",
-    "addIngredient": "Додај состојки",
-    "searchIngredient": "Пребарувај состојки",
-    "@searchIngredient": {
-        "description": "Label on ingredient search form"
-    },
-    "nutritionalPlans": "Нутритивни планови",
-    "description": "Опис",
-    "onlyLogging": "Следи само калории",
-    "goalProtein": "Цел на протеини",
-    "noNutritionalPlans": "Немате нутритивни планови",
-    "@noNutritionalPlans": {
-        "description": "Message shown when the user has no nutritional plans"
-    },
-    "errorViewDetails": "Технички детали",
-    "applicationLogs": "Логови на апликација",
-    "errorCouldNotConnectToServer": "Не може да се поврзе до сервер",
-    "errorCouldNotConnectToServerDetails": "Апликацијата не можеше да се поврзе со серверот. Проверете ја вашата интернет-врска или URL-адресата на серверот и обидете се повторно. Ако проблемот продолжи, контактирајте го администраторот на серверот.",
-    "weight": "Тежина",
-    "@weight": {
-        "description": "The weight of a workout log or body weight entry"
-    },
-    "min": "Минимум",
-    "max": "Максимум",
-    "chart30DaysTitle": "{name} последни 30 дена",
-    "@chart30DaysTitle": {
-        "description": "last 30 days chart of 'name' (e.g. 'weight', 'body fat' etc.)",
-        "type": "text",
-        "placeholders": {
-            "name": {
-                "type": "String"
-            }
-        }
-    },
-    "chartAllTimeTitle": "{name} цело време",
-    "@chartAllTimeTitle": {
-        "description": "All-time chart of 'name' (e.g. 'weight', 'body fat' etc.)",
-        "type": "text",
-        "placeholders": {
-            "name": {
-                "type": "String"
-            }
-        }
-    },
-    "copyToClipboard": "Копирај",
-    "measurement": "Мерење",
-    "measurements": "Мерења",
-    "@measurements": {
-        "description": "Categories for the measurements such as biceps size, body fat, etc."
-    },
-    "measurementCategoriesHelpText": "Мерна категорија, како 'бицепс' или 'масти'",
-    "errorInfoDescription2": "Можете да продолжите да ја користите апликацијата, но некои функции може да не работат.",
-    "errorInfoDescription": "Жал ни е, но нешто тргна наопаку. Можете да ни помогнете да го решиме ова со тоа што ќе го пријавите проблемот на GitHub.",
-    "onlyLoggingHelpText": "Штиклирајте го полето ако сакате само да ги евидентирате вашите калории и не сакате да поставите детален план за исхрана со специфични оброци",
-    "notes": "Белешки",
-    "@notes": {
-        "description": "Personal notes, e.g. for a workout session"
-    },
-    "date": "Дата",
-    "@date": {
-        "description": "The date of a workout log or body weight entry"
-    },
-    "comment": "Коментар",
-    "@comment": {
-        "description": "Comment, additional information"
-    },
-    "success": "Успешно",
-    "@success": {
-        "description": "Message when an action completed successfully, usually used as a heading"
-    },
-    "takePicture": "Направи слика",
-    "bench": "Клупа",
-    "@bench": {
-        "description": "Generated entry for translation for server strings"
-    },
-    "barbell": "Шипка",
-    "@barbell": {
-        "description": "Generated entry for translation for server strings"
-    },
-    "baseNameEnglish": "Првичното име на вежбата мора да биде на Англики",
-    "topSet": "Топ сет {value}",
-    "@topSet": {
-        "description": "Value is a representation of the set, like '10 x 80kg'",
-        "type": "text",
-        "placeholders": {
-            "value": {
-                "type": "String"
-            }
-        }
-    },
-    "impressionGood": "Добро",
-    "impressionNeutral": "Негативно",
-    "impressionBad": "Лошо",
-    "restDay": "Ден за одмор"
+    "@lightMode": {},
+    "systemMode": "System settings",
+    "@systemMode": {},
+    "productNotFoundOpenFoodFacts": "You can add this product to Open Food Facts to help the community!",
+    "@productNotFoundOpenFoodFacts": {},
+    "addToOpenFoodFacts": "Add to Open Food Facts",
+    "@addToOpenFoodFacts": {},
+    "isVegan": "Vegan",
+    "@isVegan": {},
+    "isVegetarian": "Vegetarian",
+    "@isVegetarian": {},
+    "filter": "Filter",
+    "@filter": {},
+    "searchLanguageCurrent": "Only in current language ({lang})",
+    "@searchLanguageCurrent": {},
+    "searchLanguageEnglish": "Current language ({lang}) & English",
+    "@searchLanguageEnglish": {},
+    "searchLanguageAll": "All languages",
+    "@searchLanguageAll": {},
+    "exerciseSearchMode": "Search mode",
+    "@exerciseSearchMode": {},
+    "searchModeFuzzy": "Fuzzy",
+    "@searchModeFuzzy": {},
+    "searchModeExact": "Exact",
+    "@searchModeExact": {},
+    "filterNutriscore": "Nutri-Score filter",
+    "@filterNutriscore": {},
+    "filterNutriscoreOff": "Off",
+    "@filterNutriscoreOff": {},
+    "filterNutriscoreNoFilter": "No filter",
+    "@filterNutriscoreNoFilter": {},
+    "filterNutriscoreOrBetter": "{grade} or better",
+    "@filterNutriscoreOrBetter": {},
+    "serverConfigIssueTitle": "Server Configuration Issue",
+    "@serverConfigIssueTitle": {},
+    "serverConfigIssueMessage": "Server misconfiguration detected, headers are not being passed correctly, please consult the documentation.",
+    "@serverConfigIssueMessage": {},
+    "understand": "I understand",
+    "@understand": {},
+    "viewDocumentation": "View documentation",
+    "@viewDocumentation": {},
+    "buyMeACoffee": "Buy me a coffee",
+    "@buyMeACoffee": {},
+    "liberapay": "Liberapay",
+    "@liberapay": {},
+    "githubSponsors": "GitHub Sponsors",
+    "@githubSponsors": {},
+    "viewLicenses": "View Licenses",
+    "@viewLicenses": {},
+    "nutriScore": "Nutri-Score",
+    "@nutriScore": {},
+    "notApplicable": "N/A",
+    "@notApplicable": {},
+    "ingredientSource": "Source: {sourceValue}",
+    "@ingredientSource": {},
+    "cancel": "Cancel",
+    "@cancel": {},
+    "multiplicationSign": "×",
+    "@multiplicationSign": {},
+    "unexpectedState": "Unexpected state",
+    "@unexpectedState": {},
+    "noLogsAvailable": "No logs available.",
+    "@noLogsAvailable": {},
+    "detailsCopiedToClipboard": "Details copied to clipboard!",
+    "@detailsCopiedToClipboard": {},
+    "couldNotCopyDetails": "Could not copy details.",
+    "@couldNotCopyDetails": {},
+    "reportIssue": "Report issue",
+    "@reportIssue": {},
+    "networkError": "Network error",
+    "@networkError": {},
+    "httpError": "Http error",
+    "@httpError": {},
+    "otherException": "Other exception",
+    "@otherException": {}
 }

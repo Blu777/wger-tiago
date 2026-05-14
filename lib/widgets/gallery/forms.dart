@@ -18,6 +18,7 @@
 
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -81,13 +82,13 @@ class _ImageFormState extends State<ImageForm> {
 
     // We are editing an existing entry
     if (widget._image.url != null) {
-      return Image.network(
-        widget._image.url!,
-        errorBuilder: (context, error, stackTrace) => handleImageError(
+      return CachedNetworkImage(
+        imageUrl: widget._image.url!,
+        errorWidget: (context, url, error) => handleImageError(
           context,
           error,
-          stackTrace,
-          widget._image.url!,
+          StackTrace.current,
+          url,
         ),
       );
     }

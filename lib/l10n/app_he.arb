@@ -1,10 +1,7 @@
 {
-  "sameRepetitions": "אם אתם משתמשים באותה כמות של חזרות ומשקל עבור כל הסטים, ניתן למלא רק שורה אחת. למשל עבור 4 סטים, הזינו 10 עבור חזרות, ואוטומטית הערך יהיה \"4x10\".",
-  "@sameRepetitions": {},
-  "equipment": "ציוד",
-  "@equipment": {
-    "description": "Equipment needed to perform an exercise"
-  },
+  "@@locale": "he",
+  "userProfile": "הפרופיל שלך",
+  "@userProfile": {},
   "login": "כניסה",
   "@login": {
     "description": "Text for login button"
@@ -12,6 +9,14 @@
   "logout": "יציאה",
   "@logout": {
     "description": "Text for logout button"
+  },
+  "register": "הרשמה",
+  "@register": {
+    "description": "Text for registration button"
+  },
+  "useDefaultServer": "שימוש בשרת ברירת מחדל",
+  "@useDefaultServer": {
+    "description": "Toggle button allowing users to switch between the default and a custom wger server"
   },
   "useCustomServer": "שימוש בשרת מותאם אישית",
   "@useCustomServer": {
@@ -25,25 +30,73 @@
   "@usernameValidChars": {
     "description": "Error message when the user tries to register a username with forbidden characters"
   },
+  "passwordsDontMatch": "הסיסמאות לא תואמות",
+  "@passwordsDontMatch": {
+    "description": "Error message when the user enters two different passwords during registration"
+  },
   "passwordTooShort": "הסיסמא קצרה מדי",
   "@passwordTooShort": {
     "description": "Error message when the user a password that is too short"
   },
+  "selectAvailablePlates": "Select available plates",
+  "@selectAvailablePlates": {},
+  "barWeight": "משקל Bar",
+  "@barWeight": {},
+  "useColors": "שימוש בצבעים",
+  "@useColors": {},
   "password": "סיסמא",
   "@password": {},
   "confirmPassword": "אשר סיסמא",
   "@confirmPassword": {},
-  "customServerUrl": "כתובת של ישות ווגר",
-  "@customServerUrl": {
-    "description": "Label in the form where the users can enter their own wger instance"
+  "invalidEmail": "נא להקליד כתובת דואר אלקטרוני תקינה",
+  "@invalidEmail": {
+    "description": "Error message when the user enters an invalid email"
   },
+  "email": "כתובת דואר אלקטרוני",
+  "@email": {},
+  "username": "שם משתמש",
+  "@username": {},
   "invalidUsername": "אנא הכנס שם משתמש תקין",
   "@invalidUsername": {
     "description": "Error message when the user enters an invalid username"
   },
+  "useApiToken": "שימוש באסימון API",
+  "@useApiToken": {},
+  "useUsernameAndPassword": "שימוש בשם משתמש וסיסמה",
+  "@useUsernameAndPassword": {},
+  "apiToken": "אסימון API",
+  "@apiToken": {},
+  "invalidApiToken": "נא להקליד אסימון API תקין",
+  "@invalidApiToken": {
+    "description": "Error message when the user enters an invalid API key"
+  },
+  "apiTokenValidChars": "מפתח API יכול להכיל רק את האותיות a-f, את הספרות 0-9, ועליו להיות באורך 40 תווים בדיוק",
+  "@apiTokenValidChars": {
+    "description": "Error message when the user tries to input a API key with forbidden characters"
+  },
+  "customServerUrl": "כתובת של ישות ווגר",
+  "@customServerUrl": {
+    "description": "Label in the form where the users can enter their own wger instance"
+  },
   "customServerHint": "הכנס את כתובת השרת שלך, אחרת יעשה שימוש בברירת המחדל",
   "@customServerHint": {
     "description": "Hint text for the form where the users can enter their own wger instance"
+  },
+  "reset": "איפוס",
+  "@reset": {
+    "description": "Button text allowing the user to reset the entered values to the default"
+  },
+  "registerInstead": "אין לך חשבון? הירשם עכשיו",
+  "@registerInstead": {},
+  "loginInstead": "כבר יש לך חשבון? ניתן להיכנס",
+  "@loginInstead": {},
+  "labelBottomNavWorkout": "אימון",
+  "@labelBottomNavWorkout": {
+    "description": "Label used in bottom navigation, use a short word"
+  },
+  "labelBottomNavNutrition": "תזונה",
+  "@labelBottomNavNutrition": {
+    "description": "Label used in bottom navigation, use a short word"
   },
   "labelWorkoutLogs": "אימונים מתועדים",
   "@labelWorkoutLogs": {
@@ -53,9 +106,15 @@
   "@labelWorkoutPlan": {
     "description": "Title for screen workout plan"
   },
+  "dashboardWidgets": "Dashboard widgets",
+  "@dashboardWidgets": {},
   "labelDashboard": "לוח בקרה",
   "@labelDashboard": {
     "description": "Title for screen dashboard"
+  },
+  "success": "הפעולה צלחה",
+  "@success": {
+    "description": "Message when an action completed successfully, usually used as a heading"
   },
   "successfullyDeleted": "המחיקה בוצעה",
   "@successfullyDeleted": {
@@ -65,13 +124,35 @@
   "@successfullySaved": {
     "description": "Message when an item was successfully saved"
   },
+  "exerciseList": "רשימת תרגילים",
+  "@exerciseList": {},
   "exercise": "תרגיל",
   "@exercise": {
     "description": "An exercise for a workout"
   },
+  "exercises": "תרגילים",
+  "@exercises": {
+    "description": "Multiple exercises for a workout"
+  },
+  "exerciseName": "שם התרגיל",
+  "@exerciseName": {
+    "description": "Label for the name of a workout exercise"
+  },
   "searchExercise": "חיפוש תרגילים להוספה",
   "@searchExercise": {
     "description": "Label on set form. Selected exercises are added to the set"
+  },
+  "noIngredientsDefined": "עדיין לא הוגדרו מרכיבים",
+  "@noIngredientsDefined": {},
+  "noMatchingExerciseFound": "לא נמצאו תרגילים תואמים",
+  "@noMatchingExerciseFound": {
+    "description": "Message returned if no exercises match the searched string"
+  },
+  "searchNamesInEnglish": "לחפש גם לפי השמות באנגלית",
+  "@searchNamesInEnglish": {},
+  "equipment": "ציוד",
+  "@equipment": {
+    "description": "Equipment needed to perform an exercise"
   },
   "muscles": "שרירים",
   "@muscles": {
@@ -85,13 +166,59 @@
   "@category": {
     "description": "Category for an exercise, ingredient, etc."
   },
-  "repetitions": "חזרות",
-  "@repetitions": {
-    "description": "Repetitions for an exercise set"
-  },
+  "startDate": "Start date",
+  "@startDate": {},
+  "dayTypeCustom": "Custom",
+  "@dayTypeCustom": {},
+  "dayTypeEnom": "Every minute on the minute",
+  "@dayTypeEnom": {},
+  "dayTypeAmrap": "As many rounds as possible",
+  "@dayTypeAmrap": {},
+  "dayTypeHiit": "High intensity interval training",
+  "@dayTypeHiit": {},
+  "dayTypeTabata": "Tabata",
+  "@dayTypeTabata": {},
+  "dayTypeEdt": "Escalating density training",
+  "@dayTypeEdt": {},
+  "dayTypeRft": "Rounds for time",
+  "@dayTypeRft": {},
+  "dayTypeAfap": "As fast as possible",
+  "@dayTypeAfap": {},
+  "slotEntryTypeNormal": "Normal",
+  "@slotEntryTypeNormal": {},
+  "slotEntryTypeDropset": "Dropset",
+  "@slotEntryTypeDropset": {},
+  "slotEntryTypeMyo": "Myo",
+  "@slotEntryTypeMyo": {},
+  "slotEntryTypeWarmup": "Warmup",
+  "@slotEntryTypeWarmup": {},
+  "slotEntryTypePartial": "Partial",
+  "@slotEntryTypePartial": {},
+  "slotEntryTypeForced": "Forced",
+  "@slotEntryTypeForced": {},
+  "slotEntryTypeTut": "Time under Tension",
+  "@slotEntryTypeTut": {},
+  "slotEntryTypeIso": "Isometric hold",
+  "@slotEntryTypeIso": {},
+  "slotEntryTypeJump": "Jump",
+  "@slotEntryTypeJump": {},
+  "trophies": "Trophies",
+  "@trophies": {},
+  "routines": "שגרות",
+  "@routines": {},
+  "newRoutine": "שגרה חדשה",
+  "@newRoutine": {},
+  "noRoutines": "אין לך שגרות",
+  "@noRoutines": {},
   "reps": "חזרות",
   "@reps": {
     "description": "Shorthand for repetitions, used when space constraints are tighter"
+  },
+  "restTime": "זמן מנוחה",
+  "@restTime": {},
+  "sets": "סטים",
+  "@sets": {
+    "description": "The number of sets to be done for one exercise"
   },
   "rir": "חזרות בעתודה",
   "@rir": {
@@ -101,6 +228,8 @@
   "@rirNotUsed": {
     "description": "Label used in RiR slider when the RiR value is not used/saved for the current setting or log"
   },
+  "useMetric": "שימוש בשיטה המטרית למדידת משקל הגוף",
+  "@useMetric": {},
   "weightUnit": "יחידת משקל",
   "@weightUnit": {},
   "repetitionUnit": "יחידת חזרה",
@@ -111,6 +240,18 @@
   },
   "dayDescriptionHelp": "תיאור של מה נעשה ביום זה (למשל ,יום משיכה') או אילו חלקי גוף יהיו באימון (למשל 'חזה וכתפיים')",
   "@dayDescriptionHelp": {},
+  "exerciseNr": "תרגיל {nr}",
+  "@exerciseNr": {
+    "description": "Header in form indicating the number of the current exercise. Can also be translated as something like 'Set Nr. xy'.",
+    "type": "text",
+    "placeholders": {
+      "nr": {
+        "type": "String"
+      }
+    }
+  },
+  "supersetNr": "Superset {nr}",
+  "@supersetNr": {},
   "setNr": "סט {nr}",
   "@setNr": {
     "description": "Header in form indicating the number of the current set. Can also be translated as something like 'Set Nr. xy'.",
@@ -121,6 +262,20 @@
       }
     }
   },
+  "sameRepetitions": "אם אתם משתמשים באותה כמות של חזרות ומשקל עבור כל הסטים, ניתן למלא רק שורה אחת. למשל עבור 4 סטים, הזינו 10 עבור חזרות, ואוטומטית הערך יהיה \"4x10\".",
+  "@sameRepetitions": {},
+  "comment": "הערה",
+  "@comment": {
+    "description": "Comment, additional information"
+  },
+  "topSet": "Top set: {value}",
+  "@topSet": {},
+  "impressionGood": "Good",
+  "@impressionGood": {},
+  "impressionNeutral": "Neutral",
+  "@impressionNeutral": {},
+  "impressionBad": "Bad",
+  "@impressionBad": {},
   "impression": "התרשמות",
   "@impression": {
     "description": "General impression (e.g. for a workout session) such as good, bad, etc."
@@ -133,15 +288,65 @@
   "@workoutSession": {
     "description": "A (logged) workout session"
   },
+  "restDay": "יום מנוחה",
+  "@restDay": {},
+  "isRestDay": "הוא יום מנוחה",
+  "@isRestDay": {},
+  "isRestDayHelp": "לתשומת לבך, כל הסטים והתרגילים יוסרו מימים שהגדרת בתור ימי מנוחה.",
+  "@isRestDayHelp": {},
+  "needsLogsToAdvance": "Needs logs to advance",
+  "@needsLogsToAdvance": {},
+  "needsLogsToAdvanceHelp": "Select if you want the routine to progress to the next scheduled day only if you've logged a workout for the day",
+  "@needsLogsToAdvanceHelp": {},
+  "routineDays": "ימים בשגרה",
+  "@routineDays": {},
+  "resultingRoutine": "Resulting routine",
+  "@resultingRoutine": {},
   "newDay": "יום חדש",
   "@newDay": {},
   "newSet": "סט חדש",
   "@newSet": {
     "description": "Header when adding a new set to a workout day"
   },
+  "selectExercises": "אם ברצונך לבצע סופר סט ניתן לחפש כמה אימונים כך שהם יהיו מקובצים ביחד",
+  "@selectExercises": {},
+  "personalRecords": "Personal records",
+  "@personalRecords": {},
+  "gymMode": "מצב חדש כושר",
+  "@gymMode": {
+    "description": "Label when starting the gym mode"
+  },
+  "gymModeShowExercises": "Show exercise overview pages",
+  "@gymModeShowExercises": {},
+  "gymModeShowTimer": "Show timer between sets",
+  "@gymModeShowTimer": {},
+  "gymModeTimerType": "Timer type",
+  "@gymModeTimerType": {},
+  "gymModeTimerTypeHelText": "If a set has pause time, a countdown is always used.",
+  "@gymModeTimerTypeHelText": {},
+  "countdown": "Countdown",
+  "@countdown": {},
+  "stopwatch": "Stopwatch",
+  "@stopwatch": {},
+  "gymModeDefaultCountdownTime": "Default countdown time, in seconds",
+  "@gymModeDefaultCountdownTime": {},
+  "gymModeNotifyOnCountdownFinish": "Notify on countdown end",
+  "@gymModeNotifyOnCountdownFinish": {},
+  "duration": "Duration",
+  "@duration": {},
+  "durationHoursMinutes": "{hours}h {minutes}m",
+  "@durationHoursMinutes": {},
+  "volume": "Volume",
+  "@volume": {},
+  "workoutCompleted": "Workout completed",
+  "@workoutCompleted": {},
   "plateCalculator": "צלחות",
   "@plateCalculator": {
     "description": "Label used for the plate calculator in the gym mode"
+  },
+  "plateCalculatorNotDivisible": "לא אפשרי להגיע למשקל עם הצלחות הפנויות",
+  "@plateCalculatorNotDivisible": {
+    "description": "Error message when the current weight is not reachable with plates (e.g. 33.1 kg)"
   },
   "pause": "השהה",
   "@pause": {
@@ -153,8 +358,20 @@
   },
   "todaysWorkout": "האימון שלך היום",
   "@todaysWorkout": {},
+  "logHelpEntries": "אם ביום אחד ישנה יותר מרשומה אחת עם אותה כמות חזרות, אבל משקל שונה, רק הרשומה עם המשקל הגבוה יותר תופיע בדיאגרמה.",
+  "@logHelpEntries": {},
+  "logHelpEntriesUnits": "שים לב שרק רשומות עם יחידת משקל (ק\"ג או ליברות) וחזרות הן ממופות, ישנה התעלמות משילובים אחרים כגון זמן או עד כשלון.",
+  "@logHelpEntriesUnits": {},
   "description": "תיאור",
   "@description": {},
+  "name": "שם",
+  "@name": {
+    "description": "Name for a workout or nutritional plan"
+  },
+  "save": "שמירה",
+  "@save": {},
+  "verify": "אימות",
+  "@verify": {},
   "addSet": "הוספת סט",
   "@addSet": {
     "description": "Label for the button that adds a set (to a workout day)"
@@ -163,8 +380,18 @@
   "@addMeal": {},
   "mealLogged": "ארוחה הוכנסה ליומן",
   "@mealLogged": {},
+  "ingredientLogged": "המרכיב תועד ביומן",
+  "@ingredientLogged": {},
+  "logMeal": "תיעוד המנה ביומן התזונתי",
+  "@logMeal": {},
   "addIngredient": "הוספת מרכיב",
   "@addIngredient": {},
+  "logIngredient": "תיעוד המרכיב ביומן התזונתי",
+  "@logIngredient": {},
+  "searchIngredient": "חיפוש מרכיב",
+  "@searchIngredient": {
+    "description": "Label on ingredient search form"
+  },
   "nutritionalPlan": "תכנון תזונתי",
   "@nutritionalPlan": {},
   "nutritionalDiary": "יומן תזונה",
@@ -175,681 +402,16 @@
   "@noNutritionalPlans": {
     "description": "Message shown when the user has no nutritional plans"
   },
-  "anErrorOccurred": "שגיאה קרתה!",
-  "@anErrorOccurred": {},
-  "weight": "משקל",
-  "@weight": {
-    "description": "The weight of a workout log or body weight entry"
-  },
-  "measurement": "מדידה",
-  "@measurement": {},
-  "measurements": "מדידות",
-  "@measurements": {
-    "description": "Categories for the measurements such as biceps size, body fat, etc."
-  },
-  "measurementCategoriesHelpText": "קטגורית מדידה, כמו 'שריר הזרוע' או 'שומן גוף'",
-  "@measurementCategoriesHelpText": {},
-  "measurementEntriesHelpText": "היחידה שמשתמשים למדוד את הקטגוריה כגון 'ס\"מ' או '%'",
-  "@measurementEntriesHelpText": {},
-  "date": "תאריך",
-  "@date": {
-    "description": "The date of a workout log or body weight entry"
-  },
-  "value": "ערך",
-  "@value": {
-    "description": "The value of a measurement entry"
-  },
-  "start": "התחלה",
-  "@start": {
-    "description": "Label on button to start the gym mode (i.e., an imperative)"
-  },
-  "time": "זמן",
-  "@time": {
-    "description": "The time of a meal or workout"
-  },
-  "timeStart": "זמן התחלה",
-  "@timeStart": {
-    "description": "The starting time of a workout"
-  },
-  "timeEnd": "זמן סיום",
-  "@timeEnd": {
-    "description": "The end time of a workout"
-  },
-  "timeStartAhead": "זמן התחלה לא יכול להיות אחרי זמן סיום",
-  "@timeStartAhead": {},
-  "ingredient": "מרכיב",
-  "@ingredient": {},
-  "energy": "אנרגיה",
-  "@energy": {
-    "description": "Energy in a meal, ingredient etc. e.g. in kJ"
-  },
-  "logMeal": "תיעוד המנה ביומן התזונתי",
-  "@logMeal": {},
-  "logHelpEntriesUnits": "שים לב שרק רשומות עם יחידת משקל (ק\"ג או ליברות) וחזרות הן ממופות, ישנה התעלמות משילובים אחרים כגון זמן או עד כשלון.",
-  "@logHelpEntriesUnits": {},
-  "kcal": "kcal",
-  "@kcal": {
-    "description": "Energy in a meal in kilocalories, kcal"
-  },
-  "kJ": "kJ",
-  "@kJ": {
-    "description": "Energy in a meal in kilo joules, kJ"
-  },
-  "planned": "מתוכנן",
-  "@planned": {
-    "description": "Header for the column of 'planned' nutritional values, i.e. what should be eaten"
-  },
-  "difference": "הבדל",
-  "@difference": {},
-  "percentEnergy": "אחוז של אנרגיה",
-  "@percentEnergy": {},
-  "total": "סה״כ",
-  "@total": {
-    "description": "Label used for total sums of e.g. calories or similar"
-  },
-  "g": "גרם",
-  "@g": {
-    "description": "Abbreviation for gram"
-  },
-  "protein": "חלבון",
-  "@protein": {},
-  "logged": "נרשם",
-  "@logged": {
-    "description": "Header for the column of 'logged' nutritional values, i.e. what was eaten"
-  },
-  "carbohydrates": "פחמימות",
-  "@carbohydrates": {},
-  "sugars": "סוכרים",
-  "@sugars": {},
-  "fat": "שומן",
-  "@fat": {},
-  "saturatedFat": "שומן רווי",
-  "@saturatedFat": {},
-  "fiber": "סיבים",
-  "@fiber": {},
-  "sodium": "נתרן",
-  "@sodium": {},
-  "amount": "כמות",
-  "@amount": {
-    "description": "The amount (e.g. in grams) of an ingredient in a meal"
-  },
-  "unit": "יחידת מידה",
-  "@unit": {
-    "description": "The unit used for a repetition (kg, time, etc.)"
-  },
-  "newEntry": "רשומה חדשה",
-  "@newEntry": {
-    "description": "Title when adding a new entry such as a weight or log entry"
-  },
-  "noWeightEntries": "אין לך רשומות של משקל",
-  "@noWeightEntries": {
-    "description": "Message shown when the user has no logged weight entries"
-  },
-  "edit": "עריכה",
-  "@edit": {},
-  "delete": "מחיקה",
-  "@delete": {},
-  "confirmDelete": "האם את/ה בטוח/ה שאת/ה רוצה למחוק את '{toDelete}'?",
-  "@confirmDelete": {
-    "description": "Confirmation text before the user deletes an object",
-    "type": "text",
-    "placeholders": {
-      "toDelete": {
-        "type": "String"
-      }
-    }
-  },
-  "newNutritionalPlan": "תוכנית תזונה חדשה",
-  "@newNutritionalPlan": {},
-  "toggleDetails": "הסתר/הצג פירוט",
-  "@toggleDetails": {
-    "description": "Switch to toggle detail / overview"
-  },
-  "goToDetailPage": "עבור לדף פירוט",
-  "@goToDetailPage": {},
-  "calendar": "לוח שנה",
-  "@calendar": {},
-  "goToToday": "עבור להיום",
-  "@goToToday": {
-    "description": "Label on button to jump back to 'today' in the calendar widget"
-  },
-  "enterValue": "אנא הכנס ערך",
-  "@enterValue": {
-    "description": "Error message when the user hasn't entered a value on a required field"
-  },
-  "setUnitsAndRir": "יחידות סט וחזרות בעתודה",
-  "@setUnitsAndRir": {
-    "description": "Label shown on the slider where the user can toggle showing units and RiR",
-    "type": "text"
-  },
-  "reset": "איפוס",
-  "@reset": {
-    "description": "Button text allowing the user to reset the entered values to the default"
-  },
-  "loginInstead": "כבר יש לך חשבון? ניתן להיכנס",
-  "@loginInstead": {},
-  "selectExercise": "אנא בחר/י אימון",
-  "@selectExercise": {
-    "description": "Error message when the user hasn't selected an exercise in the form"
-  },
-  "enterCharacters": "אנא בחר/י ערך בין {min} ו-{max} תווים",
-  "@enterCharacters": {
-    "description": "Error message when the user hasn't entered the correct number of characters in a form",
-    "type": "text",
-    "placeholders": {
-      "min": {
-        "type": "String"
-      },
-      "max": {
-        "type": "String"
-      }
-    }
-  },
-  "nrOfSets": "כמות סטים לאימון: {nrOfSets}",
-  "@nrOfSets": {
-    "description": "Label shown on the slider where the user selects the nr of sets",
-    "type": "text",
-    "placeholders": {
-      "nrOfSets": {
-        "type": "String"
-      }
-    }
-  },
-  "enterValidNumber": "אנא הכנס מספר תקין",
-  "@enterValidNumber": {
-    "description": "Error message when the user has submitted an invalid number (e.g. '3,.,.,.')"
-  },
-  "selectIngredient": "אנא בחר מרכיב",
-  "@selectIngredient": {
-    "description": "Error message when the user hasn't selected an ingredient from the autocompleter"
-  },
-  "selectImage": "אנא בחר תמונה",
-  "@selectImage": {
-    "description": "Label and error message when the user hasn't selected an image to save"
-  },
-  "optionsLabel": "אפשרויות",
-  "@optionsLabel": {
-    "description": "Label for the popup with general app options"
-  },
-  "takePicture": "צלם תמונה",
-  "@takePicture": {},
-  "chooseFromLibrary": "בחר מספריית תמונות",
-  "@chooseFromLibrary": {},
-  "gallery": "גלריה",
-  "@gallery": {},
-  "addImage": "הוסף תמונה",
-  "@addImage": {},
-  "email": "כתובת דואר אלקטרוני",
-  "@email": {},
-  "username": "שם משתמש",
-  "@username": {},
-  "labelBottomNavNutrition": "תזונה",
-  "@labelBottomNavNutrition": {
-    "description": "Label used in bottom navigation, use a short word"
-  },
-  "register": "הרשמה",
-  "@register": {
-    "description": "Text for registration button"
-  },
-  "useDefaultServer": "שימוש בשרת ברירת מחדל",
-  "@useDefaultServer": {
-    "description": "Toggle button allowing users to switch between the default and a custom wger server"
-  },
-  "passwordsDontMatch": "הסיסמאות לא תואמות",
-  "@passwordsDontMatch": {
-    "description": "Error message when the user enters two different passwords during registration"
-  },
-  "invalidEmail": "נא להקליד כתובת דואר אלקטרוני תקינה",
-  "@invalidEmail": {
-    "description": "Error message when the user enters an invalid email"
-  },
-  "registerInstead": "אין לך חשבון? הירשם עכשיו",
-  "@registerInstead": {},
-  "labelBottomNavWorkout": "אימון",
-  "@labelBottomNavWorkout": {
-    "description": "Label used in bottom navigation, use a short word"
-  },
-  "comment": "הערה",
-  "@comment": {
-    "description": "Comment, additional information"
-  },
-  "name": "שם",
-  "@name": {
-    "description": "Name for a workout or nutritional plan"
-  },
-  "save": "שמירה",
-  "@save": {},
-  "gymMode": "מצב חדש כושר",
-  "@gymMode": {
-    "description": "Label when starting the gym mode"
-  },
-  "plateCalculatorNotDivisible": "לא אפשרי להגיע למשקל עם הצלחות הפנויות",
-  "@plateCalculatorNotDivisible": {
-    "description": "Error message when the current weight is not reachable with plates (e.g. 33.1 kg)"
-  },
-  "macronutrients": "מקרונוטריאנטים",
-  "@macronutrients": {},
-  "gPerBodyKg": "גרם עבור ק\"ג של משקל גוף",
-  "@gPerBodyKg": {
-    "description": "Label used for total sums of e.g. calories or similar in grams per Kg of body weight"
-  },
-  "loadingText": "טוען...",
-  "@loadingText": {
-    "description": "Text to show when entries are being loaded in the background: Loading..."
-  },
-  "aboutDescription": "תודה לך על השימוש בווגר! ווגר הוא פרויקט קוד פתוח שנעשה על ידי אוהבי כושר מרחבי העולם.",
-  "@aboutDescription": {
-    "description": "Text in the about dialog"
-  },
-  "selectExercises": "אם ברצונך לבצע סופר סט ניתן לחפש כמה אימונים כך שהם יהיו מקובצים ביחד",
-  "@selectExercises": {},
-  "logHelpEntries": "אם ביום אחד ישנה יותר מרשומה אחת עם אותה כמות חזרות, אבל משקל שונה, רק הרשומה עם המשקל הגבוה יותר תופיע בדיאגרמה.",
-  "@logHelpEntries": {},
-  "searchNamesInEnglish": "לחפש גם לפי השמות באנגלית",
-  "@searchNamesInEnglish": {},
-  "success": "הפעולה צלחה",
-  "@success": {
-    "description": "Message when an action completed successfully, usually used as a heading"
-  },
-  "exerciseList": "רשימת תרגילים",
-  "@exerciseList": {},
-  "exercises": "תרגילים",
-  "@exercises": {
-    "description": "Multiple exercises for a workout"
-  },
-  "exerciseName": "שם התרגיל",
-  "@exerciseName": {
-    "description": "Label for the name of a workout exercise"
-  },
-  "userProfile": "הפרופיל שלך",
-  "@userProfile": {},
-  "noMatchingExerciseFound": "לא נמצאו תרגילים תואמים",
-  "@noMatchingExerciseFound": {
-    "description": "Message returned if no exercises match the searched string"
-  },
-  "useColors": "שימוש בצבעים",
-  "@useColors": {},
-  "useApiToken": "שימוש באסימון API",
-  "@useApiToken": {},
-  "useUsernameAndPassword": "שימוש בשם משתמש וסיסמה",
-  "@useUsernameAndPassword": {},
-  "apiToken": "אסימון API",
-  "@apiToken": {},
-  "invalidApiToken": "נא להקליד אסימון API תקין",
-  "@invalidApiToken": {
-    "description": "Error message when the user enters an invalid API key"
-  },
-  "routines": "שגרות",
-  "@routines": {},
-  "newRoutine": "שגרה חדשה",
-  "@newRoutine": {},
-  "noRoutines": "אין לך שגרות",
-  "@noRoutines": {},
-  "restDay": "יום מנוחה",
-  "@restDay": {},
-  "isRestDay": "הוא יום מנוחה",
-  "@isRestDay": {},
-  "routineDays": "ימים בשגרה",
-  "@routineDays": {},
-  "verify": "אימות",
-  "@verify": {},
-  "searchIngredient": "חיפוש מרכיב",
-  "@searchIngredient": {
-    "description": "Label on ingredient search form"
-  },
   "onlyLogging": "מעקב אחר קלוריות בלבד",
   "@onlyLogging": {},
+  "onlyLoggingHelpText": "נא לסמן תיבה זו אך ורק אם ברצונך לתעד את כמות הקלוריות מבלי להגדיר תוכנית תזונתית עם מנות ספציפיות",
+  "@onlyLoggingHelpText": {},
   "goalMacro": "מטרות מזעריות",
   "@goalMacro": {
     "description": "The goal for macronutrients"
   },
-  "goalEnergy": "יעד אנרגיה",
-  "@goalEnergy": {},
-  "goalProtein": "יעד חלבונים",
-  "@goalProtein": {},
-  "goalFat": "יעד שומנים",
-  "@goalFat": {},
-  "goalFiber": "יעד סיבים תזונתיים",
-  "@goalFiber": {},
-  "errorViewDetails": "פרטים טכניים",
-  "@errorViewDetails": {},
-  "errorCouldNotConnectToServer": "לא היה ניתן להתחבר לשרת",
-  "@errorCouldNotConnectToServer": {},
-  "min": "מינ׳",
-  "@min": {},
-  "max": "מקס׳",
-  "@max": {},
-  "today": "היום",
-  "@today": {},
-  "weekAverage": "ממוצע שבועי",
-  "@weekAverage": {
-    "description": "Header for the column of '7 day average' nutritional values, i.e. what was logged last week"
-  },
-  "kcalValue": "{value} ק׳ קלוריות",
-  "@kcalValue": {
-    "description": "A value in kcal, e.g. 500 kcal",
-    "type": "text",
-    "placeholders": {
-      "value": {
-        "type": "String"
-      }
-    }
-  },
-  "gValue": "{value} גר׳",
-  "@gValue": {
-    "description": "A value in grams, e.g. 5 g",
-    "type": "text",
-    "placeholders": {
-      "value": {
-        "type": "String"
-      }
-    }
-  },
-  "percentValue": "{value}%",
-  "@percentValue": {
-    "description": "A value in percent, e.g. 10 %",
-    "type": "text",
-    "placeholders": {
-      "value": {
-        "type": "String"
-      }
-    }
-  },
-  "aboutWhySupportTitle": "תוכנה בקוד פתוח, וחופשית לשימוש ❤️",
-  "@aboutWhySupportTitle": {},
-  "aboutDonateTitle": "תרומה כספית",
-  "@aboutDonateTitle": {},
-  "aboutContributeTitle": "התנדבות",
-  "@aboutContributeTitle": {},
-  "aboutTranslationListTitle": "עזרה בתרגום היישום",
-  "@aboutTranslationListTitle": {},
-  "aboutSourceListTitle": "צפייה בקוד המקור",
-  "@aboutSourceListTitle": {},
-  "aboutJoinCommunityTitle": "הצטרפות לקהילה",
-  "@aboutJoinCommunityTitle": {},
-  "others": "אחרים",
-  "@others": {},
-  "selectEntry": "נא לבחור ערך",
-  "@selectEntry": {},
-  "recentlyUsedIngredients": "מרכיבים שנוספו לאחרונה",
-  "@recentlyUsedIngredients": {
-    "description": "A message when a user adds a new ingredient to a meal."
-  },
-  "appUpdateTitle": "צריך לעדכן",
-  "@appUpdateTitle": {},
-  "appUpdateContent": "גרסה זו של היישום אינה מסוגלת להתחבר לשרת, נא לעדכן את היישום.",
-  "@appUpdateContent": {},
-  "productFound": "המוצר נמצא",
-  "@productFound": {
-    "description": "Header label for dialog when product is found with barcode"
-  },
-  "productNotFound": "המוצר לא נמצא",
-  "@productNotFound": {
-    "description": "Header label for dialog when product is not found with barcode"
-  },
-  "scanBarcode": "סריקת ברקוד",
-  "@scanBarcode": {
-    "description": "Label for scan barcode button"
-  },
-  "close": "סגירה",
-  "@close": {
-    "description": "Translation for close"
-  },
-  "alsoKnownAs": "מוכר גם בתור: {aliases}",
-  "@alsoKnownAs": {
-    "placeholders": {
-      "aliases": {
-        "type": "String"
-      }
-    },
-    "description": "List of alternative names for an exercise"
-  },
-  "alternativeNames": "שמות חלופיים",
-  "@alternativeNames": {},
-  "previous": "הקודם",
-  "@previous": {},
-  "next": "הבא",
-  "@next": {},
-  "images": "תמונות",
-  "@images": {},
-  "language": "שפה",
-  "@language": {},
-  "addExercise": "הוספת תרגיל",
-  "@addExercise": {},
-  "translation": "תרגום",
-  "@translation": {},
-  "translateExercise": "לתרגם את התרגיל הזה כעת",
-  "@translateExercise": {},
-  "settingsTitle": "הגדרות",
-  "@settingsTitle": {},
-  "settingsCacheTitle": "מטמון",
-  "@settingsCacheTitle": {},
-  "settingsExerciseCacheDescription": "מטמון תרגילים",
-  "@settingsExerciseCacheDescription": {},
-  "aboutPageTitle": "מידע כללי ותמיכה",
-  "@aboutPageTitle": {},
-  "simpleMode": "מצב פשוט",
-  "@simpleMode": {},
-  "arms": "זרועות",
-  "@arms": {
-    "description": "Generated entry for translation for server strings"
-  },
-  "back": "גב",
-  "@back": {
-    "description": "Generated entry for translation for server strings"
-  },
-  "biceps": "שרירי הקיבורת (דו־ראשיים)",
-  "@biceps": {
-    "description": "Generated entry for translation for server strings"
-  },
-  "body_weight": "משקל הגוף",
-  "@body_weight": {
-    "description": "Generated entry for translation for server strings"
-  },
-  "cardio": "סיבולת",
-  "@cardio": {
-    "description": "Generated entry for translation for server strings"
-  },
-  "chest": "חזה",
-  "@chest": {
-    "description": "Generated entry for translation for server strings"
-  },
-  "gym_mat": "שטיח אימונים",
-  "@gym_mat": {
-    "description": "Generated entry for translation for server strings"
-  },
-  "kilometers": "קילומטרים",
-  "@kilometers": {
-    "description": "Generated entry for translation for server strings"
-  },
-  "kilometers_per_hour": "קילומטרים לשעה",
-  "@kilometers_per_hour": {
-    "description": "Generated entry for translation for server strings"
-  },
-  "miles": "מילים",
-  "@miles": {
-    "description": "Generated entry for translation for server strings"
-  },
-  "miles_per_hour": "מילים לשעה",
-  "@miles_per_hour": {
-    "description": "Generated entry for translation for server strings"
-  },
-  "minutes": "דקות",
-  "@minutes": {
-    "description": "Generated entry for translation for server strings"
-  },
-  "resistance_band": "רצועת התנגדות",
-  "@resistance_band": {
-    "description": "Generated entry for translation for server strings"
-  },
-  "seconds": "שניות",
-  "@seconds": {
-    "description": "Generated entry for translation for server strings"
-  },
-  "shoulders": "כתפיים",
-  "@shoulders": {
-    "description": "Generated entry for translation for server strings"
-  },
-  "triceps": "השרירים התלת־ראשיים",
-  "@triceps": {
-    "description": "Generated entry for translation for server strings"
-  },
-  "kg": "ק״ג",
-  "@kg": {
-    "description": "Generated entry for translation for server strings"
-  },
-  "goalTypeBasic": "בסיסי",
-  "@goalTypeBasic": {
-    "description": "added for localization of Class GoalType's filed basic"
-  },
-  "goalTypeAdvanced": "מתקדם",
-  "@goalTypeAdvanced": {
-    "description": "added for localization of Class GoalType's filed advanced"
-  },
-  "indicatorAvg": "ממוצע",
-  "@indicatorAvg": {
-    "description": "added for localization of Class Indicator's field text"
-  },
-  "systemMode": "הגדרות מערכת",
-  "@systemMode": {},
-  "copyToClipboard": "העתקה ללוח",
-  "@copyToClipboard": {},
-  "noIngredientsDefined": "עדיין לא הוגדרו מרכיבים",
-  "@noIngredientsDefined": {},
-  "restTime": "זמן מנוחה",
-  "@restTime": {},
-  "sets": "סטים",
-  "@sets": {
-    "description": "The number of sets to be done for one exercise"
-  },
-  "ingredientLogged": "המרכיב תועד ביומן",
-  "@ingredientLogged": {},
-  "logIngredient": "תיעוד המרכיב ביומן התזונתי",
-  "@logIngredient": {},
-  "errorInfoDescription": "משהו השתבש, עמך הסליחה. ניתן לעזור לנו בתיקון התקלה בעזרת דיווח על הבעיה ב־GitHub.",
-  "@errorInfoDescription": {},
-  "errorInfoDescription2": "אפשר להמשיך להשתמש ביישום, אבל ייתכן כי תכונות מסוימות לא יעבדו.",
-  "@errorInfoDescription2": {},
-  "proteinShort": "חל׳",
-  "@proteinShort": {
-    "description": "The first letter or short name of the word 'Protein', used in overviews"
-  },
-  "fatShort": "שומנ׳",
-  "@fatShort": {
-    "description": "The first letter or short name of the word 'Fat', used in overviews"
-  },
-  "moreMeasurementEntries": "הוספת מדד חדש",
-  "@moreMeasurementEntries": {
-    "description": "Message shown when the user wants to add new measurement"
-  },
-  "aboutBugsListTitle": "דיווח על בעיה או הצעת תכונה חדשה",
-  "@aboutBugsListTitle": {},
-  "aboutDiscordTitle": "Discord",
-  "@aboutDiscordTitle": {},
-  "dataCopied": "הנתונים הועתקו לערך החדש",
-  "@dataCopied": {
-    "description": "Snackbar message to show on copying data to a new log entry"
-  },
-  "useMetric": "שימוש בשיטה המטרית למדידת משקל הגוף",
-  "@useMetric": {},
   "selectMealToLog": "בחירת מנה לתיעוד ביומן",
   "@selectMealToLog": {},
-  "energyShort": "אנרגיה",
-  "@energyShort": {
-    "description": "The first letter or short name of the word 'Energy', used in overviews"
-  },
-  "loggedToday": "תועדו היום",
-  "@loggedToday": {},
-  "enterMinCharacters": "נא להקליד לפחות {min} תווים",
-  "@enterMinCharacters": {
-    "description": "Error message when the user hasn't entered the minimum amount characters in a form",
-    "type": "text",
-    "placeholders": {
-      "min": {
-        "type": "String"
-      }
-    }
-  },
-  "productFoundDescription": "הברקוד תואם למוצר: {productName}. להמשיך?",
-  "@productFoundDescription": {
-    "description": "Dialog info when product is found with barcode",
-    "type": "text",
-    "placeholders": {
-      "productName": {
-        "type": "String"
-      }
-    }
-  },
-  "productNotFoundDescription": "לא נמצא המוצר עם הברקוד שנסרק {barcode} במאגר של wger",
-  "@productNotFoundDescription": {
-    "description": "Dialog info when product is not found with barcode",
-    "type": "text",
-    "placeholders": {
-      "barcode": {
-        "type": "String"
-      }
-    }
-  },
-  "verifiedEmail": "דוא״ל מאומת",
-  "@verifiedEmail": {},
-  "unVerifiedEmail": "דוא״ל לא מאומת",
-  "@unVerifiedEmail": {},
-  "verifiedEmailInfo": "נשלחה הודעת אימות לכתובת {email}",
-  "@verifiedEmailInfo": {
-    "placeholders": {
-      "email": {
-        "type": "String"
-      }
-    }
-  },
-  "setHasNoExercises": "עדיין אין אימונים בסט זה!",
-  "@setHasNoExercises": {},
-  "settingsIngredientCacheDescription": "מטמון מרכיב",
-  "@settingsIngredientCacheDescription": {},
-  "settingsCacheDeletedSnackbar": "המטמון נוקה בהצלחה",
-  "@settingsCacheDeletedSnackbar": {},
-  "textPromptTitle": "מוכנים להתחיל?",
-  "@textPromptTitle": {},
-  "abs": "שרירי בטן",
-  "@abs": {
-    "description": "Generated entry for translation for server strings"
-  },
-  "lb": "פאונד",
-  "@lb": {
-    "description": "Generated entry for translation for server strings"
-  },
-  "log": "תיעוד",
-  "@log": {
-    "description": "Log a specific meal (imperative form)"
-  },
-  "done": "סיום",
-  "@done": {},
-  "themeMode": "ערכת עיצוב",
-  "@themeMode": {},
-  "darkMode": "עיצוב כהה תמיד",
-  "@darkMode": {},
-  "lightMode": "עיצוב בהיר תמיד",
-  "@lightMode": {},
-  "barWeight": "משקל Bar",
-  "@barWeight": {},
-  "apiTokenValidChars": "מפתח API יכול להכיל רק את האותיות a-f, את הספרות 0-9, ועליו להיות באורך 40 תווים בדיוק",
-  "@apiTokenValidChars": {
-    "description": "Error message when the user tries to input a API key with forbidden characters"
-  },
-  "exerciseNr": "תרגיל {nr}",
-  "@exerciseNr": {
-    "description": "Header in form indicating the number of the current exercise. Can also be translated as something like 'Set Nr. xy'.",
-    "type": "text",
-    "placeholders": {
-      "nr": {
-        "type": "String"
-      }
-    }
-  },
-  "isRestDayHelp": "לתשומת לבך, כל הסטים והתרגילים יוסרו מימים שהגדרת בתור ימי מנוחה.",
-  "@isRestDayHelp": {},
-  "onlyLoggingHelpText": "נא לסמן תיבה זו אך ורק אם ברצונך לתעד את כמות הקלוריות מבלי להגדיר תוכנית תזונתית עם מנות ספציפיות",
-  "@onlyLoggingHelpText": {},
   "yourCurrentNutritionPlanHasNoMealsDefinedYet": "לא הוגדרו מנות בתוכניות התזונתית הנוכחית שלך",
   "@yourCurrentNutritionPlanHasNoMealsDefinedYet": {
     "description": "Message shown when a nutrition plan doesn't have any meals"
@@ -858,8 +420,40 @@
   "@toAddMealsToThePlanGoToNutritionalPlanDetails": {
     "description": "Message shown to guide users to the nutritional plan details page to add meals"
   },
+  "goalEnergy": "יעד אנרגיה",
+  "@goalEnergy": {},
+  "goalProtein": "יעד חלבונים",
+  "@goalProtein": {},
+  "goalCarbohydrates": "Carbohydrates goal",
+  "@goalCarbohydrates": {},
+  "goalFat": "יעד שומנים",
+  "@goalFat": {},
+  "goalFiber": "יעד סיבים תזונתיים",
+  "@goalFiber": {},
+  "anErrorOccurred": "שגיאה קרתה!",
+  "@anErrorOccurred": {},
+  "errorInfoDescription": "משהו השתבש, עמך הסליחה. ניתן לעזור לנו בתיקון התקלה בעזרת דיווח על הבעיה ב־GitHub.",
+  "@errorInfoDescription": {},
+  "errorInfoDescription2": "אפשר להמשיך להשתמש ביישום, אבל ייתכן כי תכונות מסוימות לא יעבדו.",
+  "@errorInfoDescription2": {},
+  "errorViewDetails": "פרטים טכניים",
+  "@errorViewDetails": {},
+  "applicationLogs": "Application logs",
+  "@applicationLogs": {},
+  "errorCouldNotConnectToServer": "לא היה ניתן להתחבר לשרת",
+  "@errorCouldNotConnectToServer": {},
   "errorCouldNotConnectToServerDetails": "אין באפשרות היישום להתחבר לשרת. נא לבדוק את החיבור לאינטרנט או לכתובת השרת ולנסות שוב. אם הבעיה ממשיכה להתקיים, נא לפנות למנהל השרת.",
   "@errorCouldNotConnectToServerDetails": {},
+  "copyToClipboard": "העתקה ללוח",
+  "@copyToClipboard": {},
+  "weight": "משקל",
+  "min": "מינ׳",
+  "@min": {},
+  "max": "מקס׳",
+  "@max": {},
+  "@weight": {
+    "description": "The weight of a workout log or body weight entry"
+  },
   "chartAllTimeTitle": "{name} בכל הזמנים",
   "@chartAllTimeTitle": {
     "description": "All-time chart of 'name' (e.g. 'weight', 'body fat' etc.)",
@@ -893,28 +487,495 @@
       }
     }
   },
+  "measurement": "מדידה",
+  "@measurement": {},
+  "measurements": "מדידות",
+  "@measurements": {
+    "description": "Categories for the measurements such as biceps size, body fat, etc."
+  },
+  "measurementCategoriesHelpText": "קטגורית מדידה, כמו 'שריר הזרוע' או 'שומן גוף'",
+  "@measurementCategoriesHelpText": {},
+  "measurementEntriesHelpText": "היחידה שמשתמשים למדוד את הקטגוריה כגון 'ס\"מ' או '%'",
+  "@measurementEntriesHelpText": {},
+  "date": "תאריך",
+  "@date": {
+    "description": "The date of a workout log or body weight entry"
+  },
+  "endDate": "End date",
+  "@endDate": {},
+  "openEnded": "Open ended",
+  "@openEnded": {},
+  "value": "ערך",
+  "@value": {
+    "description": "The value of a measurement entry"
+  },
+  "start": "התחלה",
+  "@start": {
+    "description": "Label on button to start the gym mode (i.e., an imperative)"
+  },
+  "time": "זמן",
+  "@time": {
+    "description": "The time of a meal or workout"
+  },
+  "timeStart": "זמן התחלה",
+  "@timeStart": {
+    "description": "The starting time of a workout"
+  },
+  "timeEnd": "זמן סיום",
+  "@timeEnd": {
+    "description": "The end time of a workout"
+  },
+  "timeStartAhead": "זמן התחלה לא יכול להיות אחרי זמן סיום",
+  "@timeStartAhead": {},
+  "ingredient": "מרכיב",
+  "@ingredient": {},
+  "energy": "אנרגיה",
+  "@energy": {
+    "description": "Energy in a meal, ingredient etc. e.g. in kJ"
+  },
+  "energyShort": "אנרגיה",
+  "@energyShort": {
+    "description": "The first letter or short name of the word 'Energy', used in overviews"
+  },
+  "macronutrients": "מקרונוטריאנטים",
+  "@macronutrients": {},
+  "planned": "מתוכנן",
+  "@planned": {
+    "description": "Header for the column of 'planned' nutritional values, i.e. what should be eaten"
+  },
+  "logged": "נרשם",
+  "@logged": {
+    "description": "Header for the column of 'logged' nutritional values, i.e. what was eaten"
+  },
+  "today": "היום",
+  "@today": {},
+  "loggedToday": "תועדו היום",
+  "@loggedToday": {},
+  "weekAverage": "ממוצע שבועי",
+  "@weekAverage": {
+    "description": "Header for the column of '7 day average' nutritional values, i.e. what was logged last week"
+  },
+  "surplus": "surplus",
+  "@surplus": {},
+  "deficit": "deficit",
+  "@deficit": {},
+  "difference": "הבדל",
+  "@difference": {},
+  "percentEnergy": "אחוז של אנרגיה",
+  "@percentEnergy": {},
+  "gPerBodyKg": "גרם עבור ק\"ג של משקל גוף",
+  "@gPerBodyKg": {
+    "description": "Label used for total sums of e.g. calories or similar in grams per Kg of body weight"
+  },
+  "total": "סה״כ",
+  "@total": {
+    "description": "Label used for total sums of e.g. calories or similar"
+  },
+  "kcal": "kcal",
+  "@kcal": {
+    "description": "Energy in a meal in kilocalories, kcal"
+  },
+  "kcalValue": "{value} ק׳ קלוריות",
+  "@kcalValue": {
+    "description": "A value in kcal, e.g. 500 kcal",
+    "type": "text",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "kJ": "kJ",
+  "@kJ": {
+    "description": "Energy in a meal in kilo joules, kJ"
+  },
+  "g": "גרם",
+  "@g": {
+    "description": "Abbreviation for gram"
+  },
+  "gValue": "{value} גר׳",
+  "@gValue": {
+    "description": "A value in grams, e.g. 5 g",
+    "type": "text",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "percentValue": "{value}%",
+  "@percentValue": {
+    "description": "A value in percent, e.g. 10 %",
+    "type": "text",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "protein": "חלבון",
+  "@protein": {},
+  "proteinShort": "חל׳",
+  "@proteinShort": {
+    "description": "The first letter or short name of the word 'Protein', used in overviews"
+  },
+  "carbohydrates": "פחמימות",
+  "@carbohydrates": {},
+  "carbohydratesShort": "C",
+  "@carbohydratesShort": {},
+  "sugars": "סוכרים",
+  "@sugars": {},
+  "fat": "שומן",
+  "@fat": {},
+  "fatShort": "שומנ׳",
+  "@fatShort": {
+    "description": "The first letter or short name of the word 'Fat', used in overviews"
+  },
+  "saturatedFat": "שומן רווי",
+  "@saturatedFat": {},
+  "fiber": "סיבים",
+  "@fiber": {},
+  "sodium": "נתרן",
+  "@sodium": {},
+  "amount": "כמות",
+  "@amount": {
+    "description": "The amount (e.g. in grams) of an ingredient in a meal"
+  },
+  "unit": "יחידת מידה",
+  "@unit": {
+    "description": "The unit used for a repetition (kg, time, etc.)"
+  },
+  "newEntry": "רשומה חדשה",
+  "@newEntry": {
+    "description": "Title when adding a new entry such as a weight or log entry"
+  },
+  "noTrophies": "You have no trophies yet",
+  "@noTrophies": {},
+  "noWeightEntries": "אין לך רשומות של משקל",
+  "@noWeightEntries": {
+    "description": "Message shown when the user has no logged weight entries"
+  },
+  "noMeasurementEntries": "You have no measurement entries",
+  "@noMeasurementEntries": {},
+  "moreMeasurementEntries": "הוספת מדד חדש",
+  "@moreMeasurementEntries": {
+    "description": "Message shown when the user wants to add new measurement"
+  },
+  "edit": "עריכה",
+  "@edit": {},
+  "preview": "Preview",
+  "@preview": {},
+  "loadingText": "טוען...",
+  "@loadingText": {
+    "description": "Text to show when entries are being loaded in the background: Loading..."
+  },
+  "delete": "מחיקה",
+  "@delete": {},
+  "confirmDelete": "האם את/ה בטוח/ה שאת/ה רוצה למחוק את '{toDelete}'?",
+  "@confirmDelete": {
+    "description": "Confirmation text before the user deletes an object",
+    "type": "text",
+    "placeholders": {
+      "toDelete": {
+        "type": "String"
+      }
+    }
+  },
+  "newNutritionalPlan": "תוכנית תזונה חדשה",
+  "@newNutritionalPlan": {},
+  "overview": "Overview",
+  "@overview": {},
+  "toggleDetails": "הסתר/הצג פירוט",
+  "@toggleDetails": {
+    "description": "Switch to toggle detail / overview"
+  },
+  "goToDetailPage": "עבור לדף פירוט",
+  "@goToDetailPage": {},
+  "aboutWhySupportTitle": "תוכנה בקוד פתוח, וחופשית לשימוש ❤️",
+  "@aboutWhySupportTitle": {},
+  "aboutDescription": "תודה לך על השימוש בווגר! ווגר הוא פרויקט קוד פתוח שנעשה על ידי אוהבי כושר מרחבי העולם.",
+  "@aboutDescription": {
+    "description": "Text in the about dialog"
+  },
+  "aboutDonateTitle": "תרומה כספית",
+  "@aboutDonateTitle": {},
   "aboutDonateText": "בעוד המיזם הזה חופשי ותמיד יישאר כך, תפעול השרת כן עולה לנו כסף! גם הפיתוח דורש השקעה משמעותית של זמן ומאמץ של מתנדבים. התרומה שלך תלך ישירות לכיסוי העלויות האלה, המאפשרות לספק את השירות שלנו נאמנה.",
   "@aboutDonateText": {},
+  "aboutContributeTitle": "התנדבות",
+  "@aboutContributeTitle": {},
   "aboutContributeText": "אנחנו מעודדים את כל סוגי התרומה. בין אם היא מתבטאת בפיתוח קוד, תרגום, או אפילו רק תשוקה לכושר, אנו מעריכים כל סוג של תמיכה!",
   "@aboutContributeText": {},
+  "aboutBugsListTitle": "דיווח על בעיה או הצעת תכונה חדשה",
+  "@aboutBugsListTitle": {},
+  "aboutTranslationListTitle": "עזרה בתרגום היישום",
+  "@aboutTranslationListTitle": {},
+  "aboutSourceListTitle": "צפייה בקוד המקור",
+  "@aboutSourceListTitle": {},
+  "aboutJoinCommunityTitle": "הצטרפות לקהילה",
+  "@aboutJoinCommunityTitle": {},
   "aboutMastodonTitle": "Mastodon",
   "@aboutMastodonTitle": {},
+  "aboutDiscordTitle": "Discord",
+  "@aboutDiscordTitle": {},
+  "others": "אחרים",
+  "@others": {},
+  "calendar": "לוח שנה",
+  "@calendar": {},
+  "goToToday": "עבור להיום",
+  "@goToToday": {
+    "description": "Label on button to jump back to 'today' in the calendar widget"
+  },
+  "enterValue": "אנא הכנס ערך",
+  "@enterValue": {
+    "description": "Error message when the user hasn't entered a value on a required field"
+  },
+  "selectEntry": "נא לבחור ערך",
+  "@selectEntry": {},
+  "selectExercise": "אנא בחר/י אימון",
+  "@selectExercise": {
+    "description": "Error message when the user hasn't selected an exercise in the form"
+  },
+  "enterCharacters": "אנא בחר/י ערך בין {min} ו-{max} תווים",
+  "@enterCharacters": {
+    "description": "Error message when the user hasn't entered the correct number of characters in a form",
+    "type": "text",
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "formMinMaxValues": "Please enter a value between {min} and {max}",
+  "@formMinMaxValues": {},
+  "enterMinCharacters": "נא להקליד לפחות {min} תווים",
+  "@enterMinCharacters": {
+    "description": "Error message when the user hasn't entered the minimum amount characters in a form",
+    "type": "text",
+    "placeholders": {
+      "min": {
+        "type": "String"
+      }
+    }
+  },
   "baseNameEnglish": "לכל התרגילים נחוץ שם מקור באנגלית",
   "@baseNameEnglish": {},
+  "nrOfSets": "כמות סטים לאימון: {nrOfSets}",
+  "@nrOfSets": {
+    "description": "Label shown on the slider where the user selects the nr of sets",
+    "type": "text",
+    "placeholders": {
+      "nrOfSets": {
+        "type": "String"
+      }
+    }
+  },
+  "setUnitsAndRir": "יחידות סט וחזרות בעתודה",
+  "@setUnitsAndRir": {
+    "description": "Label shown on the slider where the user can toggle showing units and RiR",
+    "type": "text"
+  },
+  "enterValidNumber": "אנא הכנס מספר תקין",
+  "@enterValidNumber": {
+    "description": "Error message when the user has submitted an invalid number (e.g. '3,.,.,.')"
+  },
+  "selectIngredient": "אנא בחר מרכיב",
+  "@selectIngredient": {
+    "description": "Error message when the user hasn't selected an ingredient from the autocompleter"
+  },
+  "recentlyUsedIngredients": "מרכיבים שנוספו לאחרונה",
+  "@recentlyUsedIngredients": {
+    "description": "A message when a user adds a new ingredient to a meal."
+  },
+  "selectImage": "אנא בחר תמונה",
+  "@selectImage": {
+    "description": "Label and error message when the user hasn't selected an image to save"
+  },
+  "optionsLabel": "אפשרויות",
+  "@optionsLabel": {
+    "description": "Label for the popup with general app options"
+  },
+  "takePicture": "צלם תמונה",
+  "@takePicture": {},
+  "chooseFromLibrary": "בחר מספריית תמונות",
+  "@chooseFromLibrary": {},
+  "gallery": "גלריה",
+  "@gallery": {},
+  "addImage": "הוסף תמונה",
+  "@addImage": {},
+  "dataCopied": "הנתונים הועתקו לערך החדש",
+  "@dataCopied": {
+    "description": "Snackbar message to show on copying data to a new log entry"
+  },
+  "appUpdateTitle": "צריך לעדכן",
+  "@appUpdateTitle": {},
+  "appUpdateContent": "גרסה זו של היישום אינה מסוגלת להתחבר לשרת, נא לעדכן את היישום.",
+  "@appUpdateContent": {},
+  "serverUpdateTitle": "Server update required",
+  "@serverUpdateTitle": {},
+  "serverUpdateContent": "The connected server is too old for this version of the app. Please ask the server administrator to update to at least version {minVersion}.",
+  "@serverUpdateContent": {},
+  "productFound": "המוצר נמצא",
+  "@productFound": {
+    "description": "Header label for dialog when product is found with barcode"
+  },
+  "productFoundDescription": "הברקוד תואם למוצר: {productName}. להמשיך?",
+  "@productFoundDescription": {
+    "description": "Dialog info when product is found with barcode",
+    "type": "text",
+    "placeholders": {
+      "productName": {
+        "type": "String"
+      }
+    }
+  },
+  "productNotFound": "המוצר לא נמצא",
+  "@productNotFound": {
+    "description": "Header label for dialog when product is not found with barcode"
+  },
+  "productNotFoundDescription": "לא נמצא המוצר עם הברקוד שנסרק {barcode} במאגר של wger",
+  "@productNotFoundDescription": {
+    "description": "Dialog info when product is not found with barcode",
+    "type": "text",
+    "placeholders": {
+      "barcode": {
+        "type": "String"
+      }
+    }
+  },
+  "scanBarcode": "סריקת ברקוד",
+  "@scanBarcode": {
+    "description": "Label for scan barcode button"
+  },
+  "close": "סגירה",
+  "@close": {
+    "description": "Translation for close"
+  },
+  "identicalExercisePleaseDiscard": "If you notice an exercise that is identical to the one you're adding, please discard your draft and edit that exercise instead.",
+  "@identicalExercisePleaseDiscard": {},
+  "checkInformationBeforeSubmitting": "Please check that the information you entered is correct before submitting the exercise",
+  "@checkInformationBeforeSubmitting": {},
   "add_exercise_image_license": "על התמונות להיות תואמות לרישיון CC BY SA. אם יש ספק כלשהו, יש להעלות רק תמונות שצילמת בעצמך.",
   "@add_exercise_image_license": {},
+  "imageDetailsTitle": "Image details",
+  "@imageDetailsTitle": {},
+  "imageDetailsLicenseTitle": "Title",
+  "@imageDetailsLicenseTitle": {},
+  "imageDetailsLicenseTitleHint": "Enter image title",
+  "@imageDetailsLicenseTitleHint": {},
+  "imageDetailsSourceLink": "Link to the source website",
+  "@imageDetailsSourceLink": {},
+  "author": "Author(s)",
+  "@author": {},
+  "authorHint": "Enter author name",
+  "@authorHint": {},
+  "imageDetailsAuthorLink": "Link to author website or profile",
+  "@imageDetailsAuthorLink": {},
+  "imageDetailsDerivativeSource": "Link to the original source, if this is a derivative work",
+  "@imageDetailsDerivativeSource": {},
+  "imageDetailsDerivativeHelp": "A derivative work is based on a previous work but contains sufficient new, creative content to entitle it to its own copyright.",
+  "@imageDetailsDerivativeHelp": {},
+  "imageDetailsImageType": "Image Type",
+  "@imageDetailsImageType": {},
+  "imageDetailsLicenseNotice": "By submitting this image, you agree to release it under the CC-BY-SA-4. The image must be either your own work or the author must have released it under a license compatible with it.",
+  "@imageDetailsLicenseNotice": {},
+  "imageDetailsLicenseNoticeLinkToLicense": "See license text.",
+  "@imageDetailsLicenseNoticeLinkToLicense": {},
+  "imageFormatNotSupported": "{imageFormat} not supported",
+  "@imageFormatNotSupported": {},
+  "imageFormatNotSupportedDetail": "{imageFormat} images are not supported yet.",
+  "@imageFormatNotSupportedDetail": {},
+  "add": "add",
+  "@add": {},
   "variations": "וריאציות",
   "@variations": {
     "description": "Variations of one exercise (e.g. benchpress and benchpress narrow)"
   },
+  "alsoKnownAs": "מוכר גם בתור: {aliases}",
+  "@alsoKnownAs": {
+    "placeholders": {
+      "aliases": {
+        "type": "String"
+      }
+    },
+    "description": "List of alternative names for an exercise"
+  },
+  "verifiedEmail": "דוא״ל מאומת",
+  "@verifiedEmail": {},
+  "unVerifiedEmail": "דוא״ל לא מאומת",
+  "@unVerifiedEmail": {},
   "verifiedEmailReason": "עליך לאמת את הדואר האלקטרוני שלך כדי לתרום תרגילים",
   "@verifiedEmailReason": {},
+  "verifiedEmailInfo": "נשלחה הודעת אימות לכתובת {email}",
+  "@verifiedEmailInfo": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "alternativeNames": "שמות חלופיים",
+  "@alternativeNames": {},
   "oneNamePerLine": "שם אחד בכל שורה",
   "@oneNamePerLine": {},
   "whatVariationsExist": "מהן הווריאציות שיש לתרגיל זה, אם קיימות?",
   "@whatVariationsExist": {},
+  "previous": "הקודם",
+  "@previous": {},
+  "next": "הבא",
+  "@next": {},
+  "images": "תמונות",
+  "@images": {},
+  "language": "שפה",
+  "@language": {},
+  "addExercise": "הוספת תרגיל",
+  "@addExercise": {},
+  "fitInWeek": "Fixed weekly schedule",
+  "@fitInWeek": {},
+  "fitInWeekHelp": "If enabled, the days will repeat in a weekly cycle, otherwise the days will follow sequentially without regards to the start of a new week.",
+  "@fitInWeekHelp": {},
+  "addSuperset": "Add superset",
+  "@addSuperset": {},
+  "superset": "Superset",
+  "@superset": {},
+  "setHasProgression": "Set has progression",
+  "@setHasProgression": {},
+  "setHasProgressionWarning": "Please note that at the moment it is not possible to edit all settings for a set on the mobile application or configure automatic progression. For now, please use the web application.",
+  "@setHasProgressionWarning": {},
+  "setHasNoExercises": "עדיין אין אימונים בסט זה!",
+  "@setHasNoExercises": {},
   "contributeExercise": "לתרום תרגיל",
   "@contributeExercise": {},
+  "translation": "תרגום",
+  "@translation": {},
+  "translateExercise": "לתרגם את התרגיל הזה כעת",
+  "@translateExercise": {},
+  "baseData": "Basics in English",
+  "@baseData": {},
+  "useBasicMarkdown": "You can use basic Markdown to format the text",
+  "@useBasicMarkdown": {},
+  "editorBold": "Bold",
+  "@editorBold": {},
+  "editorItalic": "Italic",
+  "@editorItalic": {},
+  "editorList": "List",
+  "@editorList": {},
+  "enterTextInLanguage": "Please enter the text in the correct language!",
+  "@enterTextInLanguage": {},
+  "settingsTitle": "הגדרות",
+  "@settingsTitle": {},
+  "settingsCacheTitle": "מטמון",
+  "@settingsCacheTitle": {},
+  "settingsExerciseCacheDescription": "מטמון תרגילים",
+  "@settingsExerciseCacheDescription": {},
+  "settingsIngredientCacheDescription": "מטמון מרכיב",
+  "@settingsIngredientCacheDescription": {},
+  "settingsCacheDeletedSnackbar": "המטמון נוקה בהצלחה",
+  "@settingsCacheDeletedSnackbar": {},
+  "aboutPageTitle": "מידע כללי ותמיכה",
+  "@aboutPageTitle": {},
   "contributeExerciseWarning": "אפשר לתרום תרגילים אך ורק אם החשבון שלך בן יותר מ־{days} ימים וכתובת הדואר האלקטרוני שלך מאומתת",
   "@contributeExerciseWarning": {
     "description": "Number of days before which a person can add exercise",
@@ -925,20 +986,82 @@
       }
     }
   },
+  "simpleMode": "מצב פשוט",
+  "@simpleMode": {},
+  "simpleModeHelp": "Hide some of the more advanced settings when editing exercises",
+  "@simpleModeHelp": {},
+  "progressionRules": "This exercise has progression rules and can't be edited on the mobile app. Please use the web application to edit this exercise.",
+  "@progressionRules": {},
+  "cacheWarning": "Due to caching it might take some time till the changes are visible throughout the application.",
+  "@cacheWarning": {},
+  "textPromptTitle": "מוכנים להתחיל?",
+  "@textPromptTitle": {},
   "textPromptSubheading": "נא ללחוץ על כפתור הפעולה כדי להתחיל",
   "@textPromptSubheading": {},
+  "abs": "שרירי בטן",
+  "@abs": {
+    "description": "Generated entry for translation for server strings"
+  },
+  "arms": "זרועות",
+  "@arms": {
+    "description": "Generated entry for translation for server strings"
+  },
+  "back": "גב",
+  "@back": {
+    "description": "Generated entry for translation for server strings"
+  },
+  "barbell": "Barbell",
+  "@barbell": {},
   "bench": "",
   "@bench": {
+    "description": "Generated entry for translation for server strings"
+  },
+  "biceps": "שרירי הקיבורת (דו־ראשיים)",
+  "@biceps": {
+    "description": "Generated entry for translation for server strings"
+  },
+  "body_weight": "משקל הגוף",
+  "@body_weight": {
+    "description": "Generated entry for translation for server strings"
+  },
+  "calves": "Calves",
+  "@calves": {},
+  "cardio": "סיבולת",
+  "@cardio": {
+    "description": "Generated entry for translation for server strings"
+  },
+  "chest": "חזה",
+  "@chest": {
     "description": "Generated entry for translation for server strings"
   },
   "dumbbell": "משקולות",
   "@dumbbell": {
     "description": "Generated entry for translation for server strings"
   },
+  "glutes": "Glutes",
+  "@glutes": {},
+  "gym_mat": "שטיח אימונים",
+  "@gym_mat": {
+    "description": "Generated entry for translation for server strings"
+  },
+  "hamstrings": "Hamstrings",
+  "@hamstrings": {},
+  "incline_bench": "Incline bench",
+  "@incline_bench": {},
   "kettlebell": "משקולות קטלבל",
   "@kettlebell": {
     "description": "Generated entry for translation for server strings"
   },
+  "kilometers": "קילומטרים",
+  "@kilometers": {
+    "description": "Generated entry for translation for server strings"
+  },
+  "kilometers_per_hour": "קילומטרים לשעה",
+  "@kilometers_per_hour": {
+    "description": "Generated entry for translation for server strings"
+  },
+  "lats": "Lats",
+  "@lats": {},
   "legs": "רגליים",
   "@legs": {
     "description": "Generated entry for translation for server strings"
@@ -951,16 +1074,170 @@
   "@max_reps": {
     "description": "Generated entry for translation for server strings"
   },
+  "miles": "מילים",
+  "@miles": {
+    "description": "Generated entry for translation for server strings"
+  },
+  "miles_per_hour": "מילים לשעה",
+  "@miles_per_hour": {
+    "description": "Generated entry for translation for server strings"
+  },
+  "minutes": "דקות",
+  "@minutes": {
+    "description": "Generated entry for translation for server strings"
+  },
+  "plates": "Plates",
+  "@plates": {},
+  "pull_up_bar": "Pull-up bar",
+  "@pull_up_bar": {},
+  "quads": "Quads",
+  "@quads": {},
+  "repetitions": "חזרות",
+  "@repetitions": {
+    "description": "Repetitions for an exercise set"
+  },
+  "resistance_band": "רצועת התנגדות",
+  "@resistance_band": {
+    "description": "Generated entry for translation for server strings"
+  },
+  "sz_bar": "SZ-Bar",
+  "@sz_bar": {},
+  "seconds": "שניות",
+  "@seconds": {
+    "description": "Generated entry for translation for server strings"
+  },
+  "shoulders": "כתפיים",
+  "@shoulders": {
+    "description": "Generated entry for translation for server strings"
+  },
   "swiss_ball": "כדור התעמלות",
   "@swiss_ball": {
+    "description": "Generated entry for translation for server strings"
+  },
+  "triceps": "השרירים התלת־ראשיים",
+  "@triceps": {
+    "description": "Generated entry for translation for server strings"
+  },
+  "until_failure": "Until Failure",
+  "@until_failure": {},
+  "kg": "ק״ג",
+  "@kg": {
+    "description": "Generated entry for translation for server strings"
+  },
+  "lb": "פאונד",
+  "@lb": {
     "description": "Generated entry for translation for server strings"
   },
   "none__bodyweight_exercise_": "ללא (התרגיל מסתמך על משקל גוף)",
   "@none__bodyweight_exercise_": {
     "description": "Generated entry for translation for server strings"
   },
+  "log": "תיעוד",
+  "@log": {
+    "description": "Log a specific meal (imperative form)"
+  },
+  "done": "סיום",
+  "@done": {},
   "overallChangeWeight": "שינוי כללי",
   "@overallChangeWeight": {
     "description": "Overall change in weight, added for localization"
-  }
+  },
+  "goalTypeMeals": "From meals",
+  "@goalTypeMeals": {},
+  "goalTypeBasic": "בסיסי",
+  "@goalTypeBasic": {
+    "description": "added for localization of Class GoalType's filed basic"
+  },
+  "goalTypeAdvanced": "מתקדם",
+  "@goalTypeAdvanced": {
+    "description": "added for localization of Class GoalType's filed advanced"
+  },
+  "indicatorRaw": "raw",
+  "@indicatorRaw": {},
+  "indicatorAvg": "ממוצע",
+  "@indicatorAvg": {
+    "description": "added for localization of Class Indicator's field text"
+  },
+  "endWorkout": "End workout",
+  "@endWorkout": {},
+  "themeMode": "ערכת עיצוב",
+  "@themeMode": {},
+  "darkMode": "עיצוב כהה תמיד",
+  "@darkMode": {},
+  "lightMode": "עיצוב בהיר תמיד",
+  "@lightMode": {},
+  "systemMode": "הגדרות מערכת",
+  "@systemMode": {},
+  "productNotFoundOpenFoodFacts": "You can add this product to Open Food Facts to help the community!",
+  "@productNotFoundOpenFoodFacts": {},
+  "addToOpenFoodFacts": "Add to Open Food Facts",
+  "@addToOpenFoodFacts": {},
+  "isVegan": "Vegan",
+  "@isVegan": {},
+  "isVegetarian": "Vegetarian",
+  "@isVegetarian": {},
+  "filter": "Filter",
+  "@filter": {},
+  "searchLanguageCurrent": "Only in current language ({lang})",
+  "@searchLanguageCurrent": {},
+  "searchLanguageEnglish": "Current language ({lang}) & English",
+  "@searchLanguageEnglish": {},
+  "searchLanguageAll": "All languages",
+  "@searchLanguageAll": {},
+  "exerciseSearchMode": "Search mode",
+  "@exerciseSearchMode": {},
+  "searchModeFuzzy": "Fuzzy",
+  "@searchModeFuzzy": {},
+  "searchModeExact": "Exact",
+  "@searchModeExact": {},
+  "filterNutriscore": "Nutri-Score filter",
+  "@filterNutriscore": {},
+  "filterNutriscoreOff": "Off",
+  "@filterNutriscoreOff": {},
+  "filterNutriscoreNoFilter": "No filter",
+  "@filterNutriscoreNoFilter": {},
+  "filterNutriscoreOrBetter": "{grade} or better",
+  "@filterNutriscoreOrBetter": {},
+  "serverConfigIssueTitle": "Server Configuration Issue",
+  "@serverConfigIssueTitle": {},
+  "serverConfigIssueMessage": "Server misconfiguration detected, headers are not being passed correctly, please consult the documentation.",
+  "@serverConfigIssueMessage": {},
+  "understand": "I understand",
+  "@understand": {},
+  "viewDocumentation": "View documentation",
+  "@viewDocumentation": {},
+  "buyMeACoffee": "Buy me a coffee",
+  "@buyMeACoffee": {},
+  "liberapay": "Liberapay",
+  "@liberapay": {},
+  "githubSponsors": "GitHub Sponsors",
+  "@githubSponsors": {},
+  "viewLicenses": "View Licenses",
+  "@viewLicenses": {},
+  "nutriScore": "Nutri-Score",
+  "@nutriScore": {},
+  "notApplicable": "N/A",
+  "@notApplicable": {},
+  "ingredientSource": "Source: {sourceValue}",
+  "@ingredientSource": {},
+  "cancel": "Cancel",
+  "@cancel": {},
+  "multiplicationSign": "×",
+  "@multiplicationSign": {},
+  "unexpectedState": "Unexpected state",
+  "@unexpectedState": {},
+  "noLogsAvailable": "No logs available.",
+  "@noLogsAvailable": {},
+  "detailsCopiedToClipboard": "Details copied to clipboard!",
+  "@detailsCopiedToClipboard": {},
+  "couldNotCopyDetails": "Could not copy details.",
+  "@couldNotCopyDetails": {},
+  "reportIssue": "Report issue",
+  "@reportIssue": {},
+  "networkError": "Network error",
+  "@networkError": {},
+  "httpError": "Http error",
+  "@httpError": {},
+  "otherException": "Other exception",
+  "@otherException": {}
 }

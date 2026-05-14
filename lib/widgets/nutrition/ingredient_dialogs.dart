@@ -18,6 +18,7 @@
 
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:wger/helpers/misc.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
@@ -35,7 +36,7 @@ Widget ingredientImage(String url, BuildContext context) {
     radius = smallest / 2.5;
   }
 
-  final imageProvider = NetworkImage(url);
+  final imageProvider = CachedNetworkImageProvider(url);
 
   return Padding(
     padding: const EdgeInsets.only(bottom: 12),
@@ -136,7 +137,7 @@ class IngredientDetails extends StatelessWidget {
                 _DietaryInfoSection(ingredient: ingredient),
               ],
               if (snapshot.hasData && ingredient != null && ingredient.licenseObjectURl == null)
-                Text('Source: ${source!}'),
+                Text(AppLocalizations.of(context).ingredientSource(source!)),
               if (snapshot.hasData && ingredient != null && ingredient.licenseObjectURl != null)
                 Builder(
                   builder: (context) {
@@ -144,7 +145,7 @@ class IngredientDetails extends StatelessWidget {
                     return Padding(
                       padding: const EdgeInsets.only(top: 12),
                       child: InkWell(
-                        child: Text('Source: ${source!}'),
+                        child: Text(AppLocalizations.of(context).ingredientSource(source!)),
                         onTap: () => launchURL(localIngredient.licenseObjectURl!, context),
                       ),
                     );
@@ -255,12 +256,12 @@ class IngredientScanResultDialog extends StatelessWidget {
                   ),
                 ),
               if (ingredient != null && ingredient.licenseObjectURl == null)
-                Text('Source: ${source!}'),
+                Text(i18n.ingredientSource(source!)),
               if (ingredient?.licenseObjectURl != null)
                 Padding(
                   padding: const EdgeInsets.only(top: 12),
                   child: InkWell(
-                    child: Text('Source: ${source!}'),
+                    child: Text(AppLocalizations.of(context).ingredientSource(source!)),
                     onTap: () => launchURL(ingredient!.licenseObjectURl!, context),
                   ),
                 ),
@@ -319,7 +320,7 @@ class _DietaryInfoSection extends StatelessWidget {
           children: [
             Text(i18n.isVegan),
             if (ingredient.isVegan == null)
-              const Text('N/A')
+              Text(i18n.notApplicable)
             else if (ingredient.isVegan!)
               Icon(Icons.eco, color: Colors.green[700])
             else
@@ -332,7 +333,7 @@ class _DietaryInfoSection extends StatelessWidget {
           children: [
             Text(i18n.isVegetarian),
             if (ingredient.isVegetarian == null)
-              const Text('N/A')
+              Text(i18n.notApplicable)
             else if (ingredient.isVegetarian!)
               Icon(Icons.eco, color: Colors.green[700])
             else
@@ -343,11 +344,11 @@ class _DietaryInfoSection extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text('Nutri-Score'),
+            Text(i18n.nutriScore),
             if (ingredient.nutriscore != null)
               NutriScoreBadge(score: ingredient.nutriscore!)
             else
-              const Text('N/A'),
+              Text(i18n.notApplicable),
           ],
         ),
       ],

@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
@@ -107,7 +108,7 @@ class TrophyCard extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 30,
-                    backgroundImage: NetworkImage(trophy.image),
+                    backgroundImage: CachedNetworkImageProvider(trophy.image),
                   ),
                   const SizedBox(width: 10),
                   Expanded(

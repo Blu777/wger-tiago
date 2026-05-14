@@ -18,14 +18,14 @@ Widget handleImageError(
   String message = '';
   switch (error) {
     case NetworkImageLoadException _:
-      message = 'Network error';
+      message = AppLocalizations.of(context).networkError;
     case HttpException _:
-      message = 'Http error';
+      message = AppLocalizations.of(context).httpError;
     case FormatException _:
       //TODO: not sure if this is the right exception for unsupported image formats?
       message = AppLocalizations.of(context).imageFormatNotSupported(imageFormat);
     default:
-      message = 'Other exception';
+      message = AppLocalizations.of(context).otherException;
   }
 
   return AspectRatio(

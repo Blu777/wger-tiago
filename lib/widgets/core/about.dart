@@ -150,17 +150,17 @@ class AboutPage extends StatelessWidget {
                         children: [
                           ElevatedButton.icon(
                             icon: const FaIcon(FontAwesomeIcons.mugHot, size: 18),
-                            label: const Text('Buy me a coffee'),
+                            label: Text(i18n.buyMeACoffee),
                             onPressed: () => launchURL(BUY_ME_A_COFFEE_URL, context),
                           ),
                           ElevatedButton.icon(
                             icon: const FaIcon(FontAwesomeIcons.solidHeart, size: 18),
-                            label: const Text('Liberapay'),
+                            label: Text(i18n.liberapay),
                             onPressed: () => launchURL(LIBERAPAY_URL, context),
                           ),
                           ElevatedButton.icon(
                             icon: const FaIcon(FontAwesomeIcons.github, size: 18),
-                            label: const Text('GitHub Sponsors'),
+                            label: Text(i18n.githubSponsors),
                             onPressed: () => launchURL(GITHUB_SPONSORS_URL, context),
                           ),
                         ],
@@ -201,7 +201,7 @@ class AboutPage extends StatelessWidget {
               ListTile(
                 leading: const Icon(Icons.article),
                 trailing: const Icon(Icons.chevron_right),
-                title: const Text('View Licenses'),
+                title: Text(i18n.viewLicenses),
                 contentPadding: EdgeInsets.zero,
                 onTap: () {
                   showLicensePage(

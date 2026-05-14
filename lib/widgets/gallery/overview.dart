@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:intl/intl.dart';
@@ -58,17 +59,19 @@ class Gallery extends StatelessWidget {
                         context: context,
                       );
                     },
-                    child: FadeInImage(
+                    child: CachedNetworkImage(
                       key: Key('image-${currentImage.id!}'),
-                      placeholder: const AssetImage('assets/images/placeholder.png'),
-                      image: NetworkImage(currentImage.url!),
+                      imageUrl: currentImage.url!,
+                      placeholder: (context, url) => const Image(
+                        image: AssetImage('assets/images/placeholder.png'),
+                        fit: BoxFit.cover,
+                      ),
                       fit: BoxFit.cover,
-                      imageSemanticLabel: currentImage.description,
-                      imageErrorBuilder: (context, error, stackTrace) => handleImageError(
+                      errorWidget: (context, url, error) => handleImageError(
                         context,
                         error,
-                        stackTrace,
-                        currentImage.url!,
+                        StackTrace.current,
+                        url,
                       ),
                     ),
                   );
@@ -99,14 +102,13 @@ class ImageDetail extends StatelessWidget {
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           Expanded(
-            child: Image.network(
-              image.url!,
-              semanticLabel: image.description,
-              errorBuilder: (context, error, stackTrace) => handleImageError(
+            child: CachedNetworkImage(
+              imageUrl: image.url!,
+              errorWidget: (context, url, error) => handleImageError(
                 context,
                 error,
-                stackTrace,
-                image.url!,
+                StackTrace.current,
+                url,
               ),
             ),
           ),

@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -207,7 +208,7 @@ class _IngredientTypeaheadState extends ConsumerState<IngredientTypeahead> {
             return ListTile(
               leading: ingredient.image != null
                   ? CircleAvatar(
-                      backgroundImage: NetworkImage(ingredient.thumbnails!.medium),
+                      backgroundImage: CachedNetworkImageProvider(ingredient.thumbnails!.medium),
                     )
                   : const CircleIconAvatar(
                       Icon(Icons.image, color: Colors.grey),
@@ -320,7 +321,7 @@ class IngredientAvatar extends StatelessWidget {
     return ingredient.image != null
         ? GestureDetector(
             child: CircleAvatar(
-              backgroundImage: NetworkImage(ingredient.image!.url),
+              backgroundImage: CachedNetworkImageProvider(ingredient.image!.url),
             ),
             onTap: () async {
               if (ingredient.image!.objectUrl != '') {

@@ -200,7 +200,7 @@ void showGeneralErrorDialog(dynamic error, StackTrace? stackTrace, {BuildContext
         actions: [
           if (allowReportIssue)
             TextButton(
-              child: const Text('Report issue'),
+              child: Text(i18n.reportIssue),
               onPressed: () async {
                 final logText = applicationLogs.isEmpty
                     ? '-- No logs available --'
@@ -297,7 +297,7 @@ class CopyToClipboardButton extends StatelessWidget {
               if (context.mounted) {
                 ScaffoldMessenger.of(
                   context,
-                ).showSnackBar(const SnackBar(content: Text('Details copied to clipboard!')));
+                ).showSnackBar(SnackBar(content: Text(i18n.detailsCopiedToClipboard)));
               }
             })
             .catchError((copyError) {
@@ -306,7 +306,7 @@ class CopyToClipboardButton extends StatelessWidget {
               if (context.mounted) {
                 ScaffoldMessenger.of(
                   context,
-                ).showSnackBar(const SnackBar(content: Text('Could not copy details.')));
+                ).showSnackBar(SnackBar(content: Text(i18n.couldNotCopyDetails)));
               }
             });
       },

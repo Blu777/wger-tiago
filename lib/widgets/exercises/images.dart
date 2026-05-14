@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:wger/models/exercises/image.dart';
 import 'package:wger/widgets/core/image.dart';
@@ -29,14 +30,13 @@ class ExerciseImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return image != null
-        ? Image.network(
-            image!.url,
-            semanticLabel: 'Exercise image',
-            errorBuilder: (context, error, stackTrace) => handleImageError(
+        ? CachedNetworkImage(
+            imageUrl: image!.url,
+            errorWidget: (context, url, error) => handleImageError(
               context,
               error,
-              stackTrace,
-              image!.url,
+              StackTrace.current,
+              url,
             ),
           )
         : const Image(

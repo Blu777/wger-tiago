@@ -37,7 +37,7 @@ class ReorderableDaysList extends StatefulWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancel'),
+              child: Text(i18n.cancel),
             ),
             TextButton(
               onPressed: () async {
@@ -49,7 +49,7 @@ class ReorderableDaysList extends StatefulWidget {
                 }
                 Navigator.of(context).pop();
               },
-              child: const Text('Delete'),
+              child: Text(i18n.delete),
             ),
           ],
         );

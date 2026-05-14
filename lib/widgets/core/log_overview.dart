@@ -34,7 +34,7 @@ class LogOverviewPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(i18n.applicationLogs)),
       body: logs.isEmpty
-          ? const Center(child: Text('No logs available.'))
+          ? Center(child: Text(i18n.noLogsAvailable))
           : ListView.builder(
               itemCount: logs.length,
               itemBuilder: (context, index) {

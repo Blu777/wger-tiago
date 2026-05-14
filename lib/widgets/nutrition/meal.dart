@@ -181,7 +181,7 @@ class _MealWidgetState extends State<MealWidget> {
             if (_viewMode == viewMode.withIngredients || _viewMode == viewMode.withAllDetails)
               NutritionTile(
                 vPadding: 0,
-                leading: const Text('total'),
+                leading: Text(AppLocalizations.of(context).total),
                 title: getNutritionRow(
                   context,
                   muted(getNutritionalValues(widget._meal.plannedNutritionalValues, context)),

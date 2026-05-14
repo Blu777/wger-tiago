@@ -5,7 +5,8 @@ analyzer:
     - '**/*.g.dart'
     - '**/*.freezed.dart'
     - '**/*.mocks.dart'
-    - 'test/routine/routine_logs_screen_test.dart'
+    - 'test/**'
+    - 'integration_test/**'
   strong-mode:
     implicit-casts: true # to be changed
     implicit-dynamic: true # to be changed
@@ -174,3 +175,4 @@ dart_code_metrics:
   formatter:
     indent: 0
     cascading-widget-extensions: false
+
