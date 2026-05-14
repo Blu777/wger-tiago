@@ -18,39 +18,40 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
+import 'package:wger/features/gallery/presentation/providers/gallery_provider.dart';
 import 'package:wger/helpers/platform.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
 import 'package:wger/models/gallery/image.dart' as gallery;
-import 'package:wger/providers/gallery.dart';
 import 'package:wger/screens/form_screen.dart';
 import 'package:wger/widgets/core/image.dart';
 import 'package:wger/widgets/core/text_prompt.dart';
 
 import 'forms.dart';
 
-class Gallery extends StatelessWidget {
+class Gallery extends ConsumerWidget {
   const Gallery();
 
   @override
-  Widget build(BuildContext context) {
-    final provider = Provider.of<GalleryProvider>(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final galleryState = ref.watch(galleryProvider);
+    final images = galleryState.asData?.value ?? [];
 
     return Padding(
       padding: const EdgeInsets.all(5),
       child: RefreshIndicator(
-        onRefresh: () => provider.fetchAndSetGallery(),
-        child: provider.images.isEmpty
+        onRefresh: () => ref.read(galleryProvider.notifier).refresh(),
+        child: images.isEmpty
             ? const TextPrompt()
             : MasonryGridView.count(
                 crossAxisCount: 2,
                 mainAxisSpacing: 5,
                 crossAxisSpacing: 5,
-                itemCount: provider.images.length,
+                itemCount: images.length,
                 itemBuilder: (context, index) {
-                  final currentImage = provider.images[index];
+                  final currentImage = images[index];
 
                   return GestureDetector(
                     onTap: () {
@@ -122,10 +123,7 @@ class ImageDetail extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.delete),
                 onPressed: () {
-                  Provider.of<GalleryProvider>(
-                    context,
-                    listen: false,
-                  ).deleteImage(image);
+                  ProviderScope.containerOf(context).read(galleryProvider.notifier).deleteImage(image.id!);
                   Navigator.of(context).pop();
                 },
               ),

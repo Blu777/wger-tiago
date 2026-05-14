@@ -30,6 +30,8 @@ class _RoutineFormState extends State<RoutineForm> {
   late DateTime endDate;
   final workoutNameController = TextEditingController();
   final workoutDescriptionController = TextEditingController();
+  final startDateController = TextEditingController();
+  final endDateController = TextEditingController();
 
   @override
   void initState() {
@@ -45,12 +47,17 @@ class _RoutineFormState extends State<RoutineForm> {
   void dispose() {
     workoutNameController.dispose();
     workoutDescriptionController.dispose();
+    startDateController.dispose();
+    endDateController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final i18n = AppLocalizations.of(context);
+    final dateFormat = DateFormat.yMd(Localizations.localeOf(context).languageCode);
+    startDateController.text = dateFormat.format(startDate);
+    endDateController.text = dateFormat.format(endDate);
 
     final children = [
       errorMessage,
@@ -120,11 +127,7 @@ class _RoutineFormState extends State<RoutineForm> {
           ),
         ),
         enableInteractiveSelection: false,
-        controller: TextEditingController(
-          text: DateFormat.yMd(
-            Localizations.localeOf(context).languageCode,
-          ).format(startDate),
-        ),
+        controller: startDateController,
         onTap: () async {
           final picked = await showDatePicker(
             context: context,
@@ -157,11 +160,7 @@ class _RoutineFormState extends State<RoutineForm> {
           ),
         ),
         enableInteractiveSelection: false,
-        controller: TextEditingController(
-          text: DateFormat.yMd(
-            Localizations.localeOf(context).languageCode,
-          ).format(endDate),
-        ),
+        controller: endDateController,
         onTap: () async {
           final picked = await showDatePicker(
             context: context,

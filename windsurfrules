@@ -1,0 +1,186 @@
+# Windsurf Rules — wger-tiago
+
+## Stack
+- Flutter + Dart
+- Riverpod (riverpod_annotation + code generation)
+- Clean Architecture: data / domain / presentation layers
+- Legacy Provider coexists in lib/providers/ — do not modify it unless explicitly asked
+
+---
+
+## Clean Architecture — folder structure
+
+Every feature lives in lib/features/<feature_name>/ with this exact structure:
+
+```
+lib/features/<feature>/
+├── index.dart                          # root barrel
+├── data/
+│   ├── api/
+│   │   ├── <feature>_api_service.dart  # raw HTTP only
+│   │   └── index.dart
+│   └── repositories/
+│       ├── <feature>_repository.dart   # implements I<Feature>Repository
+│       └── index.dart
+├── domain/
+│   ├── models/
+│   │   └── index.dart                  # re-export from lib/models/ if shared
+│   └── repositories/
+│       ├── i_<feature>_repository.dart # abstract interface
+│       └── index.dart
+└── presentation/
+    ├── providers/
+    │   ├── <feature>_provider.dart
+    │   ├── <feature>_provider.g.dart   # generated — never edit manually
+    │   └── index.dart
+    ├── screens/
+    │   └── index.dart
+    └── widgets/
+        └── index.dart
+```
+
+Reference implementation: lib/features/body_weight/
+
+---
+
+## Riverpod rules
+
+### Always use @riverpod (autoDispose by default)
+```dart
+// CORRECT
+@riverpod
+class FeatureNotifier extends _$FeatureNotifier { ... }
+
+// WRONG — never use keepAlive: true unless explicitly justified
+@Riverpod(keepAlive: true)
+@Riverpod(keepAlive: false)  // also wrong — redundant
+```
+
+### Notifier pattern
+- Extend `AsyncNotifier<T>` via `_$FeatureNotifier`
+- `build()` returns `Future<T>` — auto-fetches on first watch
+- Use `ref.mounted` guard after every `await`
+- Optimistic updates: save previous state, update optimistically, rollback on exception
+
+```dart
+Future<void> addEntry(Entry entry) async {
+  final previous = state;
+  state = AsyncData([...state.value ?? [], entry]);
+  try {
+    final saved = await _repository.addEntry(entry);
+    state = AsyncData([...state.value!..remove(entry), saved]);
+  } catch (e) {
+    state = previous;
+    rethrow;
+  }
+}
+```
+
+### Repository provider
+- Returns the interface, not the concrete class
+```dart
+@riverpod
+IFeatureRepository featureRepository(Ref ref) {
+  final base = ref.watch(wgerBaseProvider);
+  final api = FeatureApiService(base);
+  return FeatureRepository(api);
+}
+```
+
+---
+
+## Import ordering — ALWAYS sort alphabetically within each section
+
+Dart import sections in order:
+1. `dart:` imports
+2. `package:flutter/` imports
+3. `package:` third-party imports (alphabetical)
+4. `package:wger/` imports (alphabetical)
+5. Relative imports
+
+```dart
+// CORRECT
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:wger/features/trophies/data/api/trophy_api_service.dart';
+import 'package:wger/features/trophies/domain/repositories/i_trophy_repository.dart';
+import 'package:wger/providers/wger_base_riverpod.dart';
+
+// WRONG — out-of-order package:wger/ imports trigger directives_ordering lint
+import 'package:wger/providers/wger_base_riverpod.dart';
+import 'package:wger/features/trophies/data/api/trophy_api_service.dart';
+```
+
+---
+
+## Migration checklist — legacy provider → Clean Architecture
+
+When migrating lib/providers/<feature>.dart to lib/features/<feature>/:
+
+- [ ] Create folder structure mirroring lib/features/body_weight/
+- [ ] Extract HTTP calls into data/api/<feature>_api_service.dart
+- [ ] Create abstract interface in domain/repositories/i_<feature>_repository.dart
+- [ ] Create implementation in data/repositories/<feature>_repository.dart implementing the interface
+- [ ] Move notifier to presentation/providers/<feature>_provider.dart
+  - [ ] Change keepAlive: true → @riverpod
+  - [ ] Notifier depends on interface, not concrete class
+  - [ ] Convert synchronous TState pattern → AsyncValue<T> with build() returning Future
+- [ ] Create all index.dart barrel files
+- [ ] Check if models are shared (>3 files import them) → re-export, don't move
+- [ ] Update all import sites to new path
+- [ ] Run dart run build_runner build
+- [ ] Run flutter analyze — fix all errors AND warnings (directives_ordering)
+- [ ] Delete old lib/providers/<feature>.dart and <feature>.g.dart
+- [ ] Run flutter analyze again to confirm no broken references
+
+---
+
+## When showing diffs
+
+- Always show diff only unless full file is explicitly requested
+- When creating a new file that others must implement or depend on, always show diffs for ALL affected files in the same response — not just the new file
+- Example: creating IFeatureRepository → also show FeatureRepository implementing it AND the provider depending on it
+
+---
+
+## After any annotation change (@riverpod, @freezed, @JsonSerializable)
+
+Always run:
+```
+dart run build_runner build --delete-conflicting-outputs
+```
+
+Never manually edit *.g.dart files.
+
+---
+
+## AsyncValue access patterns
+
+```dart
+// Reading in widgets
+final state = ref.watch(featureProvider);
+
+// Full handling
+state.when(
+  data: (value) => ...,
+  loading: () => const CircularProgressIndicator(),
+  error: (e, _) => Text('Error: $e'),
+);
+
+// Nullable access (when loading/error should be silent)
+final value = state.valueOrNull;
+final value = state.asData?.value;
+
+// WRONG — direct property access on AsyncValue
+state.someProperty  // crashes if loading or error
+```
+
+---
+
+## Do not touch
+
+- lib/providers/auth.dart — legacy, used in 10+ files
+- lib/providers/base_provider.dart — legacy HTTP base
+- lib/providers/wger_base_riverpod.dart — bridge, intentional override pattern
+- Any *.g.dart file — generated

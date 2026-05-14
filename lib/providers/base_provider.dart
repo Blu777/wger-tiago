@@ -40,8 +40,40 @@ class WgerBaseProvider {
   late http.Client client;
 
   WgerBaseProvider(this.auth, [http.Client? client]) {
-    auth = auth;
     this.client = client ?? http.Client();
+  }
+
+  Future<http.Response> _safeRequest(
+    Future<http.Response> Function() request, {
+    bool normalizeNetworkErrors = true,
+  }) async {
+    try {
+      return await request();
+    } on TimeoutException {
+      if (!normalizeNetworkErrors) {
+        rethrow;
+      }
+      throw WgerHttpException.fromMap({'timeout': 'The request timed out. Please try again.'});
+    } on SocketException {
+      if (!normalizeNetworkErrors) {
+        rethrow;
+      }
+      throw WgerHttpException.fromMap({
+        'network': 'No internet connection. Please check your network.',
+      });
+    }
+  }
+
+  WgerHttpException? _normalizeNetworkException(Object error) {
+    if (error is TimeoutException) {
+      return WgerHttpException.fromMap({'timeout': 'The request timed out. Please try again.'});
+    }
+    if (error is SocketException) {
+      return WgerHttpException.fromMap({
+        'network': 'No internet connection. Please check your network.',
+      });
+    }
+    return null;
   }
 
   Map<String, String> getDefaultHeaders({bool includeAuth = false, String? language}) {
@@ -89,9 +121,12 @@ class WgerBaseProvider {
 
     while (true) {
       try {
-        final response = await client
-            .get(uri, headers: getDefaultHeaders(includeAuth: true, language: language))
-            .timeout(timeout);
+        final response = await _safeRequest(
+          () => client
+              .get(uri, headers: getDefaultHeaders(includeAuth: true, language: language))
+              .timeout(timeout),
+          normalizeNetworkErrors: false,
+        );
 
         if (response.statusCode >= 400) {
           // Retry on server errors (5xx); e.g. 502 might be transient
@@ -111,6 +146,11 @@ class WgerBaseProvider {
           attempt++;
           await wait(e.toString());
           continue;
+        }
+
+        final normalizedException = _normalizeNetworkException(e);
+        if (normalizedException != null) {
+          throw normalizedException;
         }
 
         rethrow;
@@ -144,11 +184,19 @@ class WgerBaseProvider {
   }
 
   /// POSTs a new object
-  Future<Map<String, dynamic>> post(Map<String, dynamic> data, Uri uri) async {
-    final response = await client.post(
-      uri,
-      headers: getDefaultHeaders(includeAuth: true),
-      body: json.encode(data),
+  Future<Map<String, dynamic>> post(
+    Map<String, dynamic> data,
+    Uri uri, {
+    Duration timeout = DEFAULT_TIMEOUT,
+  }) async {
+    final response = await _safeRequest(
+      () => client
+          .post(
+            uri,
+            headers: getDefaultHeaders(includeAuth: true),
+            body: json.encode(data),
+          )
+          .timeout(timeout),
     );
 
     // Something wrong with our request
@@ -160,11 +208,19 @@ class WgerBaseProvider {
   }
 
   /// PATCHEs an existing object
-  Future<Map<String, dynamic>> patch(Map<String, dynamic> data, Uri uri) async {
-    final response = await client.patch(
-      uri,
-      headers: getDefaultHeaders(includeAuth: true),
-      body: json.encode(data),
+  Future<Map<String, dynamic>> patch(
+    Map<String, dynamic> data,
+    Uri uri, {
+    Duration timeout = DEFAULT_TIMEOUT,
+  }) async {
+    final response = await _safeRequest(
+      () => client
+          .patch(
+            uri,
+            headers: getDefaultHeaders(includeAuth: true),
+            body: json.encode(data),
+          )
+          .timeout(timeout),
     );
 
     // Something wrong with our request
@@ -176,12 +232,20 @@ class WgerBaseProvider {
   }
 
   /// DELETEs an existing object
-  Future<http.Response> deleteRequest(String url, int id) async {
+  Future<http.Response> deleteRequest(
+    String url,
+    int id, {
+    Duration timeout = DEFAULT_TIMEOUT,
+  }) async {
     final deleteUrl = makeUrl(url, id: id);
 
-    final response = await client.delete(
-      deleteUrl,
-      headers: getDefaultHeaders(includeAuth: true),
+    final response = await _safeRequest(
+      () => client
+          .delete(
+            deleteUrl,
+            headers: getDefaultHeaders(includeAuth: true),
+          )
+          .timeout(timeout),
     );
 
     // Something wrong with our request

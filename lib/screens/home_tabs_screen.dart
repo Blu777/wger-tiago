@@ -23,13 +23,13 @@ import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:rive/rive.dart';
 import 'package:wger/features/body_weight/presentation/screens/weight_screen.dart';
+import 'package:wger/features/gallery/presentation/providers/gallery_provider.dart';
 import 'package:wger/features/measurement/presentation/providers/measurement_provider.dart';
 import 'package:wger/features/trophies/presentation/providers/trophy_provider.dart';
 import 'package:wger/helpers/material.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
 import 'package:wger/providers/auth.dart';
 import 'package:wger/providers/exercises.dart';
-import 'package:wger/providers/gallery.dart';
 import 'package:wger/providers/nutrition.dart';
 import 'package:wger/providers/routines.dart';
 import 'package:wger/providers/user.dart';
@@ -94,7 +94,7 @@ class _HomeTabsScreenState extends ConsumerState<HomeTabsScreen>
       final routinesProvider = context.read<RoutinesProvider>();
       final nutritionPlansProvider = context.read<NutritionPlansProvider>();
       final exercisesProvider = context.read<ExercisesProvider>();
-      final galleryProvider = context.read<GalleryProvider>();
+      final galleryNotifier = ref.read(galleryProvider.notifier);
       final measurementNotifier = ProviderScope.containerOf(context).read(measurementProvider.notifier);
       final userProvider = context.read<UserProvider>();
 
@@ -123,7 +123,7 @@ class _HomeTabsScreenState extends ConsumerState<HomeTabsScreen>
       // Plans, weight and gallery
       widget._logger.info('Loading routines, weight, measurements and gallery');
       await Future.wait([
-        galleryProvider.fetchAndSetGallery(),
+        galleryNotifier.refresh(),
         nutritionPlansProvider.fetchAndSetAllPlansSparse(),
         routinesProvider.fetchAndSetAllRoutinesSparse(),
         // routinesProvider.fetchAndSetAllRoutinesFull(),

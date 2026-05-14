@@ -40,15 +40,15 @@ class WgerHttpException implements Exception {
   /// Custom http exception
   WgerHttpException(Response response) {
     type = ErrorType.json;
-    final dynamic responseBody = response.body;
+    final responseBody = response.body;
 
     final contentType = response.headers[HttpHeaders.contentTypeHeader];
     if ((contentType != null && contentType.contains('text/html')) ||
-        responseBody.toString().contains('<html')) {
+        responseBody.contains('<html')) {
       type = ErrorType.html;
     }
 
-    if (responseBody == null) {
+    if (responseBody.isEmpty) {
       errors = {'unknown_error': 'An unknown error occurred, no further information available'};
     } else {
       try {
@@ -57,9 +57,9 @@ class WgerHttpException implements Exception {
           errors = (response is Map ? response : {'unknown_error': response})
               .cast<String, dynamic>();
         } else if (type == ErrorType.html) {
-          errors = {HTML_ERROR_KEY: responseBody.toString()};
+          errors = {HTML_ERROR_KEY: responseBody};
         } else {
-          errors = {'text_error': responseBody.toString()};
+          errors = {'text_error': responseBody};
         }
       } catch (e) {
         errors = {'unknown_error': responseBody};

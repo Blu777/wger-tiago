@@ -117,6 +117,7 @@ class TrophyNotifier extends _$TrophyNotifier {
       if (!ref.mounted) {
         return;
       }
+      state = AsyncError(err, stack);
       return Future.error(err, stack);
     }
   }
@@ -138,6 +139,7 @@ class TrophyNotifier extends _$TrophyNotifier {
       if (!ref.mounted) {
         return;
       }
+      state = AsyncError(err, stack);
       return Future.error(err, stack);
     }
   }
@@ -156,6 +158,7 @@ class TrophyNotifier extends _$TrophyNotifier {
       if (!ref.mounted) {
         return;
       }
+      state = AsyncError(err, stack);
       return Future.error(err, stack);
     }
   }

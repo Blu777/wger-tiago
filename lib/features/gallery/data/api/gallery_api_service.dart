@@ -1,6 +1,6 @@
 /*
  * This file is part of wger Workout Manager <https://github.com/wger-project>.
- * Copyright (C) 2020, 2021 wger Team
+ * Copyright (c) 2020 - 2026 wger Team
  *
  * wger Workout Manager is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -19,46 +19,38 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:logging/logging.dart';
+import 'package:wger/helpers/consts.dart';
 import 'package:wger/helpers/json.dart';
 import 'package:wger/models/gallery/image.dart' as gallery;
 import 'package:wger/providers/base_provider.dart';
 
-class GalleryProvider extends WgerBaseProvider with ChangeNotifier {
+class GalleryApiService {
+  final _logger = Logger('GalleryApiService');
+  final WgerBaseProvider _base;
+
+  GalleryApiService(this._base);
+
   static const _galleryUrlPath = 'gallery';
 
-  List<gallery.Image> images = [];
-
-  GalleryProvider(super.auth, List<gallery.Image> entries, [super.client]) : images = entries;
-
-  /// Clears all lists
-  void clear() {
-    images = [];
+  Future<List<gallery.Image>> fetchGallery() async {
+    _logger.info('Fetching gallery images');
+    final data = await _base.fetchPaginated(
+      _base.makeUrl(
+        _galleryUrlPath,
+        query: {'limit': API_MAX_PAGE_SIZE},
+      ),
+    );
+    return data.map((e) => gallery.Image.fromJson(e)).toList();
   }
 
-  /*
-   * Gallery
-   */
-  Future<void> fetchAndSetGallery() async {
-    final data = await fetch(makeUrl(_galleryUrlPath));
-
-    images = [];
-    data['results'].forEach((e) {
-      final gallery.Image image = gallery.Image.fromJson(e);
-      images.add(image);
-    });
-
-    notifyListeners();
-  }
-
-  Future<void> addImage(gallery.Image image, XFile imageFile) async {
-    // create multipart request
-    final request = http.MultipartRequest('POST', makeUrl(_galleryUrlPath));
+  Future<gallery.Image> addImage(gallery.Image image, XFile imageFile) async {
+    final request = http.MultipartRequest('POST', _base.makeUrl(_galleryUrlPath));
     request.headers.addAll({
-      HttpHeaders.authorizationHeader: 'Token ${auth.token}',
-      HttpHeaders.userAgentHeader: auth.getAppNameHeader(),
+      HttpHeaders.authorizationHeader: 'Token ${_base.auth.token}',
+      HttpHeaders.userAgentHeader: _base.auth.getAppNameHeader(),
     });
     request.files.add(await http.MultipartFile.fromPath('image', imageFile.path));
     request.fields['date'] = dateToYYYYMMDD(image.date) ?? '';
@@ -66,26 +58,23 @@ class GalleryProvider extends WgerBaseProvider with ChangeNotifier {
 
     final res = await request.send();
     final respStr = await res.stream.bytesToString();
-
-    images.add(gallery.Image.fromJson(json.decode(respStr)));
-    images.sort((a, b) => b.date.compareTo(a.date));
-
-    notifyListeners();
+    return gallery.Image.fromJson(json.decode(respStr));
   }
 
-  Future<void> editImage(gallery.Image image, XFile? imageFile) async {
-    final request = http.MultipartRequest('PATCH', makeUrl(_galleryUrlPath, id: image.id));
+  Future<Map<String, dynamic>> editImage(gallery.Image image, XFile? imageFile) async {
+    final request = http.MultipartRequest(
+      'PATCH',
+      _base.makeUrl(_galleryUrlPath, id: image.id),
+    );
     request.headers.addAll({
-      HttpHeaders.authorizationHeader: 'Token ${auth.token}',
-      HttpHeaders.userAgentHeader: auth.getAppNameHeader(),
+      HttpHeaders.authorizationHeader: 'Token ${_base.auth.token}',
+      HttpHeaders.userAgentHeader: _base.auth.getAppNameHeader(),
     });
 
-    // Only send the image if a new one was selected
     if (imageFile != null) {
       request.files.add(await http.MultipartFile.fromPath('image', imageFile.path));
     }
 
-    // Update image info
     final data = image.toJson();
     request.fields['id'] = data['id'].toString();
     request.fields['date'] = data['date'];
@@ -93,16 +82,10 @@ class GalleryProvider extends WgerBaseProvider with ChangeNotifier {
 
     final res = await request.send();
     final respStr = await res.stream.bytesToString();
-    final responseData = json.decode(respStr);
-    image.url = responseData['image'];
-
-    notifyListeners();
+    return json.decode(respStr);
   }
 
-  Future<void> deleteImage(gallery.Image image) async {
-    await deleteRequest(_galleryUrlPath, image.id!);
-    images.removeWhere((element) => element.id == image.id);
-
-    notifyListeners();
+  Future<void> deleteImage(int id) async {
+    await _base.deleteRequest(_galleryUrlPath, id);
   }
 }

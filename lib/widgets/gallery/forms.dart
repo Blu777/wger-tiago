@@ -20,13 +20,13 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
+import 'package:wger/features/gallery/presentation/providers/gallery_provider.dart';
 import 'package:wger/helpers/consts.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
 import 'package:wger/models/gallery/image.dart' as gallery;
-import 'package:wger/providers/gallery.dart';
 import 'package:wger/widgets/core/image.dart';
 
 class ImageForm extends StatefulWidget {
@@ -215,16 +215,16 @@ class _ImageFormState extends State<ImageForm> {
               _form.currentState!.save();
 
               if (widget._image.id == null) {
-                Provider.of<GalleryProvider>(
-                  context,
-                  listen: false,
-                ).addImage(widget._image, _file!);
+                ProviderScope.containerOf(context).read(galleryProvider.notifier).addImage(
+                  widget._image,
+                  _file!,
+                );
                 Navigator.of(context).pop();
               } else {
-                Provider.of<GalleryProvider>(
-                  context,
-                  listen: false,
-                ).editImage(widget._image, _file);
+                ProviderScope.containerOf(context).read(galleryProvider.notifier).editImage(
+                  widget._image,
+                  _file,
+                );
                 Navigator.of(context).pop();
               }
             },

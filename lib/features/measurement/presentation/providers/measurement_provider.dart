@@ -80,6 +80,7 @@ class MeasurementNotifier extends _$MeasurementNotifier {
       if (!ref.mounted) {
         return;
       }
+      state = AsyncError(err, stack);
       return Future.error(err, stack);
     }
   }
@@ -100,6 +101,7 @@ class MeasurementNotifier extends _$MeasurementNotifier {
         return;
       }
       state = AsyncValue.data(previous);
+      state = AsyncError(err, stack);
       return Future.error(err, stack);
     }
   }
@@ -117,6 +119,7 @@ class MeasurementNotifier extends _$MeasurementNotifier {
         return;
       }
       state = AsyncValue.data(previous);
+      state = AsyncError(err, stack);
       return Future.error(err, stack);
     }
   }
@@ -142,6 +145,7 @@ class MeasurementNotifier extends _$MeasurementNotifier {
         return;
       }
       state = AsyncValue.data(previous);
+      state = AsyncError(err, stack);
       return Future.error(err, stack);
     }
   }
@@ -170,6 +174,7 @@ class MeasurementNotifier extends _$MeasurementNotifier {
         return;
       }
       state = AsyncValue.data(previous);
+      state = AsyncError(err, stack);
       return Future.error(err, stack);
     }
   }
@@ -193,6 +198,7 @@ class MeasurementNotifier extends _$MeasurementNotifier {
         return;
       }
       state = AsyncValue.data(previous);
+      state = AsyncError(err, stack);
       return Future.error(err, stack);
     }
   }
@@ -214,6 +220,7 @@ class MeasurementNotifier extends _$MeasurementNotifier {
         return;
       }
       state = AsyncValue.data(previous);
+      state = AsyncError(err, stack);
       return Future.error(err, stack);
     }
   }

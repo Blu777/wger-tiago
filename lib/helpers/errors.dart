@@ -351,6 +351,9 @@ void showDeleteDialog(BuildContext context, String confirmDeleteName, Log log) a
       );
     },
   );
+  if (!context.mounted) {
+    return;
+  }
   return res;
 }
 
