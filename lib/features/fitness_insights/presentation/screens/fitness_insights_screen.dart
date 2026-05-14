@@ -1,110 +1,221 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:provider/provider.dart' as provider;
+import 'package:wger/features/body_weight/presentation/providers/body_weight_provider.dart';
+import 'package:wger/features/fitness_insights/data/mappers/training_session_mapper.dart';
+import 'package:wger/features/fitness_insights/domain/entities/exercise_insight.dart';
 import 'package:wger/features/fitness_insights/domain/entities/fitness_insight.dart';
-import 'package:wger/features/fitness_insights/presentation/providers/fitness_insight_provider.dart';
+import 'package:wger/features/fitness_insights/domain/entities/training_session.dart';
+import 'package:wger/features/fitness_insights/domain/usecases/analyze_training.dart';
+import 'package:wger/providers/routines.dart';
 
-/// Temporary debug screen that renders the full state of the fitness insight engine.
-/// No styling — purely functional visualization.
-class FitnessInsightsScreen extends ConsumerWidget {
+/// Pantalla de resumen de coaching. Muestra solo lo esencial:
+/// - Score card con color
+/// - Estado general en lenguaje humano
+/// - Recomendaciones prácticas
+/// - Ejercicios con progreso (solo si hay data suficiente)
+class FitnessInsightsScreen extends ConsumerStatefulWidget {
   const FitnessInsightsScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final asyncInsight = ref.watch(fitnessInsightProvider);
+  ConsumerState<FitnessInsightsScreen> createState() => _FitnessInsightsScreenState();
+}
 
+class _FitnessInsightsScreenState extends ConsumerState<FitnessInsightsScreen> {
+  Future<FitnessInsight>? _insightFuture;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _insightFuture ??= _loadInsight();
+  }
+
+  Future<FitnessInsight> _loadInsight() async {
+    final routines = provider.Provider.of<RoutinesProvider>(context, listen: false);
+
+    if (routines.items.isEmpty || routines.items.every((r) => r.sessions.isEmpty)) {
+      await routines.fetchAndSetAllRoutinesFull();
+    }
+
+    final sessions = <TrainingSession>[];
+    for (final routine in routines.items) {
+      for (final sessionApi in routine.sessions) {
+        sessionApi.session.logs = sessionApi.logs;
+        sessions.add(mapWorkoutSession(sessionApi.session));
+      }
+    }
+
+    final weights = await ref.read(bodyWeightProvider.future);
+
+    final analyze = AnalyzeTraining();
+    return analyze(
+      weightEntries: weights,
+      sessions: sessions,
+      feedback: [],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Fitness Insights (Debug)'),
+        title: const Text('Resumen de Entrenamiento'),
       ),
-      body: asyncInsight.when(
-        data: (insight) => _buildBody(insight),
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, stack) => Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Text('Error: $err\n\n$stack'),
-          ),
-        ),
+      body: FutureBuilder<FitnessInsight>(
+        future: _insightFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text('Error: ${snapshot.error}'),
+              ),
+            );
+          }
+          final insight = snapshot.data!;
+          return _buildBody(insight);
+        },
       ),
     );
   }
 
   Widget _buildBody(FitnessInsight insight) {
+    final lowData = insight.dataQualityScore < 60;
+
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        // --- 1. Header ---
-        _sectionTitle('Header'),
-        _kv('Training Score', insight.trainingScore.toStringAsFixed(1)),
-        _kv('Status', insight.status.name),
-        _kv('Fatigue Level', insight.fatigueLevel != null
-            ? '${insight.fatigueLevel!.toStringAsFixed(1)} / 10'
-            : 'N/A'),
+        _scoreCard(insight),
+        const SizedBox(height: 16),
+        _statusMessage(insight, lowData),
+        if (lowData) ...[
+          const SizedBox(height: 24),
+          _infoCard(
+            icon: Icons.fitness_center,
+            title: 'Datos insuficientes',
+            body: 'Registrá al menos 3 sesiones y 2 ejercicios distintos '
+                'para obtener coaching preciso.',
+          ),
+        ] else ...[
+          if (insight.recommendations.isNotEmpty) ...[
+            const SizedBox(height: 24),
+            _sectionTitle('Recomendaciones'),
+            ...insight.recommendations.take(3).map(_recommendationTile),
+          ],
+          if (insight.exerciseInsights.isNotEmpty) ...[
+            const SizedBox(height: 24),
+            _sectionTitle('Progreso por ejercicio'),
+            ...insight.exerciseInsights.take(5).map(_exerciseTile),
+          ],
+        ],
+      ],
+    );
+  }
 
-        const Divider(),
+  Widget _scoreCard(FitnessInsight insight) {
+    final score = insight.trainingScore.toInt();
+    Color color;
+    if (score >= 70) {
+      color = Colors.green;
+    } else if (score >= 40) {
+      color = Colors.orange;
+    } else {
+      color = Colors.red;
+    }
 
-        // --- 2. Action Plan ---
-        _sectionTitle('Action Plan'),
-        if (insight.actionPlan.actions.isEmpty)
-          _kv('Actions', 'None')
-        else
-          ...insight.actionPlan.actions.take(3).map((a) => Column(
+    return Card(
+      elevation: 2,
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            Text(
+              'Training Score',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              score.toString(),
+              style: TextStyle(
+                fontSize: 48,
+                fontWeight: FontWeight.bold,
+                color: color,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              insight.status == FitnessStatus.goodProgress
+                  ? 'Buen progreso'
+                  : insight.status == FitnessStatus.stalled
+                      ? 'Estancado'
+                      : insight.status == FitnessStatus.overtraining
+                          ? 'Sobreentrenamiento'
+                          : 'Datos insuficientes',
+              style: TextStyle(color: Colors.grey[600]),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _statusMessage(FitnessInsight insight, bool lowData) {
+    String message;
+    if (lowData) {
+      message = 'Todavía no tenemos suficientes datos para evaluar tu entrenamiento.';
+    } else if (insight.status == FitnessStatus.goodProgress) {
+      message = 'Tu entrenamiento va por buen camino. Seguí así.';
+    } else if (insight.status == FitnessStatus.stalled) {
+      message = 'Algunos ejercicios están estancados. Revisá las recomendaciones.';
+    } else if (insight.status == FitnessStatus.overtraining) {
+      message = 'Detectamos señales de sobreentrenamiento. Priorizá la recuperación.';
+    } else {
+      message = 'Tu progreso es irregular. Intentá mantener una frecuencia constante.';
+    }
+
+    return Text(
+      message,
+      style: Theme.of(context).textTheme.bodyLarge,
+      textAlign: TextAlign.center,
+    );
+  }
+
+  Widget _infoCard({
+    required IconData icon,
+    required String title,
+    required String body,
+  }) {
+    return Card(
+      elevation: 1,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(icon, color: Theme.of(context).colorScheme.primary),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _kv('Type', a.type.name),
-                  _kv('Target', a.target),
-                  _kv('Value', a.value.toString()),
-                  _kv('Reason', a.reason),
-                  const SizedBox(height: 8),
+                  Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 4),
+                  Text(body, style: TextStyle(color: Colors.grey[700])),
                 ],
-              )),
-
-        const Divider(),
-
-        // --- 3. Exercise Insights ---
-        _sectionTitle('Exercise Insights'),
-        if (insight.exerciseInsights.isEmpty) _kv('Insights', 'None'),
-        ...insight.exerciseInsights.map((e) => Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _kv('Exercise', e.exerciseName),
-                _kv('Progress', e.progressStatus.name),
-                _kv('e1RM Change', '${(e.e1rmChangePercent * 100).toStringAsFixed(1)}%'),
-                _kv('Recommendation', e.recommendation),
-                const SizedBox(height: 8),
-              ],
-            )),
-
-        const Divider(),
-
-        // --- 4. Muscle Analysis ---
-        _sectionTitle('Muscle Analysis'),
-        if (insight.muscleAnalysis.isEmpty) _kv('Muscles', 'None'),
-        ...insight.muscleAnalysis.values.map((m) => Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _kv('Muscle', m.muscleName),
-                _kv('Weekly Sets', m.weeklySets.toStringAsFixed(1)),
-                _kv('Status', m.status.name),
-                const SizedBox(height: 8),
-              ],
-            )),
-
-        const Divider(),
-
-        // --- 5. Debug Info ---
-        _sectionTitle('Debug Info'),
-        _kv('Data Quality', insight.dataQualityScore.toStringAsFixed(1)),
-        _kv('Fatigue Trend', insight.fatigueTrend != null
-            ? insight.fatigueTrend!.toStringAsFixed(2)
-            : 'N/A'),
-      ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
   Widget _sectionTitle(String text) {
     return Padding(
-      padding: const EdgeInsets.only(top: 12, bottom: 4),
+      padding: const EdgeInsets.only(bottom: 8),
       child: Text(
         text,
         style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -112,24 +223,52 @@ class FitnessInsightsScreen extends ConsumerWidget {
     );
   }
 
-  Widget _kv(String key, String value) {
+  Widget _recommendationTile(String text) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            flex: 2,
-            child: Text(
-              key,
-              style: const TextStyle(fontWeight: FontWeight.w500),
-            ),
-          ),
-          Expanded(
-            flex: 3,
-            child: Text(value),
-          ),
+          const Icon(Icons.lightbulb_outline, size: 20, color: Colors.amber),
+          const SizedBox(width: 8),
+          Expanded(child: Text(text)),
         ],
+      ),
+    );
+  }
+
+  Widget _exerciseTile(ExerciseInsight insight) {
+    IconData icon;
+    Color color;
+    String label;
+    switch (insight.progressStatus) {
+      case ExerciseProgressStatus.progressing:
+        icon = Icons.trending_up;
+        color = Colors.green;
+        label = 'Progresando';
+      case ExerciseProgressStatus.regression:
+        icon = Icons.trending_down;
+        color = Colors.red;
+        label = 'Bajando';
+      case ExerciseProgressStatus.stalled:
+        icon = Icons.trending_flat;
+        color = Colors.orange;
+        label = 'Estancado';
+    }
+
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 4),
+      child: ListTile(
+        leading: Icon(icon, color: color),
+        title: Text(insight.exerciseName),
+        subtitle: Text(label),
+        trailing: Text(
+          '${(insight.e1rmChangePercent * 100).toStringAsFixed(1)}%',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: color,
+          ),
+        ),
       ),
     );
   }
