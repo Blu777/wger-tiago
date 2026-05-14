@@ -22,7 +22,7 @@ import 'package:flutter_riverpod/misc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
-import 'package:wger/providers/trophies.dart';
+import 'package:wger/features/trophies/presentation/providers/trophy_provider.dart';
 import 'package:wger/widgets/dashboard/widgets/trophies.dart';
 
 import '../../test_data/trophies.dart';
@@ -51,10 +51,12 @@ void main() {
         await pumpOverview(
           tester,
           [
-            trophyStateProvider.overrideWithValue(
-              TrophyState(
-                userTrophies: getUserTrophies(),
-                trophies: getTestTrophies(),
+            trophyProvider.overrideWithValue(
+              AsyncValue.data(
+                TrophyState(
+                  userTrophies: getUserTrophies(),
+                  trophies: getTestTrophies(),
+                ),
               ),
             ),
           ],

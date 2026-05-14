@@ -18,11 +18,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wger/features/trophies/presentation/providers/trophy_provider.dart';
 import 'package:wger/helpers/date.dart';
 import 'package:wger/helpers/errors.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
 import 'package:wger/models/workouts/routine.dart';
-import 'package:wger/providers/trophies.dart';
 
 import '../gym_mode/summary.dart';
 import 'exercise_log_chart.dart';
@@ -40,14 +40,14 @@ class DayLogWidget extends ConsumerWidget {
     final i18n = AppLocalizations.of(context);
     final theme = Theme.of(context);
 
-    final trophyState = ref.read(trophyStateProvider);
+    final trophyState = ref.read(trophyProvider).asData?.value;
 
     final sessionApi = _routine.sessions.firstWhere(
       (sessionApi) => sessionApi.session.date.isSameDayAs(_date),
     );
     final exercises = sessionApi.exercises;
 
-    final prTrophies = trophyState.prTrophies
+    final prTrophies = (trophyState?.prTrophies ?? [])
         .where((t) => t.contextData?.sessionId == sessionApi.session.id)
         .toList();
 

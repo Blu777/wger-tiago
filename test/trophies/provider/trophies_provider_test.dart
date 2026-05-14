@@ -20,7 +20,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:wger/providers/base_provider.dart';
-import 'package:wger/providers/trophies.dart';
+import 'package:wger/features/trophies/data/api/trophy_api_service.dart';
 
 import 'trophies_provider_test.mocks.dart';
 
@@ -37,11 +37,11 @@ const trophyJson = {
 
 @GenerateMocks([WgerBaseProvider])
 void main() {
-  group('Trophy repository', () {
+  group('Trophy API service', () {
     test('fetches list of trophies', () async {
       // Arrange
       final mockBase = MockWgerBaseProvider();
-      when(mockBase.fetchPaginated(any)).thenAnswer((_) async => [trophyJson]);
+      when(mockBase.fetchPaginated(any, language: anyNamed('language'))).thenAnswer((_) async => [trophyJson]);
       when(
         mockBase.makeUrl(
           any,
@@ -50,10 +50,10 @@ void main() {
           query: anyNamed('query'),
         ),
       ).thenReturn(Uri.parse('https://example.org/trophies'));
-      final repository = TrophyRepository(mockBase);
+      final api = TrophyApiService(mockBase);
 
       // Act
-      final result = await repository.fetchTrophies();
+      final result = await api.fetchTrophies();
 
       // Assert
       expect(result, isA<List>());
@@ -77,12 +77,12 @@ void main() {
       };
 
       final mockBase = MockWgerBaseProvider();
-      when(mockBase.fetch(any)).thenAnswer((_) async => [progressionJson]);
-      when(mockBase.makeUrl(any)).thenReturn(Uri.parse('https://example.org/user_progressions'));
-      final repository = TrophyRepository(mockBase);
+      when(mockBase.fetch(any, language: anyNamed('language'))).thenAnswer((_) async => [progressionJson]);
+      when(mockBase.makeUrl(any, query: anyNamed('query'))).thenReturn(Uri.parse('https://example.org/user_progressions'));
+      final api = TrophyApiService(mockBase);
 
       // Act
-      final result = await repository.fetchProgression();
+      final result = await api.fetchProgression();
 
       // Assert
       expect(result, isA<List>());
@@ -93,7 +93,7 @@ void main() {
       expect(p.currentValue, 12.5);
       expect(p.progressDisplay, '12.5/100');
 
-      verify(mockBase.fetch(any)).called(1);
+      verify(mockBase.fetch(any, language: anyNamed('language'))).called(1);
     });
   });
 }

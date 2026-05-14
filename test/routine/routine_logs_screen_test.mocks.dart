@@ -8,6 +8,8 @@ import 'dart:ui' as _i17;
 
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i16;
+import 'package:wger/features/trophies/data/repositories/trophy_repository.dart'
+    as _i18;
 import 'package:wger/models/exercises/exercise.dart' as _i15;
 import 'package:wger/models/trophies/trophy.dart' as _i19;
 import 'package:wger/models/trophies/user_trophy.dart' as _i20;
@@ -24,7 +26,6 @@ import 'package:wger/models/workouts/slot_entry.dart' as _i8;
 import 'package:wger/models/workouts/weight_unit.dart' as _i3;
 import 'package:wger/providers/base_provider.dart' as _i2;
 import 'package:wger/providers/routines.dart' as _i12;
-import 'package:wger/providers/trophies.dart' as _i18;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -609,50 +610,6 @@ class MockTrophyRepository extends _i1.Mock implements _i18.TrophyRepository {
   MockTrophyRepository() {
     _i1.throwOnMissingStub(this);
   }
-
-  @override
-  _i2.WgerBaseProvider get base =>
-      (super.noSuchMethod(
-            Invocation.getter(#base),
-            returnValue: _FakeWgerBaseProvider_0(
-              this,
-              Invocation.getter(#base),
-            ),
-          )
-          as _i2.WgerBaseProvider);
-
-  @override
-  String get trophiesPath =>
-      (super.noSuchMethod(
-            Invocation.getter(#trophiesPath),
-            returnValue: _i16.dummyValue<String>(
-              this,
-              Invocation.getter(#trophiesPath),
-            ),
-          )
-          as String);
-
-  @override
-  String get userTrophiesPath =>
-      (super.noSuchMethod(
-            Invocation.getter(#userTrophiesPath),
-            returnValue: _i16.dummyValue<String>(
-              this,
-              Invocation.getter(#userTrophiesPath),
-            ),
-          )
-          as String);
-
-  @override
-  String get userTrophyProgressionPath =>
-      (super.noSuchMethod(
-            Invocation.getter(#userTrophyProgressionPath),
-            returnValue: _i16.dummyValue<String>(
-              this,
-              Invocation.getter(#userTrophyProgressionPath),
-            ),
-          )
-          as String);
 
   @override
   _i13.Future<List<_i19.Trophy>> fetchTrophies({String? language}) =>

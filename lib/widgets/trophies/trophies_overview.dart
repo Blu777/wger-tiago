@@ -19,58 +19,63 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wger/features/trophies/presentation/providers/trophy_provider.dart';
 import 'package:wger/helpers/material.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
 import 'package:wger/models/trophies/user_trophy_progression.dart';
-import 'package:wger/providers/trophies.dart';
 
 class TrophiesOverview extends ConsumerWidget {
   const TrophiesOverview({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final trophyState = ref.watch(trophyStateProvider);
     final i18n = AppLocalizations.of(context);
 
-    // Responsive grid: determine columns based on screen width
-    final width = MediaQuery.widthOf(context);
-    int crossAxisCount = 1;
-    if (width <= MATERIAL_XS_BREAKPOINT) {
-      crossAxisCount = 2;
-    } else if (width > MATERIAL_XS_BREAKPOINT && width < MATERIAL_MD_BREAKPOINT) {
-      crossAxisCount = 3;
-    } else if (width >= MATERIAL_MD_BREAKPOINT && width < MATERIAL_LG_BREAKPOINT) {
-      crossAxisCount = 4;
-    } else {
-      crossAxisCount = 5;
-    }
+    return ref.watch(trophyProvider).when(
+      data: (state) {
+        // Responsive grid: determine columns based on screen width
+        final width = MediaQuery.widthOf(context);
+        int crossAxisCount = 1;
+        if (width <= MATERIAL_XS_BREAKPOINT) {
+          crossAxisCount = 2;
+        } else if (width > MATERIAL_XS_BREAKPOINT && width < MATERIAL_MD_BREAKPOINT) {
+          crossAxisCount = 3;
+        } else if (width >= MATERIAL_MD_BREAKPOINT && width < MATERIAL_LG_BREAKPOINT) {
+          crossAxisCount = 4;
+        } else {
+          crossAxisCount = 5;
+        }
 
-    // If empty, show placeholder
-    if (trophyState.trophyProgression.isEmpty) {
-      return Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Text(
-            i18n.noTrophies,
-            style: Theme.of(context).textTheme.bodyLarge,
-            textAlign: TextAlign.center,
+        // If empty, show placeholder
+        if (state.trophyProgression.isEmpty) {
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                i18n.noTrophies,
+                style: Theme.of(context).textTheme.bodyLarge,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          );
+        }
+
+        return RepaintBoundary(
+          child: GridView.builder(
+            padding: const EdgeInsets.all(12),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: crossAxisCount,
+            ),
+            key: const ValueKey('trophy-grid'),
+            itemCount: state.trophyProgression.length,
+            itemBuilder: (context, index) {
+              return _TrophyCardImage(userProgression: state.trophyProgression[index]);
+            },
           ),
-        ),
-      );
-    }
-
-    return RepaintBoundary(
-      child: GridView.builder(
-        padding: const EdgeInsets.all(12),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: crossAxisCount,
-        ),
-        key: const ValueKey('trophy-grid'),
-        itemCount: trophyState.trophyProgression.length,
-        itemBuilder: (context, index) {
-          return _TrophyCardImage(userProgression: trophyState.trophyProgression[index]);
-        },
-      ),
+        );
+      },
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (err, stack) => Center(child: Text('Error: $err')),
     );
   }
 }

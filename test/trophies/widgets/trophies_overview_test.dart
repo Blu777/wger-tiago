@@ -21,7 +21,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
-import 'package:wger/providers/trophies.dart';
+import 'package:wger/features/trophies/presentation/providers/trophy_provider.dart';
 import 'package:wger/widgets/trophies/trophies_overview.dart';
 
 import '../../test_data/trophies.dart';
@@ -33,11 +33,13 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            trophyStateProvider.overrideWithValue(
-              TrophyState(
-                trophyProgression: getUserTrophyProgression(),
-                userTrophies: getUserTrophies(),
-                trophies: getTestTrophies(),
+            trophyProvider.overrideWithValue(
+              AsyncValue.data(
+                TrophyState(
+                  trophyProgression: getUserTrophyProgression(),
+                  userTrophies: getUserTrophies(),
+                  trophies: getTestTrophies(),
+                ),
               ),
             ),
           ],

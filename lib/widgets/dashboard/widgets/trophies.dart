@@ -19,9 +19,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wger/features/trophies/presentation/providers/trophy_provider.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
 import 'package:wger/models/trophies/trophy.dart';
-import 'package:wger/providers/trophies.dart';
 import 'package:wger/screens/trophy_screen.dart';
 
 class DashboardTrophiesWidget extends ConsumerWidget {
@@ -29,7 +29,7 @@ class DashboardTrophiesWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final trophiesState = ref.read(trophyStateProvider);
+    final trophiesState = ref.read(trophyProvider).asData?.value;
     final i18n = AppLocalizations.of(context);
 
     return Card(
@@ -38,7 +38,7 @@ class DashboardTrophiesWidget extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (trophiesState.nonPrTrophies.isEmpty)
+          if ((trophiesState?.nonPrTrophies ?? []).isEmpty)
             Card(
               child: Column(
                 children: [
@@ -65,10 +65,10 @@ class DashboardTrophiesWidget extends ConsumerWidget {
               child: ListView.separated(
                 padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
                 scrollDirection: Axis.horizontal,
-                itemCount: trophiesState.nonPrTrophies.length,
+                itemCount: trophiesState?.nonPrTrophies.length ?? 0,
                 separatorBuilder: (context, index) => const SizedBox(width: 12),
                 itemBuilder: (context, index) {
-                  final userTrophy = trophiesState.nonPrTrophies[index];
+                  final userTrophy = trophiesState!.nonPrTrophies[index];
 
                   return SizedBox(
                     width: 220,

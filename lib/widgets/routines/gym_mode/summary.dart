@@ -22,16 +22,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
+import 'package:wger/features/trophies/presentation/providers/trophy_provider.dart';
 import 'package:wger/helpers/date.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
 import 'package:wger/models/trophies/user_trophy.dart';
 import 'package:wger/models/workouts/routine.dart';
 import 'package:wger/models/workouts/session_api.dart';
-import 'package:wger/providers/auth.dart';
-import 'package:wger/providers/base_provider.dart';
 import 'package:wger/providers/gym_state.dart';
 import 'package:wger/providers/routines.dart';
-import 'package:wger/providers/trophies.dart';
 import 'package:wger/widgets/core/progress_indicator.dart';
 import 'package:wger/widgets/routines/gym_mode/navigation.dart';
 
@@ -71,21 +69,19 @@ class _WorkoutSummaryState extends ConsumerState<WorkoutSummary> {
   Future<void> _reloadRoutineData(String languageCode) async {
     widget._logger.fine('Loading routine data');
     final gymState = ref.read(gymStateProvider);
-    final authProvider = context.read<AuthProvider>();
 
     _routine = await context.read<RoutinesProvider>().fetchAndSetRoutineFull(
       gymState.routine.id!,
     );
 
-    final trophyNotifier = ref.read(trophyStateProvider.notifier);
-    final trophyRepository = TrophyRepository(WgerBaseProvider(authProvider));
-    await trophyNotifier.fetchUserTrophies(repository: trophyRepository, language: languageCode);
+    final trophyNotifier = ref.read(trophyProvider.notifier);
+    await trophyNotifier.fetchUserTrophies(language: languageCode);
   }
 
   @override
   Widget build(BuildContext context) {
     final i18n = AppLocalizations.of(context);
-    final trophyState = ref.watch(trophyStateProvider);
+    final trophyState = ref.watch(trophyProvider).asData?.value;
 
     return Column(
       children: [
@@ -108,7 +104,7 @@ class _WorkoutSummaryState extends ConsumerState<WorkoutSummary> {
                 final apiSession = _routine.sessions.firstWhereOrNull(
                   (s) => s.session.date.isSameDayAs(clock.now()),
                 );
-                final userTrophies = trophyState.prTrophies
+                final userTrophies = (trophyState?.prTrophies ?? [])
                     .where((t) => t.contextData?.sessionId == apiSession?.session.id)
                     .toList();
 

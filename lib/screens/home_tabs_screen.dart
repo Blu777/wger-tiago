@@ -24,15 +24,14 @@ import 'package:provider/provider.dart';
 import 'package:rive/rive.dart';
 import 'package:wger/features/body_weight/presentation/screens/weight_screen.dart';
 import 'package:wger/features/measurement/presentation/providers/measurement_provider.dart';
+import 'package:wger/features/trophies/presentation/providers/trophy_provider.dart';
 import 'package:wger/helpers/material.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
 import 'package:wger/providers/auth.dart';
-import 'package:wger/providers/base_provider.dart';
 import 'package:wger/providers/exercises.dart';
 import 'package:wger/providers/gallery.dart';
 import 'package:wger/providers/nutrition.dart';
 import 'package:wger/providers/routines.dart';
-import 'package:wger/providers/trophies.dart';
 import 'package:wger/providers/user.dart';
 import 'package:wger/screens/dashboard.dart';
 import 'package:wger/screens/gallery_screen.dart';
@@ -89,8 +88,7 @@ class _HomeTabsScreenState extends ConsumerState<HomeTabsScreen>
   Future<void> _loadEntries() async {
     final languageCode = Localizations.localeOf(context).languageCode;
     final authProvider = context.read<AuthProvider>();
-    final trophyNotifier = ProviderScope.containerOf(context).read(trophyStateProvider.notifier);
-    final trophyRepository = TrophyRepository(WgerBaseProvider(authProvider));
+    final trophyNotifier = ref.read(trophyProvider.notifier);
 
     if (!authProvider.dataInit) {
       final routinesProvider = context.read<RoutinesProvider>();
@@ -130,7 +128,7 @@ class _HomeTabsScreenState extends ConsumerState<HomeTabsScreen>
         routinesProvider.fetchAndSetAllRoutinesSparse(),
         // routinesProvider.fetchAndSetAllRoutinesFull(),
         measurementNotifier.refresh(),
-        trophyNotifier.fetchAll(repository: trophyRepository, language: languageCode),
+        trophyNotifier.refresh(language: languageCode),
       ]);
 
       //
