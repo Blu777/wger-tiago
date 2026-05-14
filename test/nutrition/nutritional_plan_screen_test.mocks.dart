@@ -170,9 +170,13 @@ class MockWgerBaseProvider extends _i1.Mock implements _i4.WgerBaseProvider {
           as _i5.Future<List<dynamic>>);
 
   @override
-  _i5.Future<Map<String, dynamic>> post(Map<String, dynamic>? data, Uri? uri) =>
+  _i5.Future<Map<String, dynamic>> post(
+    Map<String, dynamic>? data,
+    Uri? uri, {
+    Duration? timeout = const Duration(seconds: 15),
+  }) =>
       (super.noSuchMethod(
-            Invocation.method(#post, [data, uri]),
+            Invocation.method(#post, [data, uri], {#timeout: timeout}),
             returnValue: _i5.Future<Map<String, dynamic>>.value(
               <String, dynamic>{},
             ),
@@ -182,10 +186,11 @@ class MockWgerBaseProvider extends _i1.Mock implements _i4.WgerBaseProvider {
   @override
   _i5.Future<Map<String, dynamic>> patch(
     Map<String, dynamic>? data,
-    Uri? uri,
-  ) =>
+    Uri? uri, {
+    Duration? timeout = const Duration(seconds: 15),
+  }) =>
       (super.noSuchMethod(
-            Invocation.method(#patch, [data, uri]),
+            Invocation.method(#patch, [data, uri], {#timeout: timeout}),
             returnValue: _i5.Future<Map<String, dynamic>>.value(
               <String, dynamic>{},
             ),
@@ -193,13 +198,21 @@ class MockWgerBaseProvider extends _i1.Mock implements _i4.WgerBaseProvider {
           as _i5.Future<Map<String, dynamic>>);
 
   @override
-  _i5.Future<_i3.Response> deleteRequest(String? url, int? id) =>
+  _i5.Future<_i3.Response> deleteRequest(
+    String? url,
+    int? id, {
+    Duration? timeout = const Duration(seconds: 15),
+  }) =>
       (super.noSuchMethod(
-            Invocation.method(#deleteRequest, [url, id]),
+            Invocation.method(#deleteRequest, [url, id], {#timeout: timeout}),
             returnValue: _i5.Future<_i3.Response>.value(
               _FakeResponse_3(
                 this,
-                Invocation.method(#deleteRequest, [url, id]),
+                Invocation.method(
+                  #deleteRequest,
+                  [url, id],
+                  {#timeout: timeout},
+                ),
               ),
             ),
           )

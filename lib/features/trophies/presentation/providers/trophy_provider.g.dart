@@ -26,7 +26,7 @@ final class TrophyRepositoryProvider
         argument: null,
         retry: null,
         name: r'trophyRepositoryProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -54,7 +54,7 @@ final class TrophyRepositoryProvider
   }
 }
 
-String _$trophyRepositoryHash() => r'dcbe9352c0fbb1db60efedfe24a7540880dd92a9';
+String _$trophyRepositoryHash() => r'6a5f35e46315f45c13d27a38a96738a7a8eaed92';
 
 @ProviderFor(TrophyNotifier)
 final trophyProvider = TrophyNotifierProvider._();
@@ -67,7 +67,7 @@ final class TrophyNotifierProvider
         argument: null,
         retry: null,
         name: r'trophyProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -80,7 +80,7 @@ final class TrophyNotifierProvider
   TrophyNotifier create() => TrophyNotifier();
 }
 
-String _$trophyNotifierHash() => r'e686c25b4c76708ab5866bee0e4468cbb8d13fbe';
+String _$trophyNotifierHash() => r'd7c89f03c8715afab6dc54a29ddae8c6fd54476a';
 
 abstract class _$TrophyNotifier extends $AsyncNotifier<TrophyState> {
   FutureOr<TrophyState> build();

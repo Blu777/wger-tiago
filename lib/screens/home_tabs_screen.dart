@@ -88,7 +88,6 @@ class _HomeTabsScreenState extends ConsumerState<HomeTabsScreen>
   Future<void> _loadEntries() async {
     final languageCode = Localizations.localeOf(context).languageCode;
     final authProvider = context.read<AuthProvider>();
-    final trophyNotifier = ref.read(trophyProvider.notifier);
 
     if (!authProvider.dataInit) {
       final routinesProvider = context.read<RoutinesProvider>();
@@ -128,7 +127,7 @@ class _HomeTabsScreenState extends ConsumerState<HomeTabsScreen>
         routinesProvider.fetchAndSetAllRoutinesSparse(),
         // routinesProvider.fetchAndSetAllRoutinesFull(),
         measurementNotifier.refresh(),
-        trophyNotifier.refresh(language: languageCode),
+        ref.read(trophyProvider.notifier).refresh(language: languageCode),
       ]);
 
       //

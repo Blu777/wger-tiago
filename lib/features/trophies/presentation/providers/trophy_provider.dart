@@ -57,14 +57,14 @@ class TrophyState {
       userTrophies.where((t) => t.trophy.type != TrophyType.pr).toList();
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 ITrophyRepository trophyRepository(Ref ref) {
   final base = ref.watch(wgerBaseProvider);
   final api = TrophyApiService(base);
   return TrophyRepository(api);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class TrophyNotifier extends _$TrophyNotifier {
   @override
   Future<TrophyState> build() async {

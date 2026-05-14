@@ -443,10 +443,11 @@ class MockWgerBaseProvider extends _i1.Mock implements _i2.WgerBaseProvider {
   @override
   _i13.Future<Map<String, dynamic>> post(
     Map<String, dynamic>? data,
-    Uri? uri,
-  ) =>
+    Uri? uri, {
+    Duration? timeout = const Duration(seconds: 15),
+  }) =>
       (super.noSuchMethod(
-            Invocation.method(#post, [data, uri]),
+            Invocation.method(#post, [data, uri], {#timeout: timeout}),
             returnValue: _i13.Future<Map<String, dynamic>>.value(
               <String, dynamic>{},
             ),
@@ -456,10 +457,11 @@ class MockWgerBaseProvider extends _i1.Mock implements _i2.WgerBaseProvider {
   @override
   _i13.Future<Map<String, dynamic>> patch(
     Map<String, dynamic>? data,
-    Uri? uri,
-  ) =>
+    Uri? uri, {
+    Duration? timeout = const Duration(seconds: 15),
+  }) =>
       (super.noSuchMethod(
-            Invocation.method(#patch, [data, uri]),
+            Invocation.method(#patch, [data, uri], {#timeout: timeout}),
             returnValue: _i13.Future<Map<String, dynamic>>.value(
               <String, dynamic>{},
             ),
@@ -467,13 +469,21 @@ class MockWgerBaseProvider extends _i1.Mock implements _i2.WgerBaseProvider {
           as _i13.Future<Map<String, dynamic>>);
 
   @override
-  _i13.Future<_i4.Response> deleteRequest(String? url, int? id) =>
+  _i13.Future<_i4.Response> deleteRequest(
+    String? url,
+    int? id, {
+    Duration? timeout = const Duration(seconds: 15),
+  }) =>
       (super.noSuchMethod(
-            Invocation.method(#deleteRequest, [url, id]),
+            Invocation.method(#deleteRequest, [url, id], {#timeout: timeout}),
             returnValue: _i13.Future<_i4.Response>.value(
               _FakeResponse_4(
                 this,
-                Invocation.method(#deleteRequest, [url, id]),
+                Invocation.method(
+                  #deleteRequest,
+                  [url, id],
+                  {#timeout: timeout},
+                ),
               ),
             ),
           )
