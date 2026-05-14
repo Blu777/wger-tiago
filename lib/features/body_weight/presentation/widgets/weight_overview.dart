@@ -21,11 +21,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:wger/features/body_weight/presentation/providers/body_weight_provider.dart';
 import 'package:wger/features/body_weight/presentation/widgets/weight_form.dart';
+import 'package:wger/features/measurement/presentation/screens/measurement_categories_screen.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
 import 'package:wger/models/nutrition/nutritional_plan.dart';
 import 'package:wger/models/user/profile.dart';
 import 'package:wger/screens/form_screen.dart';
-import 'package:wger/screens/measurement_categories_screen.dart';
 import 'package:wger/widgets/measurements/charts.dart';
 import 'package:wger/widgets/measurements/helpers.dart';
 

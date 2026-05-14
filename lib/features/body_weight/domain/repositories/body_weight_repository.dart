@@ -16,33 +16,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:wger/features/body_weight/data/api/body_weight_api_service.dart';
 import 'package:wger/features/body_weight/domain/models/weight_entry.dart';
-import 'package:wger/features/body_weight/domain/repositories/body_weight_repository.dart';
 
-class BodyWeightRepository implements IBodyWeightRepository {
-  final BodyWeightApiService _api;
+abstract class IBodyWeightRepository {
+  Future<List<WeightEntry>> fetchEntries();
 
-  BodyWeightRepository(this._api);
+  Future<WeightEntry> addEntry(WeightEntry entry);
 
-  @override
-  Future<List<WeightEntry>> fetchEntries() async {
-    return _api.fetchEntries();
-  }
+  Future<void> editEntry(WeightEntry entry);
 
-  @override
-  Future<WeightEntry> addEntry(WeightEntry entry) async {
-    final result = await _api.addEntry(entry);
-    return result;
-  }
-
-  @override
-  Future<void> editEntry(WeightEntry entry) async {
-    await _api.editEntry(entry);
-  }
-
-  @override
-  Future<void> deleteEntry(int id) async {
-    await _api.deleteEntry(id);
-  }
+  Future<void> deleteEntry(int id);
 }

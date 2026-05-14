@@ -20,18 +20,19 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:wger/features/body_weight/data/api/body_weight_api_service.dart';
 import 'package:wger/features/body_weight/data/repositories/body_weight_repository.dart';
 import 'package:wger/features/body_weight/domain/models/weight_entry.dart';
+import 'package:wger/features/body_weight/domain/repositories/body_weight_repository.dart';
 import 'package:wger/providers/wger_base_riverpod.dart';
 
 part 'body_weight_provider.g.dart';
 
-@Riverpod(keepAlive: true)
-BodyWeightRepository bodyWeightRepository(Ref ref) {
+@riverpod
+IBodyWeightRepository bodyWeightRepository(Ref ref) {
   final base = ref.watch(wgerBaseProvider);
   final api = BodyWeightApiService(base);
   return BodyWeightRepository(api);
 }
 
-@Riverpod(keepAlive: true, name: 'bodyWeightProvider')
+@riverpod
 class BodyWeightNotifier extends _$BodyWeightNotifier {
   @override
   Future<List<WeightEntry>> build() async {

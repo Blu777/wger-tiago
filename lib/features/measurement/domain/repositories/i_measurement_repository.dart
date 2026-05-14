@@ -16,22 +16,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:wger/features/body_weight/domain/models/weight_entry.dart';
+import 'package:wger/models/measurements/measurement_category.dart';
+import 'package:wger/models/measurements/measurement_entry.dart';
 
-/// Local data source for body weight entries.
-///
-/// Currently a placeholder. Will be backed by drift or shared preferences
-/// when offline persistence is implemented.
-class BodyWeightLocalSource {
-  Future<List<WeightEntry>> getEntries() async {
-    return [];
-  }
+abstract class IMeasurementRepository {
+  Future<List<MeasurementCategory>> fetchCategories();
 
-  Future<void> saveEntries(List<WeightEntry> entries) async {
-    // no-op
-  }
+  Future<List<MeasurementEntry>> fetchEntries(int categoryId);
 
-  Future<void> clear() async {
-    // no-op
-  }
+  Future<MeasurementCategory> addCategory(MeasurementCategory category);
+
+  Future<void> deleteCategory(int id);
+
+  Future<MeasurementCategory> editCategory(MeasurementCategory category);
+
+  Future<MeasurementEntry> addEntry(MeasurementEntry entry);
+
+  Future<void> deleteEntry(int id);
+
+  Future<MeasurementEntry> editEntry(MeasurementEntry entry);
 }

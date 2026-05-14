@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'measurement_riverpod.dart';
+part of 'measurement_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -8,6 +8,54 @@ part of 'measurement_riverpod.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
+
+@ProviderFor(measurementRepository)
+final measurementRepositoryProvider = MeasurementRepositoryProvider._();
+
+final class MeasurementRepositoryProvider
+    extends
+        $FunctionalProvider<
+          IMeasurementRepository,
+          IMeasurementRepository,
+          IMeasurementRepository
+        >
+    with $Provider<IMeasurementRepository> {
+  MeasurementRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'measurementRepositoryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$measurementRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<IMeasurementRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  IMeasurementRepository create(Ref ref) {
+    return measurementRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(IMeasurementRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<IMeasurementRepository>(value),
+    );
+  }
+}
+
+String _$measurementRepositoryHash() =>
+    r'7594262c77073a41d4d7a2c2e929df9f065fd693';
 
 @ProviderFor(MeasurementNotifier)
 final measurementProvider = MeasurementNotifierProvider._();
@@ -21,7 +69,7 @@ final class MeasurementNotifierProvider
         argument: null,
         retry: null,
         name: r'measurementProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -35,7 +83,7 @@ final class MeasurementNotifierProvider
 }
 
 String _$measurementNotifierHash() =>
-    r'4b22548867e09e4aca2c3dd29387c4f4a9291531';
+    r'ed1754a4eed5f85c7c9df9bddd0397050fa3f06a';
 
 abstract class _$MeasurementNotifier
     extends $AsyncNotifier<List<MeasurementCategory>> {

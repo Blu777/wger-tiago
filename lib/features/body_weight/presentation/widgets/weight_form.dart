@@ -39,6 +39,7 @@ class _WeightFormState extends ConsumerState<WeightForm> {
   late final TextEditingController _dateController;
   late final TextEditingController _timeController;
   late final TextEditingController _weightController;
+  bool _initialized = false;
 
   @override
   void initState() {
@@ -46,6 +47,37 @@ class _WeightFormState extends ConsumerState<WeightForm> {
     _dateController = TextEditingController();
     _timeController = TextEditingController();
     _weightController = TextEditingController();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_initialized) {
+      _initializeControllers();
+      _initialized = true;
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant WeightForm oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.initialEntry?.id != oldWidget.initialEntry?.id) {
+      _initializeControllers();
+    }
+  }
+
+  void _initializeControllers() {
+    final numberFormat = NumberFormat.decimalPattern(Localizations.localeOf(context).toString());
+    final dateFormat = DateFormat.yMd(Localizations.localeOf(context).languageCode);
+    final entry = widget.initialEntry;
+
+    if (entry != null && entry.weight != 0) {
+      _weightController.text = numberFormat.format(entry.weight);
+    } else {
+      _weightController.text = '';
+    }
+    _dateController.text = dateFormat.format(entry?.date ?? DateTime.now());
+    _timeController.text = TimeOfDay.fromDateTime(entry?.date ?? DateTime.now()).format(context);
   }
 
   @override
@@ -62,17 +94,6 @@ class _WeightFormState extends ConsumerState<WeightForm> {
     final dateFormat = DateFormat.yMd(Localizations.localeOf(context).languageCode);
     final timeFormat = DateFormat.Hm(Localizations.localeOf(context).languageCode);
     final entry = widget.initialEntry;
-
-    if (_weightController.text.isEmpty && entry != null && entry.weight != 0) {
-      _weightController.text = numberFormat.format(entry.weight);
-    }
-    if (_dateController.text.isEmpty) {
-      _dateController.text = dateFormat.format(entry?.date ?? DateTime.now());
-    }
-    if (_timeController.text.isEmpty) {
-      _timeController.text = TimeOfDay.fromDateTime(entry?.date ?? DateTime.now()).format(context);
-    }
-
     return Form(
       key: _form,
       child: Column(

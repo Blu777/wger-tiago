@@ -18,7 +18,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wger/providers/measurement_riverpod.dart';
+import 'package:wger/features/measurement/presentation/providers/measurement_provider.dart';
 
 import 'categories_card.dart';
 

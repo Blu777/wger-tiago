@@ -15,18 +15,18 @@ final bodyWeightRepositoryProvider = BodyWeightRepositoryProvider._();
 final class BodyWeightRepositoryProvider
     extends
         $FunctionalProvider<
-          BodyWeightRepository,
-          BodyWeightRepository,
-          BodyWeightRepository
+          IBodyWeightRepository,
+          IBodyWeightRepository,
+          IBodyWeightRepository
         >
-    with $Provider<BodyWeightRepository> {
+    with $Provider<IBodyWeightRepository> {
   BodyWeightRepositoryProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
         name: r'bodyWeightRepositoryProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -36,26 +36,26 @@ final class BodyWeightRepositoryProvider
 
   @$internal
   @override
-  $ProviderElement<BodyWeightRepository> $createElement(
+  $ProviderElement<IBodyWeightRepository> $createElement(
     $ProviderPointer pointer,
   ) => $ProviderElement(pointer);
 
   @override
-  BodyWeightRepository create(Ref ref) {
+  IBodyWeightRepository create(Ref ref) {
     return bodyWeightRepository(ref);
   }
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(BodyWeightRepository value) {
+  Override overrideWithValue(IBodyWeightRepository value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<BodyWeightRepository>(value),
+      providerOverride: $SyncValueProvider<IBodyWeightRepository>(value),
     );
   }
 }
 
 String _$bodyWeightRepositoryHash() =>
-    r'a04f4442350da1441d71c2a6b09375c7278e9e4f';
+    r'b73f4aa51bc8fa690fd24167ef4487211e74feaf';
 
 @ProviderFor(BodyWeightNotifier)
 final bodyWeightProvider = BodyWeightNotifierProvider._();
@@ -68,7 +68,7 @@ final class BodyWeightNotifierProvider
         argument: null,
         retry: null,
         name: r'bodyWeightProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -82,7 +82,7 @@ final class BodyWeightNotifierProvider
 }
 
 String _$bodyWeightNotifierHash() =>
-    r'63a57827feb0e2b8753a753ce62df820da6cd1d3';
+    r'0b479d718c94d2e7fc6941bc57554ffd3cf6b88c';
 
 abstract class _$BodyWeightNotifier extends $AsyncNotifier<List<WeightEntry>> {
   FutureOr<List<WeightEntry>> build();

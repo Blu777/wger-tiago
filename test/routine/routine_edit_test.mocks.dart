@@ -216,15 +216,8 @@ class MockRoutinesProvider extends _i1.Mock implements _i12.RoutinesProvider {
           as List<_i5.Routine>);
 
   @override
-  _i5.Routine findById(int? id) =>
-      (super.noSuchMethod(
-            Invocation.method(#findById, [id]),
-            returnValue: _FakeRoutine_3(
-              this,
-              Invocation.method(#findById, [id]),
-            ),
-          )
-          as _i5.Routine);
+  _i5.Routine? findById(int? id) =>
+      (super.noSuchMethod(Invocation.method(#findById, [id])) as _i5.Routine?);
 
   @override
   int findIndexById(int? id) =>

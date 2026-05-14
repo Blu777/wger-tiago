@@ -30,7 +30,7 @@ import 'package:wger/models/workouts/session.dart';
 import 'package:wger/providers/auth.dart';
 import 'package:wger/providers/exercises.dart';
 import 'package:wger/providers/gallery.dart';
-import 'package:wger/providers/measurement_riverpod.dart';
+import 'package:wger/features/measurement/presentation/providers/measurement_provider.dart';
 import 'package:wger/providers/nutrition.dart';
 import 'package:wger/providers/routines.dart';
 import 'package:wger/providers/user.dart';

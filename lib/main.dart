@@ -23,6 +23,8 @@ import 'package:provider/provider.dart';
 import 'package:wger/core/exceptions/http_exception.dart';
 import 'package:wger/core/locator.dart';
 import 'package:wger/features/body_weight/presentation/screens/weight_screen.dart';
+import 'package:wger/features/measurement/presentation/screens/measurement_categories_screen.dart';
+import 'package:wger/features/measurement/presentation/screens/measurement_entries_screen.dart';
 import 'package:wger/helpers/errors.dart';
 import 'package:wger/helpers/locale.dart';
 import 'package:wger/helpers/shared_preferences.dart';
@@ -46,8 +48,6 @@ import 'package:wger/screens/gym_mode.dart';
 import 'package:wger/screens/home_tabs_screen.dart';
 import 'package:wger/screens/log_meal_screen.dart';
 import 'package:wger/screens/log_meals_screen.dart';
-import 'package:wger/screens/measurement_categories_screen.dart';
-import 'package:wger/screens/measurement_entries_screen.dart';
 import 'package:wger/screens/nutritional_diary_screen.dart';
 import 'package:wger/screens/nutritional_plan_screen.dart';
 import 'package:wger/screens/nutritional_plans_screen.dart';
@@ -253,10 +253,18 @@ class MainApp extends StatelessWidget {
                 NutritionalPlanScreen.routeName: (ctx) => const NutritionalPlanScreen(),
                 LogMealsScreen.routeName: (ctx) => const LogMealsScreen(),
                 LogMealScreen.routeName: (ctx) => const LogMealScreen(),
-                WeightScreen.routeName: (ctx) => WeightScreen(
-                      profile: ctx.read<UserProvider>().profile!,
-                      plans: ctx.read<NutritionPlansProvider>().items,
-                    ),
+                WeightScreen.routeName: (ctx) {
+                  final profile = ctx.read<UserProvider>().profile;
+                  if (profile == null) {
+                    return const Scaffold(
+                      body: Center(child: CircularProgressIndicator()),
+                    );
+                  }
+                  return WeightScreen(
+                    profile: profile,
+                    plans: ctx.read<NutritionPlansProvider>().items,
+                  );
+                },
                 RoutineScreen.routeName: (ctx) => const RoutineScreen(),
                 RoutineEditScreen.routeName: (ctx) => const RoutineEditScreen(),
                 WorkoutLogsScreen.routeName: (ctx) => const WorkoutLogsScreen(),

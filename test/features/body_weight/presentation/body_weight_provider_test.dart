@@ -118,5 +118,95 @@ void main() {
       final state = container.read(bodyWeightProvider);
       expect(state.value?.length, 0);
     });
+
+    test('rolls back state on addEntry exception', () async {
+      final uri = Uri(
+        scheme: 'https',
+        host: 'localhost',
+        path: 'api/v2/weightentry/',
+      );
+      when(mockBaseProvider.makeUrl(any, query: anyNamed('query'))).thenReturn(uri);
+
+      // Seed the state with one entry
+      when(mockBaseProvider.post(any, uri)).thenAnswer(
+        (_) => Future.value({'id': 1, 'date': '2021-01-01', 'weight': '70'}),
+      );
+      final notifier = container.read(bodyWeightProvider.notifier);
+      await notifier.addEntry(WeightEntry(date: DateTime(2021, 1, 1), weight: 70));
+      final previousState = container.read(bodyWeightProvider);
+      expect(previousState.value?.length, 1);
+
+      // Force addEntry to throw
+      when(mockBaseProvider.post(any, uri)).thenThrow(Exception('network error'));
+
+      final newEntry = WeightEntry(date: DateTime(2021, 1, 2), weight: 80);
+      await expectLater(notifier.addEntry(newEntry), throwsException);
+
+      final state = container.read(bodyWeightProvider);
+      expect(state.value?.length, 1);
+      expect(state.value?.first.weight, 70);
+    });
+
+    test('rolls back state on editEntry exception', () async {
+      final uri = Uri(
+        scheme: 'https',
+        host: 'localhost',
+        path: 'api/v2/weightentry/',
+      );
+      final patchUri = Uri(
+        scheme: 'https',
+        host: 'localhost',
+        path: 'api/v2/weightentry/1/',
+      );
+      when(mockBaseProvider.makeUrl(any, query: anyNamed('query'))).thenReturn(uri);
+      when(mockBaseProvider.makeUrl('weightentry', id: 1)).thenReturn(patchUri);
+
+      // Seed the state with one entry
+      when(mockBaseProvider.post(any, uri)).thenAnswer(
+        (_) => Future.value({'id': 1, 'date': '2021-01-01', 'weight': '70'}),
+      );
+      final notifier = container.read(bodyWeightProvider.notifier);
+      await notifier.addEntry(WeightEntry(date: DateTime(2021, 1, 1), weight: 70));
+      final previousState = container.read(bodyWeightProvider);
+      expect(previousState.value?.length, 1);
+      expect(previousState.value?.first.weight, 70);
+
+      // Force editEntry to throw
+      when(mockBaseProvider.patch(any, patchUri)).thenThrow(Exception('network error'));
+
+      final updatedEntry = WeightEntry(id: 1, date: DateTime(2021, 1, 1), weight: 75);
+      await expectLater(notifier.editEntry(updatedEntry), throwsException);
+
+      final state = container.read(bodyWeightProvider);
+      expect(state.value?.length, 1);
+      expect(state.value?.first.weight, 70);
+    });
+
+    test('rolls back state on deleteEntry exception', () async {
+      final uri = Uri(
+        scheme: 'https',
+        host: 'localhost',
+        path: 'api/v2/weightentry/',
+      );
+      when(mockBaseProvider.makeUrl(any, query: anyNamed('query'))).thenReturn(uri);
+
+      // Seed the state with one entry
+      when(mockBaseProvider.post(any, uri)).thenAnswer(
+        (_) => Future.value({'id': 5, 'date': '2021-01-01', 'weight': '70'}),
+      );
+      final notifier = container.read(bodyWeightProvider.notifier);
+      await notifier.addEntry(WeightEntry(date: DateTime(2021, 1, 1), weight: 70));
+      final previousState = container.read(bodyWeightProvider);
+      expect(previousState.value?.length, 1);
+
+      // Force deleteEntry to throw
+      when(mockBaseProvider.deleteRequest('weightentry', 5)).thenThrow(Exception('network error'));
+
+      await expectLater(notifier.deleteEntry(5), throwsException);
+
+      final state = container.read(bodyWeightProvider);
+      expect(state.value?.length, 1);
+      expect(state.value?.first.id, 5);
+    });
   });
 }
