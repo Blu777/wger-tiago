@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
@@ -157,7 +158,13 @@ class AddExerciseProvider with ChangeNotifier {
   }
 
   void removeImage(String path) {
-    final file = _exerciseImages.where((element) => element.imageFile.path == path).first;
+    final file = _exerciseImages.firstWhereOrNull(
+      (element) => element.imageFile.path == path,
+    );
+    if (file == null) {
+      _logger.warning('Could not find image with path $path to remove');
+      return;
+    }
     _exerciseImages.remove(file);
     notifyListeners();
   }

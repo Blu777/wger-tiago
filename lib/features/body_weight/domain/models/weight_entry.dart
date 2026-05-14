@@ -24,24 +24,18 @@ part 'weight_entry.g.dart';
 @JsonSerializable()
 class WeightEntry {
   @JsonKey(required: true)
-  int? id;
+  final int? id;
 
   @JsonKey(required: true, fromJson: stringToNum, toJson: numToString)
-  late num weight = 0;
+  final num weight;
 
   @JsonKey(required: true, fromJson: utcIso8601ToLocalDate, toJson: dateToUtcIso8601)
-  late DateTime date;
+  final DateTime date;
 
-  WeightEntry({this.id, weight, DateTime? date}) {
-    this.date = date ?? DateTime.now();
+  const WeightEntry({this.id, required this.weight, required this.date});
 
-    if (weight != null) {
-      this.weight = weight;
-    }
-  }
-
-  WeightEntry copyWith({int? id, int? weight, DateTime? date}) => WeightEntry(
-    id: id,
+  WeightEntry copyWith({int? id, num? weight, DateTime? date}) => WeightEntry(
+    id: id ?? this.id,
     weight: weight ?? this.weight,
     date: date ?? this.date,
   );

@@ -45,7 +45,7 @@ void main() {
     });
 
     // Act
-    final provider = WgerBaseProvider(testAuthProvider, mockClient);
+    final provider = WgerBaseProvider(createTestAuthProvider(), mockClient);
     final result = await provider.fetch(testUri, initialDelay: const Duration(milliseconds: 1));
 
     // Assert
@@ -67,7 +67,7 @@ void main() {
     });
 
     // Act
-    final provider = WgerBaseProvider(testAuthProvider, mockClient);
+    final provider = WgerBaseProvider(createTestAuthProvider(), mockClient);
     final result = await provider.fetch(testUri, initialDelay: const Duration(milliseconds: 1));
 
     // Assert
@@ -84,7 +84,7 @@ void main() {
     ).thenAnswer((_) => Future.value(Response('{"error":"bad"}', 400)));
 
     // Act
-    final provider = WgerBaseProvider(testAuthProvider, mockClient);
+    final provider = WgerBaseProvider(createTestAuthProvider(), mockClient);
 
     // Assert
     await expectLater(
@@ -102,7 +102,7 @@ void main() {
     ).thenAnswer((_) => Future.error(ClientException('conn fail')));
 
     // Act
-    final provider = WgerBaseProvider(testAuthProvider, mockClient);
+    final provider = WgerBaseProvider(createTestAuthProvider(), mockClient);
     dynamic caught;
     try {
       await provider.fetch(testUri, initialDelay: const Duration(milliseconds: 1));
@@ -124,7 +124,7 @@ void main() {
     ).thenAnswer((_) => Future.value(Response('{"ok": true}', 200)));
 
     // Act
-    final provider = WgerBaseProvider(testAuthProvider, mockClient);
+    final provider = WgerBaseProvider(createTestAuthProvider(), mockClient);
     final result = await provider.fetch(testUri);
 
     // Assert

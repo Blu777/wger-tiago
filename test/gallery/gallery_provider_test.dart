@@ -47,7 +47,7 @@ void main() {
         ),
       );
 
-      final galleryProvider = GalleryProvider(testAuthProvider, [], client);
+      final galleryProvider = GalleryProvider(createTestAuthProvider(), [], client);
 
       await galleryProvider.fetchAndSetGallery();
 
@@ -74,7 +74,7 @@ void main() {
         ),
       );
 
-      final galleryProvider = GalleryProvider(testAuthProvider, [], client);
+      final galleryProvider = GalleryProvider(createTestAuthProvider(), [], client);
 
       final image = gallery.Image(
         id: 58,

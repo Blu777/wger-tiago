@@ -16,20 +16,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+// ignore_for_file: scoped_providers_should_specify_dependencies
+
 import 'package:drift/native.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 import 'package:wger/database/ingredients/ingredients_database.dart';
+import 'package:wger/features/body_weight/domain/models/weight_entry.dart';
+import 'package:wger/features/body_weight/presentation/providers/body_weight_provider.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
 import 'package:wger/models/nutrition/nutritional_plan.dart';
 import 'package:wger/models/user/profile.dart';
 import 'package:wger/providers/auth.dart';
 import 'package:wger/providers/base_provider.dart';
-import 'package:wger/providers/body_weight.dart';
 import 'package:wger/providers/nutrition.dart';
 import 'package:wger/providers/user.dart';
 import 'package:wger/screens/form_screen.dart';
@@ -37,6 +41,11 @@ import 'package:wger/screens/nutritional_plans_screen.dart';
 import 'package:wger/widgets/nutrition/forms.dart';
 
 import 'nutritional_plan_screen_test.mocks.dart';
+
+class MockBodyWeightNotifier extends BodyWeightNotifier {
+  @override
+  Future<List<WeightEntry>> build() async => [];
+}
 
 @GenerateMocks([AuthProvider, WgerBaseProvider, http.Client])
 void main() {
@@ -66,51 +75,53 @@ void main() {
     when(mockAuthProvider.serverUrl).thenReturn('http://localhost');
     when(mockAuthProvider.getAppNameHeader()).thenReturn('wger app');
 
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<NutritionPlansProvider>(
-          create: (context) => NutritionPlansProvider(
-            mockBaseProvider,
-            [
-              NutritionalPlan(
-                id: 1,
-                description: 'test plan 1',
-                creationDate: DateTime(2021, 01, 01),
-                startDate: DateTime(2021, 01, 01),
-              ),
-              NutritionalPlan(
-                id: 2,
-                description: 'test plan 2',
-                creationDate: DateTime(2021, 01, 10),
-                startDate: DateTime(2021, 01, 10),
-              ),
-            ],
-            database: database,
-          ),
-        ),
-        ChangeNotifierProvider<BodyWeightProvider>(
-          create: (context) => BodyWeightProvider(mockBaseProvider),
-        ),
-        ChangeNotifierProvider<UserProvider>(
-          create: (context) =>
-              UserProvider(
-                  mockBaseProvider,
-                )
-                ..profile = Profile(
-                  username: 'test',
-                  emailVerified: true,
-                  isTrustworthy: true,
-                  email: 'test@example.com',
-                  weightUnitStr: 'kg',
-                ),
-        ),
+    return ProviderScope(
+      overrides: [
+        bodyWeightProvider.overrideWith(() => MockBodyWeightNotifier()),
       ],
-      child: MaterialApp(
-        locale: Locale(locale),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: const NutritionalPlansScreen(),
-        routes: {FormScreen.routeName: (ctx) => const FormScreen()},
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider<NutritionPlansProvider>(
+            create: (context) => NutritionPlansProvider(
+              mockBaseProvider,
+              [
+                NutritionalPlan(
+                  id: 1,
+                  description: 'test plan 1',
+                  creationDate: DateTime(2021, 01, 01),
+                  startDate: DateTime(2021, 01, 01),
+                ),
+                NutritionalPlan(
+                  id: 2,
+                  description: 'test plan 2',
+                  creationDate: DateTime(2021, 01, 10),
+                  startDate: DateTime(2021, 01, 10),
+                ),
+              ],
+              database: database,
+            ),
+          ),
+          ChangeNotifierProvider<UserProvider>(
+            create: (context) =>
+                UserProvider(
+                    mockBaseProvider,
+                  )
+                  ..profile = Profile(
+                    username: 'test',
+                    emailVerified: true,
+                    isTrustworthy: true,
+                    email: 'test@example.com',
+                    weightUnitStr: 'kg',
+                  ),
+          ),
+        ],
+        child: MaterialApp(
+          locale: Locale(locale),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: const NutritionalPlansScreen(),
+          routes: {FormScreen.routeName: (ctx) => const FormScreen()},
+        ),
       ),
     );
   }

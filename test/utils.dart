@@ -19,14 +19,16 @@
 import 'package:wger/providers/auth.dart';
 import 'package:wger/providers/exercises.dart';
 
-import 'measurements/measurement_provider_test.mocks.dart';
 import 'other/base_provider_test.mocks.dart';
 
-// Test Auth provider
-final AuthProvider testAuthProvider = AuthProvider(MockClient())
+/// Creates a fresh test Auth provider to avoid state leaking between tests
+AuthProvider createTestAuthProvider() => AuthProvider(MockClient())
   ..token = 'FooBar'
   ..serverUrl = 'https://localhost';
 
-// Test Exercises provider
-final mockBaseProvider = MockWgerBaseProvider();
-final ExercisesProvider testExercisesProvider = ExercisesProvider(mockBaseProvider);
+/// Creates a fresh mock base provider
+MockWgerBaseProvider createMockBaseProvider() => MockWgerBaseProvider();
+
+/// Creates a fresh Exercises provider with a mock base
+ExercisesProvider createTestExercisesProvider(MockWgerBaseProvider mock) =>
+    ExercisesProvider(mock);

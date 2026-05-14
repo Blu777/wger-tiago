@@ -34,6 +34,11 @@ class RoutineScreen extends StatelessWidget {
     final provider = context.read<RoutinesProvider>();
 
     final routine = provider.findById(routineId);
+    if (routine == null) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
 
     return Scaffold(
       appBar: RoutineDetailAppBar(routine),

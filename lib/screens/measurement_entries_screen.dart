@@ -16,13 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart';
-import 'package:wger/core/exceptions/no_such_entry_exception.dart';
 import 'package:wger/core/wide_screen_wrapper.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
 import 'package:wger/models/measurements/measurement_category.dart';
-import 'package:wger/providers/measurement.dart';
+import 'package:wger/models/nutrition/nutritional_plan.dart';
+import 'package:wger/providers/measurement_riverpod.dart';
+import 'package:wger/providers/nutrition.dart';
 import 'package:wger/screens/form_screen.dart';
 import 'package:wger/widgets/measurements/entries.dart';
 import 'package:wger/widgets/measurements/forms.dart';
@@ -32,28 +35,61 @@ enum MeasurementOptions {
   delete,
 }
 
-class MeasurementEntriesScreen extends StatelessWidget {
+class MeasurementEntriesScreen extends ConsumerWidget {
   const MeasurementEntriesScreen();
 
   static const routeName = '/measurement-entries';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final categoryId = ModalRoute.of(context)!.settings.arguments as int;
-    final provider = Provider.of<MeasurementProvider>(context);
-    MeasurementCategory? category;
+    final categoriesAsync = ref.watch(measurementProvider);
+    final plans = context.read<NutritionPlansProvider>().items;
 
-    try {
-      category = provider.findCategoryById(categoryId);
-    } on NoSuchEntryException {
-      Future.microtask(() {
-        if (context.mounted && Navigator.of(context).canPop()) {
-          Navigator.of(context).pop();
+    return categoriesAsync.when(
+      loading: () => Scaffold(
+        appBar: AppBar(),
+        body: const Center(child: CircularProgressIndicator()),
+      ),
+      error: (err, stack) => Scaffold(
+        appBar: AppBar(),
+        body: Center(child: Text('Error: $err')),
+      ),
+      data: (categories) {
+        final category = categories.firstWhereOrNull((c) => c.id == categoryId);
+
+        if (category == null) {
+          Future.microtask(() {
+            if (context.mounted && Navigator.of(context).canPop()) {
+              Navigator.of(context).pop();
+            }
+          });
+          return const SizedBox();
         }
-      });
-      return const SizedBox(); // Return empty widget until pop happens
-    }
 
+        return _MeasurementEntriesBody(
+          category: category,
+          categoryId: categoryId,
+          plans: plans,
+        );
+      },
+    );
+  }
+}
+
+class _MeasurementEntriesBody extends StatelessWidget {
+  final MeasurementCategory category;
+  final int categoryId;
+  final List<NutritionalPlan> plans;
+
+  const _MeasurementEntriesBody({
+    required this.category,
+    required this.categoryId,
+    required this.plans,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(category.name),
@@ -79,7 +115,7 @@ class MeasurementEntriesScreen extends StatelessWidget {
                     builder: (BuildContext contextDialog) {
                       return AlertDialog(
                         content: Text(
-                          AppLocalizations.of(context).confirmDelete(category!.name),
+                          AppLocalizations.of(context).confirmDelete(category.name),
                         ),
                         actions: [
                           TextButton(
@@ -94,17 +130,8 @@ class MeasurementEntriesScreen extends StatelessWidget {
                               ),
                             ),
                             onPressed: () {
-                              // Confirmed, delete the workout
-                              Provider.of<MeasurementProvider>(
-                                context,
-                                listen: false,
-                              ).deleteCategory(category!.id!);
-                              // Close the popup
                               Navigator.of(contextDialog).pop();
-
-                              Navigator.of(context).pop(); // Exit detail screen
-
-                              // and inform the user
+                              Navigator.of(context).pop();
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
@@ -152,9 +179,7 @@ class MeasurementEntriesScreen extends StatelessWidget {
       ),
       body: WidescreenWrapper(
         child: SingleChildScrollView(
-          child: Consumer<MeasurementProvider>(
-            builder: (context, provider, child) => EntriesList(category!),
-          ),
+          child: EntriesList(category: category, plans: plans),
         ),
       ),
     );

@@ -7,7 +7,7 @@
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * wger Workout Manager is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
@@ -18,27 +18,39 @@
 
 import 'dart:convert';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:wger/models/body_weight/weight_entry.dart';
+import 'package:wger/features/body_weight/domain/models/weight_entry.dart';
+import 'package:wger/features/body_weight/presentation/providers/body_weight_provider.dart';
 import 'package:wger/providers/base_provider.dart';
-import 'package:wger/providers/body_weight.dart';
+import 'package:wger/providers/wger_base_riverpod.dart';
 
-import '../fixtures/fixture_reader.dart';
-import 'weight_provider_test.mocks.dart';
+import '../../../fixtures/fixture_reader.dart';
+import 'body_weight_provider_test.mocks.dart';
 
 @GenerateMocks([WgerBaseProvider])
 void main() {
   late MockWgerBaseProvider mockBaseProvider;
+  late ProviderContainer container;
 
   setUp(() {
     mockBaseProvider = MockWgerBaseProvider();
+    container = ProviderContainer(
+      overrides: [
+        wgerBaseProvider.overrideWithValue(mockBaseProvider),
+      ],
+    );
   });
 
-  group('test body weight provider', () {
-    test('Test that the weight entries are correctly loaded', () async {
+  tearDown(() {
+    container.dispose();
+  });
+
+  group('BodyWeightNotifier', () {
+    test('fetches entries on build', () async {
       final uri = Uri(
         scheme: 'https',
         host: 'localhost',
@@ -53,17 +65,14 @@ void main() {
         (_) => Future.value(weightEntries['results']),
       );
 
-      // Load the entries
-      final BodyWeightProvider provider = BodyWeightProvider(mockBaseProvider);
-      await provider.fetchAndSetEntries();
+      await container.read(bodyWeightProvider.future);
+      final state = container.read(bodyWeightProvider);
 
-      // Check that everything is ok
-      expect(provider.items, isA<List<WeightEntry>>());
-      expect(provider.items.length, 11);
+      expect(state.value, isA<List<WeightEntry>>());
+      expect(state.value?.length, 11);
     });
 
-    test('Test adding a new weight entry', () async {
-      // Arrange
+    test('adds a new weight entry', () async {
       final uri = Uri(
         scheme: 'https',
         host: 'localhost',
@@ -77,19 +86,16 @@ void main() {
         ),
       ).thenAnswer((_) => Future.value({'id': 25, 'date': '2021-01-01', 'weight': '80'}));
 
-      // Act
-      final BodyWeightProvider provider = BodyWeightProvider(mockBaseProvider);
-      final WeightEntry weightEntry = WeightEntry(date: DateTime.utc(2021, 1, 1), weight: 80);
-      final WeightEntry weightEntryNew = await provider.addEntry(weightEntry);
+      final weightEntry = WeightEntry(date: DateTime.utc(2021, 1, 1), weight: 80);
+      await container.read(bodyWeightProvider.notifier).addEntry(weightEntry);
 
-      // Assert
-      expect(weightEntryNew.id, 25);
-      expect(weightEntryNew.date, DateTime(2021, 1, 1));
-      expect(weightEntryNew.weight, 80);
+      final state = container.read(bodyWeightProvider);
+      expect(state.value?.length, 1);
+      expect(state.value?.first.id, 25);
+      expect(state.value?.first.weight, 80);
     });
 
-    test('Test deleting an existing weight entry', () async {
-      // Arrange
+    test('deletes an existing weight entry', () async {
       final uri = Uri(
         scheme: 'https',
         host: 'localhost',
@@ -100,17 +106,17 @@ void main() {
         (_) => Future.value(Response("{'id': 4, 'date': '2021-01-01', 'weight': '80'}", 204)),
       );
 
-      // DELETE the data from the server
-      final BodyWeightProvider provider = BodyWeightProvider(mockBaseProvider);
-      provider.items = [
-        WeightEntry(id: 4, weight: 80, date: DateTime(2021, 1, 1)),
-        WeightEntry(id: 2, weight: 100, date: DateTime(2021, 2, 2)),
-        WeightEntry(id: 5, weight: 60, date: DateTime(2021, 2, 2)),
-      ];
-      await provider.deleteEntry(4);
+      // Seed the state with an entry via addEntry then delete it
+      final notifier = container.read(bodyWeightProvider.notifier);
+      when(
+        mockBaseProvider.post(any, uri),
+      ).thenAnswer((_) => Future.value({'id': 4, 'date': '2021-01-01', 'weight': '80'}));
 
-      // Check that the entry was removed from the entry list
-      expect(provider.items.length, 2);
+      await notifier.addEntry(WeightEntry(id: 4, date: DateTime(2021, 1, 1), weight: 80));
+      await notifier.deleteEntry(4);
+
+      final state = container.read(bodyWeightProvider);
+      expect(state.value?.length, 0);
     });
   });
 }

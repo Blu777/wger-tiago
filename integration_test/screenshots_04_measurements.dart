@@ -16,35 +16,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+// ignore_for_file: scoped_providers_should_specify_dependencies
+
 import 'package:flutter/material.dart';
-import 'package:mockito/mockito.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
-import 'package:wger/providers/measurement.dart';
+import 'package:wger/models/measurements/measurement_category.dart';
+import 'package:wger/providers/measurement_riverpod.dart';
 import 'package:wger/screens/measurement_categories_screen.dart';
 import 'package:wger/theme/theme.dart';
 
-import '../test/measurements/measurement_categories_screen_test.mocks.dart';
 import '../test_data/measurements.dart';
+
+class MockMeasurementNotifier extends MeasurementNotifier {
+  @override
+  Future<List<MeasurementCategory>> build() async => getMeasurementCategories();
+}
 
 Widget createMeasurementScreen({Locale? locale}) {
   locale ??= const Locale('en');
 
-  final mockMeasurementProvider = MockMeasurementProvider();
-  when(mockMeasurementProvider.categories).thenReturn(getMeasurementCategories());
-
-  return MediaQuery(
-    data: MediaQueryData.fromView(WidgetsBinding.instance.platformDispatcher.views.first).copyWith(
-      padding: EdgeInsets.zero,
-      viewPadding: EdgeInsets.zero,
-      viewInsets: EdgeInsets.zero,
-    ),
-    child: MultiProvider(
-      providers: [
-        ChangeNotifierProvider<MeasurementProvider>(
-          create: (context) => mockMeasurementProvider,
-        ),
-      ],
+  return ProviderScope(
+    overrides: [
+      measurementProvider.overrideWith(() => MockMeasurementNotifier()),
+    ],
+    child: MediaQuery(
+      data: MediaQueryData.fromView(WidgetsBinding.instance.platformDispatcher.views.first).copyWith(
+        padding: EdgeInsets.zero,
+        viewPadding: EdgeInsets.zero,
+        viewInsets: EdgeInsets.zero,
+      ),
       child: MaterialApp(
         locale: locale,
         debugShowCheckedModeBanner: false,

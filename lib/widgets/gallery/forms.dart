@@ -26,6 +26,7 @@ import 'package:wger/helpers/consts.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
 import 'package:wger/models/gallery/image.dart' as gallery;
 import 'package:wger/providers/gallery.dart';
+import 'package:wger/widgets/core/image.dart';
 
 class ImageForm extends StatefulWidget {
   late final gallery.Image _image;
@@ -80,7 +81,15 @@ class _ImageFormState extends State<ImageForm> {
 
     // We are editing an existing entry
     if (widget._image.url != null) {
-      return Image.network(widget._image.url!);
+      return Image.network(
+        widget._image.url!,
+        errorBuilder: (context, error, stackTrace) => handleImageError(
+          context,
+          error,
+          stackTrace,
+          widget._image.url!,
+        ),
+      );
     }
 
     // No picture available, show a message to the user

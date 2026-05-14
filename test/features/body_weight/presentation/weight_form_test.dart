@@ -18,19 +18,19 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:wger/features/body_weight/domain/models/weight_entry.dart';
+import 'package:wger/features/body_weight/presentation/widgets/weight_form.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
-import 'package:wger/models/body_weight/weight_entry.dart';
-import 'package:wger/widgets/weight/forms.dart';
 
-import '../../test_data/body_weight.dart';
+import '../../../../test_data/body_weight.dart';
 
 void main() {
-  Widget createWeightForm({locale = 'en', weightEntry = WeightEntry}) {
+  Widget createWeightForm({locale = 'en', WeightEntry? weightEntry}) {
     return MaterialApp(
       locale: Locale(locale),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: Scaffold(body: WeightForm(weightEntry)),
+      home: Scaffold(body: WeightForm(initialEntry: weightEntry)),
     );
   }
 

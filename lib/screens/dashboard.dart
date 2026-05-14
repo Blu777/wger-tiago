@@ -20,6 +20,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wger/helpers/material.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
+import 'package:wger/models/nutrition/nutritional_plan.dart';
+import 'package:wger/models/user/profile.dart';
+import 'package:wger/providers/nutrition.dart';
 import 'package:wger/providers/user.dart';
 import 'package:wger/widgets/core/app_bar.dart';
 import 'package:wger/widgets/dashboard/calendar.dart';
@@ -34,12 +37,16 @@ class DashboardScreen extends StatelessWidget {
 
   static const routeName = '/dashboard';
 
-  Widget _getDashboardWidget(DashboardWidget widget) {
+  Widget _getDashboardWidget(
+    DashboardWidget widget,
+    Profile profile,
+    List<NutritionalPlan> plans,
+  ) {
     switch (widget) {
       case DashboardWidget.routines:
         return const DashboardRoutineWidget();
       case DashboardWidget.weight:
-        return const DashboardWeightWidget();
+        return DashboardWeightWidget(profile: profile, plans: plans);
       case DashboardWidget.measurements:
         return const DashboardMeasurementWidget();
       case DashboardWidget.calendar:
@@ -56,6 +63,8 @@ class DashboardScreen extends StatelessWidget {
     final width = MediaQuery.sizeOf(context).width;
     final isMobile = width < MATERIAL_XS_BREAKPOINT;
     final user = Provider.of<UserProvider>(context);
+    final profile = user.profile!;
+    final plans = Provider.of<NutritionPlansProvider>(context).items;
 
     late final int crossAxisCount;
     if (width < MATERIAL_XS_BREAKPOINT) {
@@ -77,13 +86,13 @@ class DashboardScreen extends StatelessWidget {
               ? ListView.builder(
                   padding: const EdgeInsets.all(10),
                   itemBuilder: (context, index) =>
-                      _getDashboardWidget(user.dashboardWidgets[index]),
+                      _getDashboardWidget(user.dashboardWidgets[index], profile, plans),
                   itemCount: user.dashboardWidgets.length,
                 )
               : GridView.builder(
                   padding: const EdgeInsets.all(10),
                   itemBuilder: (context, index) => SingleChildScrollView(
-                    child: _getDashboardWidget(user.dashboardWidgets[index]),
+                    child: _getDashboardWidget(user.dashboardWidgets[index], profile, plans),
                   ),
                   itemCount: user.dashboardWidgets.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

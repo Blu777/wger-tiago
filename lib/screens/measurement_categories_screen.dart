@@ -17,10 +17,8 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:wger/core/wide_screen_wrapper.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
-import 'package:wger/providers/measurement.dart';
 import 'package:wger/screens/form_screen.dart';
 import 'package:wger/widgets/measurements/categories.dart';
 import 'package:wger/widgets/measurements/forms.dart';
@@ -47,10 +45,8 @@ class MeasurementCategoriesScreen extends StatelessWidget {
           );
         },
       ),
-      body: WidescreenWrapper(
-        child: Consumer<MeasurementProvider>(
-          builder: (context, provider, child) => const CategoriesList(),
-        ),
+      body: const WidescreenWrapper(
+        child: CategoriesList(),
       ),
     );
   }

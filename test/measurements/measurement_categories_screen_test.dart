@@ -16,51 +16,48 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+// ignore_for_file: scoped_providers_should_specify_dependencies
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
-import 'package:provider/provider.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
 import 'package:wger/models/measurements/measurement_category.dart';
 import 'package:wger/models/measurements/measurement_entry.dart';
-import 'package:wger/providers/measurement.dart';
+import 'package:wger/providers/measurement_riverpod.dart';
 import 'package:wger/screens/measurement_categories_screen.dart';
 import 'package:wger/widgets/measurements/charts.dart';
 
-import 'measurement_categories_screen_test.mocks.dart';
+class MockMeasurementNotifier extends MeasurementNotifier {
+  @override
+  Future<List<MeasurementCategory>> build() async => [
+    MeasurementCategory(
+      id: 1,
+      name: 'body fat',
+      unit: '%',
+      entries: [
+        MeasurementEntry(id: 1, category: 1, date: DateTime(2021, 9, 1), value: 10, notes: ''),
+        MeasurementEntry(id: 2, category: 1, date: DateTime(2021, 9, 5), value: 11, notes: ''),
+      ],
+    ),
+    MeasurementCategory(
+      id: 2,
+      name: 'biceps',
+      unit: 'cm',
+      entries: [
+        MeasurementEntry(id: 3, category: 2, date: DateTime(2021, 9, 1), value: 30, notes: ''),
+        MeasurementEntry(id: 4, category: 2, date: DateTime(2021, 9, 5), value: 40, notes: ''),
+      ],
+    ),
+  ];
+}
 
-@GenerateMocks([MeasurementProvider])
 void main() {
-  late MeasurementProvider mockMeasurementProvider;
-
-  setUp(() {
-    mockMeasurementProvider = MockMeasurementProvider();
-    when(mockMeasurementProvider.categories).thenReturn([
-      MeasurementCategory(
-        id: 1,
-        name: 'body fat',
-        unit: '%',
-        entries: [
-          MeasurementEntry(id: 1, category: 1, date: DateTime(2021, 9, 1), value: 10, notes: ''),
-          MeasurementEntry(id: 2, category: 1, date: DateTime(2021, 9, 5), value: 11, notes: ''),
-        ],
-      ),
-      MeasurementCategory(
-        id: 2,
-        name: 'biceps',
-        unit: 'cm',
-        entries: [
-          MeasurementEntry(id: 3, category: 2, date: DateTime(2021, 9, 1), value: 30, notes: ''),
-          MeasurementEntry(id: 4, category: 2, date: DateTime(2021, 9, 5), value: 40, notes: ''),
-        ],
-      ),
-    ]);
-  });
-
   Widget createHomeScreen({locale = 'en'}) {
-    return ChangeNotifierProvider<MeasurementProvider>(
-      create: (context) => mockMeasurementProvider,
+    return ProviderScope(
+      overrides: [
+        measurementProvider.overrideWith(() => MockMeasurementNotifier()),
+      ],
       child: MaterialApp(
         locale: Locale(locale),
         localizationsDelegates: AppLocalizations.localizationsDelegates,

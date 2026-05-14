@@ -1,5 +1,3 @@
-// ignore_for_file: must_be_immutable
-
 /*
  * This file is part of wger Workout Manager <https://github.com/wger-project>.
  * Copyright (C) 2020, 2021 wger Team
@@ -22,7 +20,6 @@ import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:wger/models/exercises/alias.dart';
 import 'package:wger/models/exercises/comment.dart';
-import 'package:wger/models/exercises/exercise.dart';
 import 'package:wger/models/exercises/language.dart';
 
 part 'translation.g.dart';
@@ -36,16 +33,16 @@ class Translation extends Equatable {
   final String? uuid;
 
   @JsonKey(required: true, name: 'language')
-  late int languageId;
+  final int languageId;
 
   @JsonKey(includeFromJson: false, includeToJson: false)
-  late Language languageObj;
+  final Language? languageObj;
 
   @JsonKey(required: true, name: 'created')
   final DateTime? created;
 
   @JsonKey(required: true, name: 'exercise')
-  late int? exerciseId;
+  final int? exerciseId;
 
   @JsonKey(required: true)
   final String name;
@@ -57,39 +54,51 @@ class Translation extends Equatable {
   final String descriptionSource;
 
   @JsonKey(includeFromJson: true, includeToJson: false)
-  List<Comment> notes = [];
+  final List<Comment> notes;
 
   @JsonKey(includeFromJson: true, includeToJson: false)
-  List<Alias> aliases = [];
+  final List<Alias> aliases;
 
-  Translation({
+  const Translation({
     this.id,
     this.uuid,
+    required this.languageId,
+    this.languageObj,
     this.created,
+    this.exerciseId,
     required this.name,
     required this.description,
     this.descriptionSource = '',
+    this.notes = const [],
+    this.aliases = const [],
+  });
+
+  Translation copyWith({
+    int? id,
+    String? uuid,
+    int? languageId,
+    Language? languageObj,
+    DateTime? created,
     int? exerciseId,
-    language,
-  }) {
-    if (exerciseId != null) {
-      this.exerciseId = exerciseId;
-    }
-
-    if (language != null) {
-      languageObj = language;
-      languageId = language.id;
-    }
-  }
-
-  set exercise(Exercise exercise) {
-    exerciseId = exercise.id;
-  }
-
-  set language(Language language) {
-    languageObj = language;
-    languageId = language.id;
-  }
+    String? name,
+    String? description,
+    String? descriptionSource,
+    List<Comment>? notes,
+    List<Alias>? aliases,
+  }) =>
+      Translation(
+        id: id ?? this.id,
+        uuid: uuid ?? this.uuid,
+        languageId: languageId ?? this.languageId,
+        languageObj: languageObj ?? this.languageObj,
+        created: created ?? this.created,
+        exerciseId: exerciseId ?? this.exerciseId,
+        name: name ?? this.name,
+        description: description ?? this.description,
+        descriptionSource: descriptionSource ?? this.descriptionSource,
+        notes: notes ?? this.notes,
+        aliases: aliases ?? this.aliases,
+      );
 
   // Boilerplate
   factory Translation.fromJson(Map<String, dynamic> json) => _$TranslationFromJson(json);

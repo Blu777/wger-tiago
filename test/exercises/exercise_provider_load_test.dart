@@ -12,7 +12,7 @@ import 'package:wger/providers/exercises.dart';
 
 import '../../test_data/exercises.dart';
 import '../fixtures/fixture_reader.dart';
-import '../measurements/measurement_provider_test.mocks.dart';
+import '../other/base_provider_test.mocks.dart';
 
 void main() {
   late MockWgerBaseProvider mockBaseProvider;
@@ -117,7 +117,7 @@ void main() {
 
       final translation1 = exercise.translations[0];
       expect(translation1.name, '2 Handed Kettlebell Swing');
-      expect(translation1.languageObj.shortName, 'en');
+      expect(translation1.languageObj!.shortName, 'en');
       expect(translation1.notes[0].comment, "it's important to do the exercise correctly");
       expect(translation1.notes[1].comment, 'put a lot of effort into this exercise');
       expect(translation1.notes[2].comment, 'have fun');

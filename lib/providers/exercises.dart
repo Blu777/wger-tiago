@@ -514,7 +514,7 @@ class ExercisesProvider with ChangeNotifier {
     exercises = data.map((e) => Exercise.fromApiDataJson(e, _languages)).toList();
 
     // Insert new entries and update ones that have been edited
-    Future.forEach(data, (exerciseData) async {
+    await Future.forEach(data, (exerciseData) async {
       final exercise = await (database.select(
         database.exercises,
       )..where((e) => e.id.equals(exerciseData['id']))).getSingleOrNull();

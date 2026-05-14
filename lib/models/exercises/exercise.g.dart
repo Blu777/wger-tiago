@@ -23,37 +23,43 @@ Exercise _$ExerciseFromJson(Map<String, dynamic> json) {
     ],
   );
   return Exercise(
-      id: (json['id'] as num?)?.toInt(),
-      uuid: json['uuid'] as String?,
-      created: json['created'] == null
-          ? null
-          : DateTime.parse(json['created'] as String),
-      lastUpdate: json['last_update'] == null
-          ? null
-          : DateTime.parse(json['last_update'] as String),
-      lastUpdateGlobal: json['last_update_global'] == null
-          ? null
-          : DateTime.parse(json['last_update_global'] as String),
-      variationGroup: json['variation_group'] as String?,
-      translations: (json['translations'] as List<dynamic>?)
-          ?.map((e) => Translation.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      category: json['categories'] == null
-          ? null
-          : ExerciseCategory.fromJson(
-              json['categories'] as Map<String, dynamic>,
-            ),
-    )
-    ..categoryId = (json['category'] as num).toInt()
-    ..musclesIds = (json['muscles'] as List<dynamic>)
-        .map((e) => (e as num).toInt())
-        .toList()
-    ..musclesSecondaryIds = (json['muscles_secondary'] as List<dynamic>)
-        .map((e) => (e as num).toInt())
-        .toList()
-    ..equipmentIds = (json['equipment'] as List<dynamic>)
-        .map((e) => (e as num).toInt())
-        .toList();
+    id: (json['id'] as num?)?.toInt(),
+    uuid: json['uuid'] as String?,
+    created: json['created'] == null
+        ? null
+        : DateTime.parse(json['created'] as String),
+    lastUpdate: json['last_update'] == null
+        ? null
+        : DateTime.parse(json['last_update'] as String),
+    lastUpdateGlobal: json['last_update_global'] == null
+        ? null
+        : DateTime.parse(json['last_update_global'] as String),
+    variationGroup: json['variation_group'] as String?,
+    categoryId: (json['category'] as num?)?.toInt() ?? 0,
+    category: json['categories'] == null
+        ? null
+        : ExerciseCategory.fromJson(json['categories'] as Map<String, dynamic>),
+    musclesIds:
+        (json['muscles'] as List<dynamic>?)
+            ?.map((e) => (e as num).toInt())
+            .toList() ??
+        const [],
+    musclesSecondaryIds:
+        (json['muscles_secondary'] as List<dynamic>?)
+            ?.map((e) => (e as num).toInt())
+            .toList() ??
+        const [],
+    equipmentIds:
+        (json['equipment'] as List<dynamic>?)
+            ?.map((e) => (e as num).toInt())
+            .toList() ??
+        const [],
+    translations:
+        (json['translations'] as List<dynamic>?)
+            ?.map((e) => Translation.fromJson(e as Map<String, dynamic>))
+            .toList() ??
+        const [],
+  );
 }
 
 Map<String, dynamic> _$ExerciseToJson(Exercise instance) => <String, dynamic>{

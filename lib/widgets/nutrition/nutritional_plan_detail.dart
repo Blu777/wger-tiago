@@ -17,28 +17,25 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
+import 'package:wger/features/body_weight/presentation/providers/body_weight_provider.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
 import 'package:wger/models/nutrition/nutritional_plan.dart';
-import 'package:wger/providers/body_weight.dart';
 import 'package:wger/widgets/nutrition/charts.dart';
 import 'package:wger/widgets/nutrition/macro_nutrients_table.dart';
 import 'package:wger/widgets/nutrition/meal.dart';
 import 'package:wger/widgets/nutrition/nutritional_diary_table.dart';
 
-class NutritionalPlanDetailWidget extends StatelessWidget {
+class NutritionalPlanDetailWidget extends ConsumerWidget {
   final NutritionalPlan _nutritionalPlan;
 
   const NutritionalPlanDetailWidget(this._nutritionalPlan);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final nutritionalGoals = _nutritionalPlan.nutritionalGoals;
-    final lastWeightEntry = Provider.of<BodyWeightProvider>(
-      context,
-      listen: false,
-    ).getNewestEntry();
+    final lastWeightEntry = ref.watch(bodyWeightProvider).asData?.value.firstOrNull;
     final nutritionalGoalsGperKg = lastWeightEntry != null
         ? nutritionalGoals / lastWeightEntry.weight.toDouble()
         : null;

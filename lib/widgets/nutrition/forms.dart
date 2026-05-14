@@ -868,7 +868,7 @@ class GoalMacros extends StatelessWidget {
         if (newValue == null || newValue == '') {
           return;
         }
-        onSave(numberFormat.parse(newValue) as double);
+        onSave(numberFormat.parse(newValue).toDouble());
       },
       validator: (value) {
         if (value == '') {

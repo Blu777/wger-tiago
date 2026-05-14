@@ -22,14 +22,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:rive/rive.dart';
+import 'package:wger/features/body_weight/presentation/screens/weight_screen.dart';
 import 'package:wger/helpers/material.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
 import 'package:wger/providers/auth.dart';
 import 'package:wger/providers/base_provider.dart';
-import 'package:wger/providers/body_weight.dart';
 import 'package:wger/providers/exercises.dart';
 import 'package:wger/providers/gallery.dart';
-import 'package:wger/providers/measurement.dart';
+import 'package:wger/providers/measurement_riverpod.dart';
 import 'package:wger/providers/nutrition.dart';
 import 'package:wger/providers/routines.dart';
 import 'package:wger/providers/trophies.dart';
@@ -38,7 +38,6 @@ import 'package:wger/screens/dashboard.dart';
 import 'package:wger/screens/gallery_screen.dart';
 import 'package:wger/screens/nutritional_plans_screen.dart';
 import 'package:wger/screens/routine_list_screen.dart';
-import 'package:wger/screens/weight_screen.dart';
 
 class HomeTabsScreen extends ConsumerStatefulWidget {
   final _logger = Logger('HomeTabsScreen');
@@ -73,13 +72,18 @@ class _HomeTabsScreenState extends ConsumerState<HomeTabsScreen>
     });
   }
 
-  final _screenList = [
-    const DashboardScreen(),
-    const RoutineListScreen(),
-    const NutritionalPlansScreen(),
-    const WeightScreen(),
-    const GalleryScreen(),
-  ];
+  List<Widget> get _screens {
+    return [
+      const DashboardScreen(),
+      const RoutineListScreen(),
+      const NutritionalPlansScreen(),
+      WeightScreen(
+        profile: context.read<UserProvider>().profile!,
+        plans: context.read<NutritionPlansProvider>().items,
+      ),
+      const GalleryScreen(),
+    ];
+  }
 
   /// Load initial data from the server
   Future<void> _loadEntries() async {
@@ -93,8 +97,7 @@ class _HomeTabsScreenState extends ConsumerState<HomeTabsScreen>
       final nutritionPlansProvider = context.read<NutritionPlansProvider>();
       final exercisesProvider = context.read<ExercisesProvider>();
       final galleryProvider = context.read<GalleryProvider>();
-      final weightProvider = context.read<BodyWeightProvider>();
-      final measurementProvider = context.read<MeasurementProvider>();
+      final measurementNotifier = ProviderScope.containerOf(context).read(measurementProvider.notifier);
       final userProvider = context.read<UserProvider>();
 
       //
@@ -126,8 +129,7 @@ class _HomeTabsScreenState extends ConsumerState<HomeTabsScreen>
         nutritionPlansProvider.fetchAndSetAllPlansSparse(),
         routinesProvider.fetchAndSetAllRoutinesSparse(),
         // routinesProvider.fetchAndSetAllRoutinesFull(),
-        weightProvider.fetchAndSetEntries(),
-        measurementProvider.fetchAndSetAllCategoriesAndEntries(),
+        measurementNotifier.refresh(),
         trophyNotifier.fetchAll(repository: trophyRepository, language: languageCode),
       ]);
 
@@ -243,7 +245,7 @@ class _HomeTabsScreenState extends ConsumerState<HomeTabsScreen>
           body: Row(
             children: [
               if (_isWideScreen) getNavigationRail(),
-              Expanded(child: _screenList.elementAt(_selectedIndex)),
+              Expanded(child: _screens.elementAt(_selectedIndex)),
             ],
           ),
           bottomNavigationBar: _isWideScreen ? null : getNavigationBar(),

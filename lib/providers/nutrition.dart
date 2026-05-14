@@ -493,7 +493,7 @@ class NutritionPlansProvider with ChangeNotifier {
   Future<void> logMealToDiary(Meal meal, DateTime mealDateTime) async {
     for (final item in meal.mealItems) {
       final plan = findById(meal.planId);
-      final Log log = Log.fromMealItem(item, plan.id!, meal.id, mealDateTime);
+      final Log log = Log.fromMealItem(item, meal.planId, meal.id, mealDateTime);
 
       final data = await baseProvider.post(log.toJson(), baseProvider.makeUrl(_nutritionDiaryPath));
       log.id = data['id'];
@@ -506,7 +506,7 @@ class NutritionPlansProvider with ChangeNotifier {
   Future<void> logIngredientToDiary(MealItem mealItem, int planId, [DateTime? dateTime]) async {
     final plan = findById(planId);
     mealItem.ingredient = await fetchIngredient(mealItem.ingredientId);
-    final log = Log.fromMealItem(mealItem, plan.id!, null, dateTime);
+    final log = Log.fromMealItem(mealItem, planId, null, dateTime);
 
     final data = await baseProvider.post(log.toJson(), baseProvider.makeUrl(_nutritionDiaryPath));
     log.id = data['id'];

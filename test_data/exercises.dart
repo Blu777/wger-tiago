@@ -130,7 +130,8 @@ final benchPressDe = Translation(
   description: 'add clever text',
   descriptionSource: 'add clever text',
   exerciseId: 1,
-  language: tLanguage1,
+  languageId: tLanguage1.id,
+  languageObj: tLanguage1,
 );
 
 final benchPressEn = Translation(
@@ -141,7 +142,8 @@ final benchPressEn = Translation(
   description: 'add clever text',
   descriptionSource: 'add clever text',
   exerciseId: 1,
-  language: tLanguage1,
+  languageId: tLanguage1.id,
+  languageObj: tLanguage1,
 );
 
 final deadLiftEn = Translation(
@@ -152,7 +154,8 @@ final deadLiftEn = Translation(
   description: 'Lorem ipsum etc',
   descriptionSource: 'Lorem ipsum etc',
   exerciseId: 3,
-  language: tLanguage2,
+  languageId: tLanguage2.id,
+  languageObj: tLanguage2,
 );
 
 final crunchesFr = Translation(
@@ -163,7 +166,8 @@ final crunchesFr = Translation(
   description: 'The man in black fled across the desert, and the gunslinger followed',
   descriptionSource: 'The man in black fled across the desert, and the gunslinger followed',
   exerciseId: 2,
-  language: tLanguage3,
+  languageId: tLanguage3.id,
+  languageObj: tLanguage3,
 );
 
 final crunchesDe = Translation(
@@ -174,7 +178,8 @@ final crunchesDe = Translation(
   description: 'The story so far: in the beginning, the universe was created',
   descriptionSource: 'The story so far: in the beginning, the universe was created',
   exerciseId: 2,
-  language: tLanguage1,
+  languageId: tLanguage1.id,
+  languageObj: tLanguage1,
 );
 
 final crunchesEn = Translation(
@@ -185,7 +190,8 @@ final crunchesEn = Translation(
   description: 'I am an invisible man',
   descriptionSource: 'I am an invisible man',
   exerciseId: 2,
-  language: tLanguage2,
+  languageId: tLanguage2.id,
+  languageObj: tLanguage2,
 );
 
 final curlsEn = Translation(
@@ -196,7 +202,8 @@ final curlsEn = Translation(
   description: 'It was a bright cold day in April, and the clocks were striking thirteen',
   descriptionSource: 'It was a bright cold day in April, and the clocks were striking thirteen',
   exerciseId: 4,
-  language: tLanguage2,
+  languageId: tLanguage2.id,
+  languageObj: tLanguage2,
 );
 
 final squatsEn = Translation(
@@ -207,7 +214,8 @@ final squatsEn = Translation(
   description: 'It was a bright cold day in April, and the clocks were striking thirteen',
   descriptionSource: 'It was a bright cold day in April, and the clocks were striking thirteen',
   exerciseId: 5,
-  language: tLanguage2,
+  languageId: tLanguage2.id,
+  languageObj: tLanguage2,
 );
 
 final sideRaisesEn = Translation(
@@ -218,7 +226,8 @@ final sideRaisesEn = Translation(
   description: 'It was a bright cold day in April, and the clocks were striking thirteen',
   descriptionSource: 'It was a bright cold day in April, and the clocks were striking thirteen',
   exerciseId: 6,
-  language: tLanguage2,
+  languageId: tLanguage2.id,
+  languageObj: tLanguage2,
 );
 
 List<Exercise> getTestExercises() {
@@ -226,12 +235,12 @@ List<Exercise> getTestExercises() {
 }
 
 List<Exercise> getScreenshotExercises() {
-  testBenchPress.translations = benchPressTranslations;
-  testCrunches.translations = crunchesTranslations;
-  testDeadLift.translations = deadLiftTranslations;
-  testCurls.translations = curlsTranslations;
-  testSquats.translations = squatsTranslations;
-  testSideRaises.translations = raisesTranslations;
-
-  return [testBenchPress, testCrunches, testDeadLift, testCurls, testSquats, testSideRaises];
+  return [
+    testBenchPress.copyWith(translations: benchPressTranslations),
+    testCrunches.copyWith(translations: crunchesTranslations),
+    testDeadLift.copyWith(translations: deadLiftTranslations),
+    testCurls.copyWith(translations: curlsTranslations),
+    testSquats.copyWith(translations: squatsTranslations),
+    testSideRaises.copyWith(translations: raisesTranslations),
+  ];
 }

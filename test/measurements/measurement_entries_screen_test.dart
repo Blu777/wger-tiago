@@ -16,31 +16,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+// ignore_for_file: scoped_providers_should_specify_dependencies
+
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
+import 'package:wger/models/measurements/measurement_category.dart';
 import 'package:wger/models/measurements/measurement_entry.dart';
-import 'package:wger/providers/measurement.dart';
+import 'package:wger/providers/measurement_riverpod.dart';
 import 'package:wger/providers/nutrition.dart';
 import 'package:wger/screens/measurement_entries_screen.dart';
 import 'package:wger/widgets/measurements/forms.dart';
 
 import '../../test_data/measurements.dart';
 import '../nutrition/nutritional_plan_form_test.mocks.dart';
-import 'measurement_categories_screen_test.mocks.dart';
+
+class MockMeasurementNotifier extends MeasurementNotifier {
+  @override
+  Future<List<MeasurementCategory>> build() async => getMeasurementCategories();
+
+  @override
+  MeasurementCategory? findCategoryById(int id) => getMeasurementCategories().firstWhereOrNull((c) => c.id == id);
+}
 
 void main() {
-  late MockMeasurementProvider mockMeasurementProvider;
   late MockNutritionPlansProvider mockNutritionPlansProvider;
 
   setUp(() {
-    mockMeasurementProvider = MockMeasurementProvider();
-    when(mockMeasurementProvider.findCategoryById(any)).thenReturn(
-      getMeasurementCategories().first,
-    );
-
     mockNutritionPlansProvider = MockNutritionPlansProvider();
     when(mockNutritionPlansProvider.currentPlan).thenReturn(null);
     when(mockNutritionPlansProvider.items).thenReturn([]);
@@ -49,10 +55,12 @@ void main() {
   Widget createHomeScreen({locale = 'en'}) {
     final key = GlobalKey<NavigatorState>();
 
-    return ChangeNotifierProvider<NutritionPlansProvider>(
-      create: (context) => mockNutritionPlansProvider,
-      child: ChangeNotifierProvider<MeasurementProvider>(
-        create: (context) => mockMeasurementProvider,
+    return ProviderScope(
+      overrides: [
+        measurementProvider.overrideWith(() => MockMeasurementNotifier()),
+      ],
+      child: ChangeNotifierProvider<NutritionPlansProvider>(
+        create: (context) => mockNutritionPlansProvider,
         child: MaterialApp(
           locale: Locale(locale),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -107,9 +115,10 @@ void main() {
       String locale = 'en',
       MeasurementEntry? entry,
     }) {
-      when(mockMeasurementProvider.categories).thenReturn(getMeasurementCategories());
-      return ChangeNotifierProvider<MeasurementProvider>(
-        create: (context) => mockMeasurementProvider,
+      return ProviderScope(
+        overrides: [
+          measurementProvider.overrideWith(() => MockMeasurementNotifier()),
+        ],
         child: MaterialApp(
           locale: Locale(locale),
           localizationsDelegates: AppLocalizations.localizationsDelegates,

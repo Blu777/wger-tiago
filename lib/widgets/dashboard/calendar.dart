@@ -17,15 +17,16 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:wger/features/body_weight/presentation/providers/body_weight_provider.dart';
 import 'package:wger/helpers/consts.dart';
 import 'package:wger/helpers/date.dart';
 import 'package:wger/helpers/json.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
-import 'package:wger/providers/body_weight.dart';
-import 'package:wger/providers/measurement.dart';
+import 'package:wger/providers/measurement_riverpod.dart';
 import 'package:wger/providers/nutrition.dart';
 import 'package:wger/providers/routines.dart';
 import 'package:wger/theme/theme.dart';
@@ -105,8 +106,8 @@ class _DashboardCalendarWidgetState extends State<DashboardCalendarWidget>
     final i18n = AppLocalizations.of(context);
 
     // Process weight entries
-    final weightProvider = context.read<BodyWeightProvider>();
-    for (final entry in weightProvider.items) {
+    final weightEntries = ProviderScope.containerOf(context).read(bodyWeightProvider).asData?.value ?? [];
+    for (final entry in weightEntries) {
       final date = DateFormatLists.format(entry.date);
 
       if (!_events.containsKey(date)) {
@@ -118,8 +119,8 @@ class _DashboardCalendarWidgetState extends State<DashboardCalendarWidget>
     }
 
     // Process measurements
-    final measurementProvider = context.read<MeasurementProvider>();
-    for (final category in measurementProvider.categories) {
+    final categories = ProviderScope.containerOf(context).read(measurementProvider).asData?.value ?? [];
+    for (final category in categories) {
       for (final entry in category.entries) {
         final date = DateFormatLists.format(entry.date);
 

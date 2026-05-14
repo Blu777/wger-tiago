@@ -32,6 +32,11 @@ class RoutineEditScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final routineId = ModalRoute.of(context)!.settings.arguments as int;
     final routine = Provider.of<RoutinesProvider>(context).findById(routineId);
+    if (routine == null) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
 
     return Scaffold(
       appBar: EmptyAppBar(routine.name),

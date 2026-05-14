@@ -20,23 +20,27 @@ Translation _$TranslationFromJson(Map<String, dynamic> json) {
     ],
   );
   return Translation(
-      id: (json['id'] as num?)?.toInt(),
-      uuid: json['uuid'] as String?,
-      created: json['created'] == null
-          ? null
-          : DateTime.parse(json['created'] as String),
-      name: json['name'] as String,
-      description: json['description'] as String,
-      descriptionSource: json['description_source'] as String? ?? '',
-      exerciseId: (json['exercise'] as num?)?.toInt(),
-    )
-    ..languageId = (json['language'] as num).toInt()
-    ..notes = (json['notes'] as List<dynamic>)
-        .map((e) => Comment.fromJson(e as Map<String, dynamic>))
-        .toList()
-    ..aliases = (json['aliases'] as List<dynamic>)
-        .map((e) => Alias.fromJson(e as Map<String, dynamic>))
-        .toList();
+    id: (json['id'] as num?)?.toInt(),
+    uuid: json['uuid'] as String?,
+    languageId: (json['language'] as num).toInt(),
+    created: json['created'] == null
+        ? null
+        : DateTime.parse(json['created'] as String),
+    exerciseId: (json['exercise'] as num?)?.toInt(),
+    name: json['name'] as String,
+    description: json['description'] as String,
+    descriptionSource: json['description_source'] as String? ?? '',
+    notes:
+        (json['notes'] as List<dynamic>?)
+            ?.map((e) => Comment.fromJson(e as Map<String, dynamic>))
+            .toList() ??
+        const [],
+    aliases:
+        (json['aliases'] as List<dynamic>?)
+            ?.map((e) => Alias.fromJson(e as Map<String, dynamic>))
+            .toList() ??
+        const [],
+  );
 }
 
 Map<String, dynamic> _$TranslationToJson(Translation instance) =>

@@ -138,8 +138,9 @@ class RoutinesProvider with ChangeNotifier {
     return _routines;
   }
 
-  Routine findById(int id) {
-    return _routines.firstWhere((routine) => routine.id == id);
+  Routine? findById(int id) {
+    final idx = _routines.indexWhere((routine) => routine.id == id);
+    return idx == -1 ? null : _routines[idx];
   }
 
   int findIndexById(int id) {
@@ -662,7 +663,7 @@ class RoutinesProvider with ChangeNotifier {
 
     if (routineId != null) {
       final routine = findById(routineId);
-      routine.sessions.add(WorkoutSessionApi(session: newSession));
+      routine?.sessions.add(WorkoutSessionApi(session: newSession));
     }
 
     notifyListeners();
@@ -698,6 +699,9 @@ class RoutinesProvider with ChangeNotifier {
     newLog.exerciseBase = exercise;
 
     final plan = findById(newLog.routineId);
+    if (plan == null) {
+      throw StateError('Routine ${newLog.routineId} not found');
+    }
 
     // If there is no session known locally, just re-fetch everything
     try {

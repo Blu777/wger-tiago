@@ -17,57 +17,54 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
 import 'package:wger/models/measurements/measurement_category.dart';
-import 'package:wger/providers/measurement.dart';
-import 'package:wger/providers/nutrition.dart';
+import 'package:wger/models/nutrition/nutritional_plan.dart';
+import 'package:wger/providers/measurement_riverpod.dart';
 import 'package:wger/screens/form_screen.dart';
 import 'package:wger/widgets/measurements/charts.dart';
 import 'package:wger/widgets/measurements/helpers.dart';
 
 import 'forms.dart';
 
-class EntriesList extends StatelessWidget {
-  final MeasurementCategory _category;
+class EntriesList extends ConsumerWidget {
+  final MeasurementCategory category;
+  final List<NutritionalPlan> plans;
 
-  const EntriesList(this._category);
+  const EntriesList({required this.category, required this.plans});
 
   @override
-  Widget build(BuildContext context) {
-    final plans = Provider.of<NutritionPlansProvider>(context, listen: false).items;
+  Widget build(BuildContext context, WidgetRef ref) {
     final numberFormat = NumberFormat.decimalPattern(Localizations.localeOf(context).toString());
-    final provider = Provider.of<MeasurementProvider>(context, listen: false);
-
-    final entriesAll = _category.entries
+    final entriesAll = category.entries
         .map((e) => MeasurementChartEntry(e.value, e.date))
         .toList();
     final entries7dAvg = moving7dAverage(entriesAll);
-
     final datetimeFormat = DateFormat.yMd(Localizations.localeOf(context).languageCode).add_Hm();
 
     return Column(
       children: [
         ...getOverviewWidgetsSeries(
-          _category.name,
+          category.name,
           entriesAll,
           entries7dAvg,
           plans,
-          _category.unit,
+          category.unit,
           context,
         ),
         SizedBox(
           height: 300,
           child: ListView.builder(
             padding: const EdgeInsets.all(10.0),
-            itemCount: _category.entries.length,
+            itemCount: category.entries.length,
             itemBuilder: (context, index) {
-              final currentEntry = _category.entries[index];
+              final currentEntry = category.entries[index];
 
               return Card(
                 child: ListTile(
-                  title: Text('${numberFormat.format(currentEntry.value)} ${_category.unit}'),
+                  title: Text('${numberFormat.format(currentEntry.value)} ${category.unit}'),
                   subtitle: Text(datetimeFormat.format(currentEntry.date)),
                   trailing: PopupMenuButton(
                     itemBuilder: (BuildContext context) {
@@ -89,13 +86,11 @@ class EntriesList extends StatelessWidget {
                         PopupMenuItem(
                           child: Text(AppLocalizations.of(context).delete),
                           onTap: () async {
-                            // Delete entry from DB
-                            await provider.deleteEntry(
+                            await ref.read(measurementProvider.notifier).deleteEntry(
                               currentEntry.id!,
                               currentEntry.category,
                             );
 
-                            // and inform the user
                             if (context.mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(

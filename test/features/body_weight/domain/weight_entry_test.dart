@@ -17,7 +17,7 @@
  */
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:wger/models/body_weight/weight_entry.dart';
+import 'package:wger/features/body_weight/domain/models/weight_entry.dart';
 
 void main() {
   group('fetchPost', () {

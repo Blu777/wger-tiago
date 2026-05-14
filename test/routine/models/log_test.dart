@@ -132,7 +132,7 @@ void main() {
     late Exercise exercise;
 
     setUp(() {
-      exercise = Exercise(id: 1);
+      exercise = const Exercise(id: 1);
     });
 
     test('uses default unit IDs when unit objects are not loaded', () {

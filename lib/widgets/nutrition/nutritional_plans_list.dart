@@ -17,11 +17,12 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:wger/features/body_weight/presentation/providers/body_weight_provider.dart';
 import 'package:wger/helpers/measurements.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
-import 'package:wger/providers/body_weight.dart';
 import 'package:wger/providers/nutrition.dart';
 import 'package:wger/providers/user.dart';
 import 'package:wger/screens/nutritional_plan_screen.dart';
@@ -35,9 +36,9 @@ class NutritionalPlansList extends StatelessWidget {
 
   /// Builds the weight change information for a nutritional plan period
   Widget _buildWeightChangeInfo(BuildContext context, DateTime startDate, DateTime? endDate) {
-    final provider = Provider.of<BodyWeightProvider>(context, listen: false);
+    final weightEntries = ProviderScope.containerOf(context).read(bodyWeightProvider).asData?.value ?? [];
 
-    final entriesAll = provider.items.map((e) => MeasurementChartEntry(e.weight, e.date)).toList();
+    final entriesAll = weightEntries.map((e) => MeasurementChartEntry(e.weight, e.date)).toList();
     final entries7dAvg = moving7dAverage(entriesAll).whereDateWithInterpolation(startDate, endDate);
     if (entries7dAvg.length < 2) {
       return const SizedBox.shrink();

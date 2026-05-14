@@ -16,27 +16,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+// ignore_for_file: scoped_providers_should_specify_dependencies
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
+import 'package:wger/features/body_weight/domain/models/weight_entry.dart';
+import 'package:wger/features/body_weight/presentation/providers/body_weight_provider.dart';
+import 'package:wger/features/body_weight/presentation/screens/weight_screen.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
-import 'package:wger/providers/body_weight.dart';
 import 'package:wger/providers/nutrition.dart';
 import 'package:wger/providers/user.dart';
 import 'package:wger/screens/form_screen.dart';
-import 'package:wger/screens/weight_screen.dart';
 import 'package:wger/theme/theme.dart';
 
-import '../test/utils.dart';
-import '../test/weight/weight_screen_test.mocks.dart';
+import '../test/exercises/contribute_exercise_test.mocks.dart';
+import '../test/nutrition/nutritional_meal_form_test.mocks.dart';
 import '../test_data/body_weight.dart';
 import '../test_data/nutritional_plans.dart';
 import '../test_data/profile.dart';
 
+class MockBodyWeightNotifier extends BodyWeightNotifier {
+  final List<WeightEntry> _entries;
+  MockBodyWeightNotifier(this._entries);
+
+  @override
+  Future<List<WeightEntry>> build() async => _entries;
+}
+
 Widget createWeightScreen({Locale? locale}) {
   locale ??= const Locale('en');
-  final weightProvider = BodyWeightProvider(mockBaseProvider);
-  weightProvider.items = getScreenshotWeightEntries();
 
   final mockUserProvider = MockUserProvider();
   when(mockUserProvider.profile).thenReturn(tProfile1);
@@ -45,32 +55,37 @@ Widget createWeightScreen({Locale? locale}) {
   when(mockNutritionPlansProvider.currentPlan).thenReturn(null);
   when(mockNutritionPlansProvider.items).thenReturn([getNutritionalPlan()]);
 
-  return MediaQuery(
-    data: MediaQueryData.fromView(WidgetsBinding.instance.platformDispatcher.views.first).copyWith(
-      padding: EdgeInsets.zero,
-      viewPadding: EdgeInsets.zero,
-      viewInsets: EdgeInsets.zero,
-    ),
-    child: MultiProvider(
-      providers: [
-        ChangeNotifierProvider<UserProvider>(
-          create: (context) => mockUserProvider,
+  return ProviderScope(
+    overrides: [
+      bodyWeightProvider.overrideWith(() => MockBodyWeightNotifier(getScreenshotWeightEntries())),
+    ],
+    child: MediaQuery(
+      data: MediaQueryData.fromView(WidgetsBinding.instance.platformDispatcher.views.first).copyWith(
+        padding: EdgeInsets.zero,
+        viewPadding: EdgeInsets.zero,
+        viewInsets: EdgeInsets.zero,
+      ),
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider<UserProvider>(
+            create: (context) => mockUserProvider,
+          ),
+          ChangeNotifierProvider<NutritionPlansProvider>(
+            create: (context) => mockNutritionPlansProvider,
+          ),
+        ],
+        child: MaterialApp(
+          locale: locale,
+          debugShowCheckedModeBanner: false,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          theme: wgerLightTheme,
+          home: WeightScreen(
+            profile: mockUserProvider.profile!,
+            plans: mockNutritionPlansProvider.items,
+          ),
+          routes: {FormScreen.routeName: (ctx) => const FormScreen()},
         ),
-        ChangeNotifierProvider<BodyWeightProvider>(
-          create: (context) => weightProvider,
-        ),
-        ChangeNotifierProvider<NutritionPlansProvider>(
-          create: (context) => mockNutritionPlansProvider,
-        ),
-      ],
-      child: MaterialApp(
-        locale: locale,
-        debugShowCheckedModeBanner: false,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        theme: wgerLightTheme,
-        home: const WeightScreen(),
-        routes: {FormScreen.routeName: (ctx) => const FormScreen()},
       ),
     ),
   );

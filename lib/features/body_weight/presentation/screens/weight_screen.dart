@@ -17,17 +17,20 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:wger/core/wide_screen_wrapper.dart';
+import 'package:wger/features/body_weight/presentation/widgets/weight_form.dart';
+import 'package:wger/features/body_weight/presentation/widgets/weight_overview.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
-import 'package:wger/providers/body_weight.dart';
+import 'package:wger/models/nutrition/nutritional_plan.dart';
+import 'package:wger/models/user/profile.dart';
 import 'package:wger/screens/form_screen.dart';
 import 'package:wger/widgets/core/app_bar.dart';
-import 'package:wger/widgets/weight/forms.dart';
-import 'package:wger/widgets/weight/weight_overview.dart';
 
 class WeightScreen extends StatelessWidget {
-  const WeightScreen();
+  final Profile profile;
+  final List<NutritionalPlan> plans;
+
+  const WeightScreen({required this.profile, required this.plans});
 
   static const routeName = '/weight';
 
@@ -43,16 +46,14 @@ class WeightScreen extends StatelessWidget {
             FormScreen.routeName,
             arguments: FormScreenArguments(
               AppLocalizations.of(context).newEntry,
-              WeightForm(),
+              const WeightForm(),
             ),
           );
         },
       ),
       body: WidescreenWrapper(
         child: SingleChildScrollView(
-          child: Consumer<BodyWeightProvider>(
-            builder: (context, provider, child) => WeightOverview(provider),
-          ),
+          child: WeightOverview(profile: profile, plans: plans),
         ),
       ),
     );

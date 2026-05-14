@@ -39,7 +39,7 @@ import 'package:wger/providers/exercises.dart';
 import '../../test_data/exercises.dart' as data;
 import '../../test_data/exercises.dart';
 import '../fixtures/fixture_reader.dart';
-import '../measurements/measurement_provider_test.mocks.dart';
+import '../other/base_provider_test.mocks.dart';
 
 void main() {
   late MockWgerBaseProvider mockBaseProvider;

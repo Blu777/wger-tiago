@@ -16,17 +16,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+// ignore_for_file: scoped_providers_should_specify_dependencies
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' as riverpod;
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
+import 'package:wger/features/body_weight/domain/models/weight_entry.dart';
+import 'package:wger/features/body_weight/presentation/providers/body_weight_provider.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
+import 'package:wger/models/measurements/measurement_category.dart';
 import 'package:wger/models/workouts/session.dart';
 import 'package:wger/providers/auth.dart';
-import 'package:wger/providers/body_weight.dart';
 import 'package:wger/providers/exercises.dart';
 import 'package:wger/providers/gallery.dart';
-import 'package:wger/providers/measurement.dart';
+import 'package:wger/providers/measurement_riverpod.dart';
 import 'package:wger/providers/nutrition.dart';
 import 'package:wger/providers/routines.dart';
 import 'package:wger/providers/user.dart';
@@ -35,16 +39,28 @@ import 'package:wger/theme/theme.dart';
 
 import '../test/exercises/contribute_exercise_test.mocks.dart';
 import '../test/gallery/gallery_form_test.mocks.dart';
-import '../test/measurements/measurement_categories_screen_test.mocks.dart';
+import '../test/nutrition/nutritional_meal_form_test.mocks.dart';
 import '../test/nutrition/nutritional_plan_screen_test.mocks.dart';
 import '../test/routine/weight_unit_form_widget_test.mocks.dart';
-import '../test/weight/weight_screen_test.mocks.dart' as weight;
 import '../test_data/body_weight.dart';
 import '../test_data/exercises.dart';
 import '../test_data/measurements.dart';
 import '../test_data/nutritional_plans.dart';
 import '../test_data/profile.dart';
 import '../test_data/routines.dart';
+
+class MockBodyWeightNotifier extends BodyWeightNotifier {
+  final List<WeightEntry> _entries;
+  MockBodyWeightNotifier(this._entries);
+
+  @override
+  Future<List<WeightEntry>> build() async => _entries;
+}
+
+class MockMeasurementNotifier extends MeasurementNotifier {
+  @override
+  Future<List<MeasurementCategory>> build() async => getMeasurementCategories();
+}
 
 Widget createDashboardScreen({Locale? locale}) {
   locale ??= const Locale('en');
@@ -75,18 +91,12 @@ Widget createDashboardScreen({Locale? locale}) {
     ]),
   );
 
-  final mockNutritionProvider = weight.MockNutritionPlansProvider();
+  final mockNutritionProvider = MockNutritionPlansProvider();
 
   when(
     mockNutritionProvider.currentPlan,
   ).thenAnswer((realInvocation) => getNutritionalPlanScreenshot());
   when(mockNutritionProvider.items).thenReturn([getNutritionalPlanScreenshot()]);
-
-  final mockWeightProvider = weight.MockBodyWeightProvider();
-  when(mockWeightProvider.items).thenReturn(getScreenshotWeightEntries());
-
-  final mockMeasurementProvider = MockMeasurementProvider();
-  when(mockMeasurementProvider.categories).thenReturn(getMeasurementCategories());
 
   final mockUserProvider = MockUserProvider();
   when(mockUserProvider.profile).thenReturn(tProfile1);
@@ -100,6 +110,12 @@ Widget createDashboardScreen({Locale? locale}) {
   ]);
 
   return riverpod.ProviderScope(
+    overrides: [
+      bodyWeightProvider.overrideWith(
+        () => MockBodyWeightNotifier(getScreenshotWeightEntries()),
+      ),
+      measurementProvider.overrideWith(() => MockMeasurementNotifier()),
+    ],
     child: MediaQuery(
       data: MediaQueryData.fromView(WidgetsBinding.instance.platformDispatcher.views.first)
           .copyWith(
@@ -126,12 +142,6 @@ Widget createDashboardScreen({Locale? locale}) {
           ),
           ChangeNotifierProvider<NutritionPlansProvider>(
             create: (context) => mockNutritionProvider,
-          ),
-          ChangeNotifierProvider<BodyWeightProvider>(
-            create: (context) => mockWeightProvider,
-          ),
-          ChangeNotifierProvider<MeasurementProvider>(
-            create: (context) => mockMeasurementProvider,
           ),
         ],
         child: MaterialApp(

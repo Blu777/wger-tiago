@@ -17,23 +17,28 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:wger/providers/measurement.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wger/providers/measurement_riverpod.dart';
 
 import 'categories_card.dart';
 
-class CategoriesList extends StatelessWidget {
+class CategoriesList extends ConsumerWidget {
   const CategoriesList();
-  @override
-  Widget build(BuildContext context) {
-    final provider = Provider.of<MeasurementProvider>(context, listen: false);
 
-    return RefreshIndicator(
-      onRefresh: () => provider.fetchAndSetAllCategoriesAndEntries(),
-      child: ListView.builder(
-        padding: const EdgeInsets.all(10.0),
-        itemCount: provider.categories.length,
-        itemBuilder: (context, index) => CategoriesCard(provider.categories[index]),
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final categoriesAsync = ref.watch(measurementProvider);
+
+    return categoriesAsync.when(
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (err, stack) => Center(child: Text('Error: $err')),
+      data: (categories) => RefreshIndicator(
+        onRefresh: () => ref.read(measurementProvider.notifier).refresh(),
+        child: ListView.builder(
+          padding: const EdgeInsets.all(10.0),
+          itemCount: categories.length,
+          itemBuilder: (context, index) => CategoriesCard(categories[index]),
+        ),
       ),
     );
   }

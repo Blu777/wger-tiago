@@ -17,10 +17,11 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart';
+import 'package:wger/features/body_weight/presentation/providers/body_weight_provider.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
 import 'package:wger/providers/auth.dart';
-import 'package:wger/providers/body_weight.dart';
 import 'package:wger/providers/gallery.dart';
 import 'package:wger/providers/nutrition.dart';
 import 'package:wger/providers/routines.dart';
@@ -119,7 +120,7 @@ class MainSettingsDialog extends StatelessWidget {
               context.read<AuthProvider>().logout();
               context.read<RoutinesProvider>().clear();
               context.read<NutritionPlansProvider>().clear();
-              context.read<BodyWeightProvider>().clear();
+              ProviderScope.containerOf(context).read(bodyWeightProvider.notifier).clear();
               context.read<GalleryProvider>().clear();
               context.read<UserProvider>().clear();
 
