@@ -26,7 +26,7 @@ final class BodyWeightRepositoryProvider
         argument: null,
         retry: null,
         name: r'bodyWeightRepositoryProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -68,7 +68,7 @@ final class BodyWeightNotifierProvider
         argument: null,
         retry: null,
         name: r'bodyWeightProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );

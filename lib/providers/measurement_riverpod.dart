@@ -94,7 +94,7 @@ List<MeasurementCategory> _updateCategory(
   return categories.map((c) => c.id == categoryId ? updater(c) : c).toList();
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class MeasurementNotifier extends _$MeasurementNotifier {
   late final MeasurementRepository _repo;
 
@@ -106,7 +106,10 @@ class MeasurementNotifier extends _$MeasurementNotifier {
 
   Future<void> refresh() async {
     state = const AsyncValue.loading();
-    state = await AsyncValue.guard(() async {
+    if (!ref.mounted) {
+      return;
+    }
+    final result = await AsyncValue.guard(() async {
       final categories = await _repo.fetchCategories();
       final withEntries = await Future.wait(
         categories.map((c) async {
@@ -116,16 +119,26 @@ class MeasurementNotifier extends _$MeasurementNotifier {
       );
       return withEntries;
     });
+    if (!ref.mounted) {
+      return;
+    }
+    state = result;
   }
 
   Future<void> loadCategoryEntries(int categoryId) async {
     final previous = state.asData?.value ?? [];
     try {
       final entries = await _repo.fetchEntries(categoryId);
+      if (!ref.mounted) {
+        return;
+      }
       state = AsyncValue.data(
         _updateCategory(previous, categoryId, (cat) => cat.copyWith(entries: entries)),
       );
     } catch (err, stack) {
+      if (!ref.mounted) {
+        return;
+      }
       return Future.error(err, stack);
     }
   }
@@ -135,10 +148,16 @@ class MeasurementNotifier extends _$MeasurementNotifier {
     state = AsyncValue.data([...previous, category]..sort((a, b) => a.name.compareTo(b.name)));
     try {
       final newCategory = await _repo.addCategory(category);
+      if (!ref.mounted) {
+        return;
+      }
       state = AsyncValue.data(
         [...previous, newCategory]..sort((a, b) => a.name.compareTo(b.name)),
       );
     } catch (err, stack) {
+      if (!ref.mounted) {
+        return;
+      }
       state = AsyncValue.data(previous);
       return Future.error(err, stack);
     }
@@ -149,7 +168,13 @@ class MeasurementNotifier extends _$MeasurementNotifier {
     state = AsyncValue.data(previous.where((c) => c.id != id).toList());
     try {
       await _repo.deleteCategory(id);
+      if (!ref.mounted) {
+        return;
+      }
     } catch (err, stack) {
+      if (!ref.mounted) {
+        return;
+      }
       state = AsyncValue.data(previous);
       return Future.error(err, stack);
     }
@@ -163,12 +188,18 @@ class MeasurementNotifier extends _$MeasurementNotifier {
     );
     try {
       final updated = await _repo.editCategory(category);
+      if (!ref.mounted) {
+        return;
+      }
       final old = previous.firstWhereOrNull((c) => c.id == category.id);
       state = AsyncValue.data(
         previous.map((c) => c.id == category.id ? updated.copyWith(entries: old?.entries ?? []) : c).toList()
           ..sort((a, b) => a.name.compareTo(b.name)),
       );
     } catch (err, stack) {
+      if (!ref.mounted) {
+        return;
+      }
       state = AsyncValue.data(previous);
       return Future.error(err, stack);
     }
@@ -184,6 +215,9 @@ class MeasurementNotifier extends _$MeasurementNotifier {
 
     try {
       final newEntry = await _repo.addEntry(entry);
+      if (!ref.mounted) {
+        return;
+      }
       final finalState = _updateCategory(previous, entry.category, (cat) {
         final newEntries = [...cat.entries.where((e) => e.id != entry.id), newEntry]
           ..sort((a, b) => b.date.compareTo(a.date));
@@ -191,6 +225,9 @@ class MeasurementNotifier extends _$MeasurementNotifier {
       });
       state = AsyncValue.data(finalState);
     } catch (err, stack) {
+      if (!ref.mounted) {
+        return;
+      }
       state = AsyncValue.data(previous);
       return Future.error(err, stack);
     }
@@ -207,7 +244,13 @@ class MeasurementNotifier extends _$MeasurementNotifier {
     );
     try {
       await _repo.editEntry(entry);
+      if (!ref.mounted) {
+        return;
+      }
     } catch (err, stack) {
+      if (!ref.mounted) {
+        return;
+      }
       state = AsyncValue.data(previous);
       return Future.error(err, stack);
     }
@@ -222,7 +265,13 @@ class MeasurementNotifier extends _$MeasurementNotifier {
     );
     try {
       await _repo.deleteEntry(id);
+      if (!ref.mounted) {
+        return;
+      }
     } catch (err, stack) {
+      if (!ref.mounted) {
+        return;
+      }
       state = AsyncValue.data(previous);
       return Future.error(err, stack);
     }

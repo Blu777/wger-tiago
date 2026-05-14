@@ -24,14 +24,14 @@ import 'package:wger/providers/wger_base_riverpod.dart';
 
 part 'body_weight_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 BodyWeightRepository bodyWeightRepository(Ref ref) {
   final base = ref.watch(wgerBaseProvider);
   final api = BodyWeightApiService(base);
   return BodyWeightRepository(api);
 }
 
-@Riverpod(name: 'bodyWeightProvider')
+@Riverpod(keepAlive: true, name: 'bodyWeightProvider')
 class BodyWeightNotifier extends _$BodyWeightNotifier {
   @override
   Future<List<WeightEntry>> build() async {
@@ -39,9 +39,13 @@ class BodyWeightNotifier extends _$BodyWeightNotifier {
   }
 
   Future<void> refresh() async {
-    state = await AsyncValue.guard(
+    final result = await AsyncValue.guard(
       () => ref.read(bodyWeightRepositoryProvider).fetchEntries(),
     );
+    if (!ref.mounted) {
+      return;
+    }
+    state = result;
   }
 
   Future<void> addEntry(WeightEntry entry) async {
@@ -52,6 +56,9 @@ class BodyWeightNotifier extends _$BodyWeightNotifier {
 
     try {
       final newEntry = await ref.read(bodyWeightRepositoryProvider).addEntry(entry);
+      if (!ref.mounted) {
+        return;
+      }
       final current = state.asData?.value ?? [];
       state = AsyncValue.data(
         [
@@ -62,6 +69,9 @@ class BodyWeightNotifier extends _$BodyWeightNotifier {
         ]..sort((a, b) => b.date.compareTo(a.date)),
       );
     } catch (err, stackTrace) {
+      if (!ref.mounted) {
+        return;
+      }
       state = AsyncValue.data(previous);
       Error.throwWithStackTrace(err, stackTrace);
     }
@@ -75,7 +85,13 @@ class BodyWeightNotifier extends _$BodyWeightNotifier {
 
     try {
       await ref.read(bodyWeightRepositoryProvider).editEntry(entry);
+      if (!ref.mounted) {
+        return;
+      }
     } catch (err, stackTrace) {
+      if (!ref.mounted) {
+        return;
+      }
       state = AsyncValue.data(previous);
       Error.throwWithStackTrace(err, stackTrace);
     }
@@ -87,7 +103,13 @@ class BodyWeightNotifier extends _$BodyWeightNotifier {
 
     try {
       await ref.read(bodyWeightRepositoryProvider).deleteEntry(id);
+      if (!ref.mounted) {
+        return;
+      }
     } catch (err, stackTrace) {
+      if (!ref.mounted) {
+        return;
+      }
       state = AsyncValue.data(previous);
       Error.throwWithStackTrace(err, stackTrace);
     }

@@ -21,7 +21,7 @@ final class MeasurementNotifierProvider
         argument: null,
         retry: null,
         name: r'measurementProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
