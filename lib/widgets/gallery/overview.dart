@@ -61,8 +61,8 @@ class Gallery extends ConsumerWidget {
                       );
                     },
                     child: CachedNetworkImage(
-                      key: Key('image-${currentImage.id!}'),
-                      imageUrl: currentImage.url!,
+                      key: Key('image-${currentImage.id ?? index}'),
+                      imageUrl: currentImage.url ?? '',
                       placeholder: (context, url) => const Image(
                         image: AssetImage('assets/images/placeholder.png'),
                         fit: BoxFit.cover,
@@ -94,7 +94,7 @@ class ImageDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      key: Key('image-${image.id!}-detail'),
+      key: Key('image-${image.id ?? 'null'}-detail'),
       padding: const EdgeInsets.all(10),
       child: Column(
         children: [
@@ -104,7 +104,7 @@ class ImageDetail extends StatelessWidget {
           ),
           Expanded(
             child: CachedNetworkImage(
-              imageUrl: image.url!,
+              imageUrl: image.url ?? '',
               errorWidget: (context, url, error) => handleImageError(
                 context,
                 error,
@@ -123,7 +123,9 @@ class ImageDetail extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.delete),
                 onPressed: () {
-                  ProviderScope.containerOf(context).read(galleryProvider.notifier).deleteImage(image.id!);
+                  if (image.id != null) {
+                    ProviderScope.containerOf(context).read(galleryProvider.notifier).deleteImage(image.id!);
+                  }
                   Navigator.of(context).pop();
                 },
               ),

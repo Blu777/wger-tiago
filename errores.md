@@ -1,50 +1,89 @@
-Aparecieron estos dos errores cuando abrr la app
+Tuve este error al abrir la galeria, estoy usando una version de la app vieja igual
+
 
 Error Title: An error occurred
-Error Message: Cannot use the Ref of trophyProvider after it has been disposed. This typically happens if:
-- A provider rebuilt, but the previous "build" was still pending and is still performing operations.
-  You should therefore either use `ref.onDispose` to cancel pending work, or
-  check `ref.mounted` after async gaps or anything that could invalidate the provider.
-- You tried to use Ref inside `onDispose` or other life-cycles.
-  This is not supported, as the provider is already being disposed.
-
+Error Message: Null check operator used on a null value
 
 Stack Trace:
-#0      Ref._throwIfInvalidUsage (package:riverpod/src/core/ref.dart:236)
-#1      Ref.read (package:riverpod/src/core/ref.dart:538)
-#2      TrophyNotifier.refresh (package:wger/features/trophies/presentation/providers/trophy_provider.dart:96)
-#3      _HomeTabsScreenState._loadEntries (package:wger/screens/home_tabs_screen.dart:131)
-<asynchronous suspension>
-#4      _FutureBuilderState._subscribe.<anonymous closure> (package:flutter/src/widgets/async.dart:641)
-<asynchronous suspension>
-
-2026-05-14T10:40:51.794257 SEVERE [main] Error caught by FlutterError.onError: Cannot use the Ref of trophyProvider after it has been disposed. This typically happens if:
-- A provider rebuilt, but the previous "build" was still pending and is still performing operations.
-  You should therefore either use `ref.onDispose` to cancel pending work, or
-  check `ref.mounted` after async gaps or anything that could invalidate the provider.
-- You tried to use Ref inside `onDispose` or other life-cycles.
-  This is not supported, as the provider is already being disposed.
-
-2026-05-14T10:40:51.787405 INFO [MeasurementApiService] Fetching all measurement categories
-2026-05-14T10:40:51.787098 INFO [BodyWeightApiService] Fetching all body weight entries
-2026-05-14T10:40:51.783967 INFO [TrophyApiService] Fetching trophy progression
-2026-05-14T10:40:51.783876 INFO [TrophyApiService] Fetching user trophies
-2026-05-14T10:40:51.783569 INFO [TrophyApiService] Fetching all trophies
-2026-05-14T10:40:51.727637 INFO [HomeTabsScreen] Loading routines, weight, measurements and gallery
-2026-05-14T10:40:51.727383 INFO [ExercisesProvider] Loading all exercises from API
-2026-05-14T10:40:51.613896 INFO [ExercisesProvider] Loaded 386 exercises from DB cache
-2026-05-14T10:40:51.605473 INFO [ExercisesProvider] Loaded 11 equipment from cache
-2026-05-14T10:40:51.604033 INFO [ExercisesProvider] Loaded 30 languages from cache
-2026-05-14T10:40:51.601182 INFO [ExercisesProvider] Loaded 8 categories from cache
-2026-05-14T10:40:51.600848 INFO [ExercisesProvider] Loaded 16 muscles from cache
-2026-05-14T10:40:51.584083 INFO [NutritionPlansProvider] Read 0 ingredients from db cache
-2026-05-14T10:40:51.577709 INFO [RoutinesProvider] Read workout units data from cache. Valid till 2026-06-03T10:30:09.126597
-2026-05-14T10:40:51.565077 INFO [ExercisesProvider] Fetching initial exercise data
-2026-05-14T10:40:51.564780 INFO [HomeTabsScreen] Loading base data
-2026-05-14T10:40:51.564646 INFO [MeasurementApiService] Fetching all measurement categories
-2026-05-14T10:40:51.564411 INFO [GalleryApiService] Fetching gallery images
-2026-05-14T10:40:51.564043 INFO [TrophyApiService] Fetching trophy progression
-2026-05-14T10:40:51.563930 INFO [TrophyApiService] Fetching user trophies
-2026-05-14T10:40:51.563672 INFO [TrophyApiService] Fetching all trophies
-2026-05-14T10:40:51.559286 INFO [AuthProvider] autologin successful
-2026-05-14T10:40:51.558899 INFO [AuthProvider] autologin successful
+#0      Gallery.build.<anonymous closure> (package:wger/widgets/gallery/overview.dart:64)
+#1      SliverChildBuilderDelegate.build (package:flutter/src/widgets/scroll_delegate.dart:552)
+#2      SliverMultiBoxAdaptorElement._build (package:flutter/src/widgets/sliver.dart:1055)
+#3      SliverMultiBoxAdaptorElement.createChild.<anonymous closure> (package:flutter/src/widgets/sliver.dart:1071)
+#4      BuildOwner.buildScope (package:flutter/src/widgets/framework.dart:3101)
+#5      SliverMultiBoxAdaptorElement.createChild (package:flutter/src/widgets/sliver.dart:1061)
+#6      RenderSliverMultiBoxAdaptor._createOrObtainChild.<anonymous closure> (package:flutter/src/rendering/sliver_multi_box_adaptor.dart:368)
+#7      RenderObject.invokeLayoutCallback.<anonymous closure> (package:flutter/src/rendering/object.dart:2887)
+#8      PipelineOwner._enableMutationsToDirtySubtrees (package:flutter/src/rendering/object.dart:1223)
+#9      RenderObject.invokeLayoutCallback (package:flutter/src/rendering/object.dart:2886)
+#10     RenderSliverMultiBoxAdaptor._createOrObtainChild (package:flutter/src/rendering/sliver_multi_box_adaptor.dart:357)
+#11     RenderSliverMultiBoxAdaptor.addInitialChild (package:flutter/src/rendering/sliver_multi_box_adaptor.dart:455)
+#12     RenderSliverMasonryGrid.addInitialChild (package:flutter_staggered_grid_view/src/rendering/sliver_masonry_grid.dart:128)
+#13     RenderSliverMasonryGrid.performLayout (package:flutter_staggered_grid_view/src/rendering/sliver_masonry_grid.dart:286)
+#14     RenderObject.layout (package:flutter/src/rendering/object.dart:2768)
+#15     RenderSliverEdgeInsetsPadding.performLayout (package:flutter/src/rendering/sliver_padding.dart:133)
+#16     RenderSliverPadding.performLayout (package:flutter/src/rendering/sliver_padding.dart:368)
+#17     RenderObject.layout (package:flutter/src/rendering/object.dart:2768)
+#18     RenderViewportBase.layoutChildSequence (package:flutter/src/rendering/viewport.dart:673)
+#19     RenderViewport._attemptLayout (package:flutter/src/rendering/viewport.dart:1684)
+#20     RenderViewport.performLayout (package:flutter/src/rendering/viewport.dart:1575)
+#21     RenderObject.layout (package:flutter/src/rendering/object.dart:2768)
+#22     RenderProxyBoxMixin.performLayout (package:flutter/src/rendering/proxy_box.dart:118)
+#23     RenderObject.layout (package:flutter/src/rendering/object.dart:2768)
+#24     RenderProxyBoxMixin.performLayout (package:flutter/src/rendering/proxy_box.dart:118)
+#25     RenderObject.layout (package:flutter/src/rendering/object.dart:2768)
+#26     RenderProxyBoxMixin.performLayout (package:flutter/src/rendering/proxy_box.dart:118)
+#27     RenderObject.layout (package:flutter/src/rendering/object.dart:2768)
+#28     RenderProxyBoxMixin.performLayout (package:flutter/src/rendering/proxy_box.dart:118)
+#29     RenderObject.layout (package:flutter/src/rendering/object.dart:2768)
+#30     RenderProxyBoxMixin.performLayout (package:flutter/src/rendering/proxy_box.dart:118)
+#31     RenderObject.layout (package:flutter/src/rendering/object.dart:2768)
+#32     RenderProxyBoxMixin.performLayout (package:flutter/src/rendering/proxy_box.dart:118)
+#33     RenderObject.layout (package:flutter/src/rendering/object.dart:2768)
+#34     RenderProxyBoxMixin.performLayout (package:flutter/src/rendering/proxy_box.dart:118)
+#35     RenderCustomPaint.performLayout (package:flutter/src/rendering/custom_paint.dart:574)
+#36     RenderObject.layout (package:flutter/src/rendering/object.dart:2768)
+#37     RenderProxyBoxMixin.performLayout (package:flutter/src/rendering/proxy_box.dart:118)
+#38     RenderObject.layout (package:flutter/src/rendering/object.dart:2768)
+#39     RenderProxyBoxMixin.performLayout (package:flutter/src/rendering/proxy_box.dart:118)
+#40     _RenderCustomClip.performLayout (package:flutter/src/rendering/proxy_box.dart:1549)
+#41     RenderObject.layout (package:flutter/src/rendering/object.dart:2768)
+#42     ChildLayoutHelper.layoutChild (package:flutter/src/rendering/layout_helper.dart:62)
+#43     RenderStack._computeSize (package:flutter/src/rendering/stack.dart:645)
+#44     RenderStack.performLayout (package:flutter/src/rendering/stack.dart:680)
+#45     RenderObject.layout (package:flutter/src/rendering/object.dart:2768)
+#46     RenderPadding.performLayout (package:flutter/src/rendering/shifted_box.dart:262)
+#47     RenderObject.layout (package:flutter/src/rendering/object.dart:2768)
+#48     RenderConstrainedBox.performLayout (package:flutter/src/rendering/proxy_box.dart:296)
+#49     RenderObject.layout (package:flutter/src/rendering/object.dart:2768)
+#50     RenderPositionedBox.performLayout (package:flutter/src/rendering/shifted_box.dart:484)
+#51     RenderObject.layout (package:flutter/src/rendering/object.dart:2768)
+#52     MultiChildLayoutDelegate.layoutChild (package:flutter/src/rendering/custom_layout.dart:180)
+#53     _ScaffoldLayout.performLayout (package:flutter/src/material/scaffold.dart:1113)
+#54     MultiChildLayoutDelegate._callPerformLayout (package:flutter/src/rendering/custom_layout.dart:246)
+#55     RenderCustomMultiChildLayoutBox.performLayout (package:flutter/src/rendering/custom_layout.dart:417)
+#56     RenderObject.layout (package:flutter/src/rendering/object.dart:2768)
+#57     RenderProxyBoxMixin.performLayout (package:flutter/src/rendering/proxy_box.dart:118)
+#58     RenderObject.layout (package:flutter/src/rendering/object.dart:2768)
+#59     RenderProxyBoxMixin.performLayout (package:flutter/src/rendering/proxy_box.dart:118)
+#60     _RenderCustomClip.performLayout (package:flutter/src/rendering/proxy_box.dart:1549)
+#61     RenderObject.layout (package:flutter/src/rendering/object.dart:2768)
+#62     ChildLayoutHelper.layoutChild (package:flutter/src/rendering/layout_helper.dart:62)
+#63     RenderFlex._computeSizes (package:flutter/src/rendering/flex.dart:1275)
+#64     RenderFlex.performLayout (package:flutter/src/rendering/flex.dart:1329)
+#65     RenderObject.layout (package:flutter/src/rendering/object.dart:2768)
+#66     MultiChildLayoutDelegate.layoutChild (package:flutter/src/rendering/custom_layout.dart:180)
+#67     _ScaffoldLayout.performLayout (package:flutter/src/material/scaffold.dart:1113)
+#68     MultiChildLayoutDelegate._callPerformLayout (package:flutter/src/rendering/custom_layout.dart:246)
+#69     RenderCustomMultiChildLayoutBox.performLayout (package:flutter/src/rendering/custom_layout.dart:417)
+#70     RenderObject._layoutWithoutResize (package:flutter/src/rendering/object.dart:2616)
+#71     PipelineOwner.flushLayout (package:flutter/src/rendering/object.dart:1174)
+#72     PipelineOwner.flushLayout (package:flutter/src/rendering/object.dart:1187)
+#73     RendererBinding.drawFrame (package:flutter/src/rendering/binding.dart:629)
+#74     WidgetsBinding.drawFrame (package:flutter/src/widgets/binding.dart:1304)
+#75     RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:495)
+#76     SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1430)
+#77     SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1345)
+#78     SchedulerBinding._handleDrawFrame (package:flutter/src/scheduler/binding.dart:1198)
+#79     _invoke (dart:ui/hooks.dart:356)
+#80     PlatformDispatcher._drawFrame (dart:ui/platform_dispatcher.dart:444)
+#81     _drawFrame (dart:ui/hooks.dart:328)
