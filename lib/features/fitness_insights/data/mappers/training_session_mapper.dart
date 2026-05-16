@@ -1,6 +1,8 @@
 import 'package:wger/features/fitness_insights/domain/entities/exercise_performance.dart';
 import 'package:wger/features/fitness_insights/domain/entities/exercise_set.dart';
 import 'package:wger/features/fitness_insights/domain/entities/training_session.dart';
+import 'package:wger/helpers/consts.dart';
+import 'package:wger/models/exercises/translation.dart';
 import 'package:wger/models/workouts/log.dart';
 import 'package:wger/models/workouts/session.dart';
 
@@ -20,8 +22,7 @@ TrainingSession mapWorkoutSession(WorkoutSession source) {
       continue;
     }
 
-    final translations = logs.first.exercise.translations;
-    final exerciseName = translations.isNotEmpty ? translations.first.name : 'Exercise ${entry.key}';
+    final exerciseName = _pickExerciseName(logs.first.exercise.translations, entry.key);
     final sets = logs
         .where((log) => log.weight != null && log.repetitions != null)
         .map(
@@ -68,4 +69,24 @@ TrainingSession mapWorkoutSession(WorkoutSession source) {
     impression: source.impression,
     durationMinutes: durationMinutes,
   );
+}
+
+/// Busca el nombre del ejercicio en español, luego inglés, luego cualquier disponible.
+String _pickExerciseName(List<Translation> translations, int exerciseId) {
+  if (translations.isEmpty) {
+    return 'Exercise $exerciseId';
+  }
+
+  String? fallback;
+  for (final t in translations) {
+    final code = t.languageObj?.shortName ?? '';
+    if (code == 'es') {
+      return t.name;
+    }
+    if (code == LANGUAGE_SHORT_ENGLISH) {
+      fallback = t.name;
+    }
+  }
+
+  return fallback ?? translations.first.name;
 }
