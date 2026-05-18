@@ -82,7 +82,8 @@ Future<TrainingGoal> trainingGoalReady(Ref ref) async {
 ITrainingRepository trainingRepositoryV2(Ref ref) {
   final base = ref.watch(wgerBaseProvider);
   final exercises = ref.watch(exercisesRiverpodProvider);
-  return TrainingRepositoryImpl(base, exercises);
+  final routines = ref.watch(routinesRiverpodProvider);
+  return TrainingRepositoryImpl(base, exercises, routines);
 }
 
 /// Cached sessions provider — fetches once and holds the result.

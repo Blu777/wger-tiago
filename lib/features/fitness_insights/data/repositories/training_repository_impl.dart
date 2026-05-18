@@ -7,6 +7,7 @@ import 'package:wger/models/workouts/log.dart';
 import 'package:wger/models/workouts/session.dart';
 import 'package:wger/providers/base_provider.dart';
 import 'package:wger/providers/exercises.dart';
+import 'package:wger/providers/routines.dart';
 
 /// Concrete implementation of [ITrainingRepository].
 /// Fetches raw [WorkoutSession] objects directly from the wger API,
@@ -15,11 +16,12 @@ import 'package:wger/providers/exercises.dart';
 class TrainingRepositoryImpl implements ITrainingRepository {
   final WgerBaseProvider _baseProvider;
   final ExercisesProvider _exercisesProvider;
+  final RoutinesProvider _routinesProvider;
 
   static const _sessionUrlPath = 'workoutsession';
   static const _logUrlPath = 'workoutlog';
 
-  TrainingRepositoryImpl(this._baseProvider, this._exercisesProvider);
+  TrainingRepositoryImpl(this._baseProvider, this._exercisesProvider, this._routinesProvider);
 
   @override
   Future<List<TrainingSession>> fetchSessions({int? routineId}) async {
@@ -29,21 +31,14 @@ class TrainingRepositoryImpl implements ITrainingRepository {
     final cutoffStr =
         '${cutoff.year}-${cutoff.month.toString().padLeft(2, '0')}-${cutoff.day.toString().padLeft(2, '0')}';
 
-    // Auto-detect the active routine if none was provided
+    // Use the active routine from RoutinesProvider if none was provided
     if (routineId == null) {
-      try {
-        final routines = await _baseProvider.fetchPaginated(
-          _baseProvider.makeUrl('routine', query: {
-            'limit': '1',
-            'ordering': '-creation_date',
-            'is_template': 'false',
-          }),
-        );
-        if (routines.isNotEmpty) {
-          routineId = routines.first['id'] as int?;
-        }
-      } catch (e, st) {
-        debugPrint('[TrainingRepository] routine fetch failed: $e\n$st');
+      final activeRoutine = _routinesProvider.currentRoutine;
+      if (activeRoutine != null && activeRoutine.id != null) {
+        routineId = activeRoutine.id;
+        debugPrint('[TrainingRepository] Using active routine: ${activeRoutine.name} (ID: $routineId)');
+      } else {
+        debugPrint('[TrainingRepository] No active routine found');
       }
     }
 
@@ -76,6 +71,19 @@ class TrainingRepositoryImpl implements ITrainingRepository {
         .map((json) => Log.fromJson(json as Map<String, dynamic>))
         .toList();
 
+    // Get the set of exercise IDs that are in the active routine
+    final activeRoutineExerciseIds = <int>{};
+    final activeRoutine = _routinesProvider.currentRoutine;
+    if (activeRoutine != null) {
+      for (final day in activeRoutine.days) {
+        for (final slot in day.slots) {
+          // Add all exercise IDs from this slot (a slot can have multiple exercises)
+          activeRoutineExerciseIds.addAll(slot.exercisesIds);
+        }
+      }
+      debugPrint('[TrainingRepository] Active routine contains ${activeRoutineExerciseIds.length} exercises');
+    }
+
     // Hydrate the late Exercise field on each log (the API only returns exerciseId).
     // Deduplicate IDs and fetch all exercises in parallel to avoid N+1 requests.
     final uniqueIds = logs.map((l) => l.exerciseId).toSet();
@@ -92,12 +100,24 @@ class TrainingRepositoryImpl implements ITrainingRepository {
         }),
       ),
     );
+    
+    // Filter logs to only include exercises from the active routine
+    final filteredLogs = <Log>[];
     for (final log in logs) {
-      final exercise = exerciseMap[log.exerciseId];
-      if (exercise != null) {
-        log.exerciseBase = exercise;
+      // Only include logs for exercises that are in the active routine
+      if (activeRoutineExerciseIds.contains(log.exerciseId)) {
+        final exercise = exerciseMap[log.exerciseId];
+        if (exercise != null) {
+          log.exerciseBase = exercise;
+          filteredLogs.add(log);
+        }
       }
     }
+    
+    // Replace logs with filtered logs
+    logs.clear();
+    logs.addAll(filteredLogs);
+    debugPrint('[TrainingRepository] Filtered to ${logs.length} logs from active routine exercises');
 
     // Group logs by sessionId and attach to their session
     final logsBySession = <int, List<Log>>{};
