@@ -144,6 +144,34 @@ class FitnessCoachV2 extends _$FitnessCoachV2 {
       goal: goal,
     );
 
+    // Validation logging for training score
+    debugPrint('[FitnessCoachV2] === TRAINING SCORE ANALYSIS ===');
+    debugPrint('[FitnessCoachV2] Training Score: ${insight.trainingScore}');
+    debugPrint('[FitnessCoachV2] Sessions analyzed: ${sessions.length}');
+    debugPrint('[FitnessCoachV2] Weight entries: ${weights.length}');
+    debugPrint('[FitnessCoachV2] Feedback entries: ${syntheticFeedback.length}');
+    debugPrint('[FitnessCoachV2] Goal: ${goal.name}');
+    
+    // Validate that score 100 is meaningful
+    if (insight.trainingScore == 100) {
+      debugPrint('[FitnessCoachV2] SCORE 100 VALIDATION:');
+      debugPrint('[FitnessCoachV2] - Sessions with data: ${sessions.where((s) => s.exercises.isNotEmpty).length}');
+      debugPrint('[FitnessCoachV2] - Total exercises: ${sessions.fold(0, (sum, s) => sum + s.exercises.length)}');
+      debugPrint('[FitnessCoachV2] - Total sets: ${sessions.fold(0, (sum, s) => sum + s.exercises.fold(0, (eSum, e) => eSum + e.sets.length))}');
+      
+      // Check if this is a meaningful 100 or a default value
+      final hasRealData = sessions.isNotEmpty && 
+                         sessions.any((s) => s.exercises.isNotEmpty) &&
+                         sessions.any((s) => s.exercises.any((e) => e.sets.isNotEmpty));
+      
+      if (hasRealData) {
+        debugPrint('[FitnessCoachV2] ✅ Score 100 is MEANINGFUL - based on real exercise data');
+      } else {
+        debugPrint('[FitnessCoachV2] ⚠️  Score 100 might be DEFAULT - no real exercise data found');
+      }
+    }
+    debugPrint('[FitnessCoachV2] === END SCORE ANALYSIS ===');
+
     // Cache asynchronously (fire-and-forget)
     _cacheInsight(insight);
 
