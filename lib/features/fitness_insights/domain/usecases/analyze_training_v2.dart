@@ -871,7 +871,7 @@ class AnalyzeTrainingV2 {
           reason: '${muscle.muscleName}: agregar $setsToAdd sets.',
           detailReason: 'Fase de acumulación. '
               '${muscle.muscleName} tiene ${muscle.weeklySets.toStringAsFixed(0)} sets/semana, '
-              'por debajo del umbral de ${_muscleUnderThreshold} sets. '
+              'por debajo del umbral de $_muscleUnderThreshold sets. '
               'Agregar $setsToAdd sets para estimular el crecimiento.',
         );
         if (!wasRecentlyApplied(candidate)) {
@@ -1015,7 +1015,7 @@ class AnalyzeTrainingV2 {
         priority: 2,
         reason: '${muscle.muscleName}: agregar $setsToAdd sets.',
         detailReason: '${muscle.muscleName} tiene ${muscle.weeklySets.toStringAsFixed(0)} sets/semana, '
-            'por debajo del umbral mínimo de ${_muscleUnderThreshold} sets. '
+            'por debajo del umbral mínimo de $_muscleUnderThreshold sets. '
             'Agregar volumen para mejorar el estímulo de crecimiento.',
       );
       if (!wasRecentlyApplied(candidate)) {
@@ -1182,7 +1182,7 @@ class AnalyzeTrainingV2 {
 // ------------------------------------------------------------------
 
 /// Rounds a value up to the nearest multiple of 5.
-int _roundTo5(num value) => ((value / 5).ceil() * 5).toInt();
+int _roundTo5(num value) => (value / 5).ceil() * 5;
 
 class _E1rmEntry {
   final DateTime date;
