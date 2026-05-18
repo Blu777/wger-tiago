@@ -22,7 +22,26 @@ TrainingSession mapWorkoutSession(WorkoutSession source) {
       continue;
     }
 
-    final exerciseName = _pickExerciseName(logs.first.exercise.translations, entry.key);
+    // Safely extract exercise name and muscles.
+    // log.exercise is a `late` field that may not be initialized when logs
+    // come directly from the workoutlog API (without hydration).
+    String exerciseName;
+    final muscleNames = <String>[];
+    try {
+      final exercise = logs.first.exercise;
+      exerciseName = _pickExerciseName(exercise.translations, entry.key);
+      for (final m in exercise.muscles) {
+        muscleNames.add(m.name);
+      }
+      for (final m in exercise.musclesSecondary) {
+        if (!muscleNames.contains(m.name)) {
+          muscleNames.add(m.name);
+        }
+      }
+    } catch (_) {
+      exerciseName = 'Exercise ${entry.key}';
+    }
+
     final sets = logs
         .where((log) => log.weight != null && log.repetitions != null)
         .map(
@@ -32,18 +51,6 @@ TrainingSession mapWorkoutSession(WorkoutSession source) {
           ),
         )
         .toList();
-
-    // Extract muscle names from primary and secondary muscles
-    final muscleNames = <String>[];
-    final exercise = logs.first.exercise;
-    for (final m in exercise.muscles) {
-      muscleNames.add(m.name);
-    }
-    for (final m in exercise.musclesSecondary) {
-      if (!muscleNames.contains(m.name)) {
-        muscleNames.add(m.name);
-      }
-    }
 
     if (sets.isNotEmpty) {
       performances.add(

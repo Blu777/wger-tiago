@@ -5,6 +5,7 @@ part 'action_item.freezed.dart';
 /// Types of coaching actions.
 enum ActionType {
   increaseWeight,
+  addReps,
   addSets,
   reduceVolume,
   deload,
@@ -29,5 +30,8 @@ sealed class ActionItem with _$ActionItem {
 
     /// Human-readable justification for the action.
     required String reason,
+
+    /// Detailed explanation shown when the user taps the action.
+    @Default('') String detailReason,
   }) = _ActionItem;
 }

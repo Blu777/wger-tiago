@@ -19,6 +19,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wger/providers/auth.dart';
 import 'package:wger/providers/base_provider.dart';
+import 'package:wger/providers/exercises.dart';
+import 'package:wger/providers/routines.dart';
 
 /// Central provider that maps an existing [AuthProvider] (from the provider package)
 /// to a [WgerBaseProvider] used by repositories.
@@ -27,5 +29,21 @@ import 'package:wger/providers/base_provider.dart';
 final wgerBaseProvider = Provider<WgerBaseProvider>((ref) {
   throw UnimplementedError(
     'Override wgerBaseProvider in a ProviderScope with your existing WgerBaseProvider instance',
+  );
+});
+
+/// Bridge for the legacy [ExercisesProvider] (ChangeNotifier) so that
+/// Riverpod-based repositories can resolve exercise names and muscles.
+final exercisesRiverpodProvider = Provider<ExercisesProvider>((ref) {
+  throw UnimplementedError(
+    'Override exercisesRiverpodProvider in a ProviderScope with your existing ExercisesProvider instance',
+  );
+});
+
+/// Bridge for the legacy [RoutinesProvider] so that Riverpod-based code
+/// can read the active routine ID.
+final routinesRiverpodProvider = Provider<RoutinesProvider>((ref) {
+  throw UnimplementedError(
+    'Override routinesRiverpodProvider in a ProviderScope with your existing RoutinesProvider instance',
   );
 });

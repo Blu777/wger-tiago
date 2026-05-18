@@ -21,6 +21,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:wger/features/fitness_insights/domain/entities/workout_adaptation.dart';
 import 'package:wger/helpers/shared_preferences.dart';
 import 'package:wger/helpers/uuid.dart';
 import 'package:wger/models/exercises/exercise.dart';
@@ -191,6 +192,14 @@ class GymModeState {
   late final int iteration;
   late final Routine routine;
 
+  // Adaptation data (session-scoped, never persisted)
+  final bool isAdaptedSession;
+  final WorkoutAdaptation? adaptation;
+  final Map<String, SetConfigData> originalSetConfigs;
+
+  // Coach recommendation hints per exercise name (session-scoped)
+  final Map<String, String> coachHints;
+
   GymModeState({
     this.isInitialized = false,
     this.pages = const [],
@@ -205,6 +214,11 @@ class GymModeState {
     int? dayId,
     int? iteration,
     Routine? routine,
+
+    this.isAdaptedSession = false,
+    this.adaptation,
+    this.originalSetConfigs = const {},
+    this.coachHints = const {},
 
     DateTime? validUntil,
     TimeOfDay? startTime,
@@ -242,6 +256,12 @@ class GymModeState {
     bool? alertOnCountdownEnd,
     bool? useCountdownBetweenSets,
     int? countdownDuration,
+
+    // Adaptation
+    bool? isAdaptedSession,
+    WorkoutAdaptation? adaptation,
+    Map<String, SetConfigData>? originalSetConfigs,
+    Map<String, String>? coachHints,
   }) {
     return GymModeState(
       isInitialized: isInitialized ?? this.isInitialized,
@@ -261,6 +281,11 @@ class GymModeState {
       countdownDuration: Duration(
         seconds: countdownDuration ?? this.countdownDuration.inSeconds,
       ),
+
+      isAdaptedSession: isAdaptedSession ?? this.isAdaptedSession,
+      adaptation: adaptation ?? this.adaptation,
+      originalSetConfigs: originalSetConfigs ?? this.originalSetConfigs,
+      coachHints: coachHints ?? this.coachHints,
     );
   }
 
@@ -590,7 +615,42 @@ class GymStateNotifier extends _$GymStateNotifier {
       log.routineId = routineId;
     }
     log.iteration = state.iteration;
+
+    // In adapted sessions, the setConfigData already holds adapted values
+    // (weight/reps as defaults). Override the targets with original values
+    // so the user sees what was originally planned.
+    if (state.isAdaptedSession) {
+      final originalConfig = _findOriginalConfig(slotEntryPage);
+      if (originalConfig != null) {
+        log.weightTarget = originalConfig.weight;
+        log.repetitionsTarget = originalConfig.repetitions;
+      }
+    }
+
     ref.read(gymLogProvider.notifier).setLog(log);
+  }
+
+  SetConfigData? _findOriginalConfig(SlotPageEntry slotPage) {
+    // Walk the page structure to find matching slotIndex-configIndex key
+    int slotIndex = 0;
+    for (final pageEntry in state.pages) {
+      if (pageEntry.type != PageType.set) {
+        continue;
+      }
+
+      int configIndex = 0;
+      for (final sp in pageEntry.slotPages) {
+        if (sp.type == SlotPageType.log) {
+          if (sp.uuid == slotPage.uuid) {
+            final key = '$slotIndex-$configIndex';
+            return state.originalSetConfigs[key];
+          }
+          configIndex++;
+        }
+      }
+      slotIndex++;
+    }
+    return null;
   }
 
   void setShowExercisePages(bool value) {
@@ -618,6 +678,10 @@ class GymStateNotifier extends _$GymStateNotifier {
   void setCountdownDuration(int duration) {
     state = state.copyWith(countdownDuration: duration);
     _savePrefs();
+  }
+
+  void setCoachHints(Map<String, String> hints) {
+    state = state.copyWith(coachHints: hints);
   }
 
   void markSlotPageAsDone(String uuid, {required bool isDone}) {
@@ -728,6 +792,82 @@ class GymStateNotifier extends _$GymStateNotifier {
     );
 
     recalculateIndices();
+  }
+
+  void applyAdaptation(WorkoutAdaptation adaptation) {
+    if (!adaptation.hasModifications) {
+      _logger.fine('No modifications in adaptation, skipping');
+      return;
+    }
+
+    // Build a lookup: slotIndex → adapted SetConfigData list
+    final adaptedSlots = adaptation.adaptedSlots;
+
+    // Store original set configs keyed by "slotIndex-configIndex"
+    final originals = <String, SetConfigData>{};
+
+    final updatedPages = <PageEntry>[];
+    int slotIndex = 0;
+
+    for (final page in state.pages) {
+      if (page.type != PageType.set) {
+        updatedPages.add(page);
+        if (page.type == PageType.start) {
+          // slotIndex advances after start page (slots begin)
+        }
+        continue;
+      }
+
+      // Each PageType.set corresponds to a slot in order
+      if (slotIndex >= adaptedSlots.length) {
+        updatedPages.add(page);
+        slotIndex++;
+        continue;
+      }
+
+      final adaptedSlot = adaptedSlots[slotIndex];
+      int configIndex = 0;
+
+      final updatedSlotPages = <SlotPageEntry>[];
+      for (final slotPage in page.slotPages) {
+        if (slotPage.setConfigData != null &&
+            slotPage.type == SlotPageType.log &&
+            configIndex < adaptedSlot.setConfigs.length) {
+          final key = '$slotIndex-$configIndex';
+          originals[key] = slotPage.setConfigData!;
+
+          final adaptedConfig = adaptedSlot.setConfigs[configIndex];
+          updatedSlotPages.add(
+            slotPage.copyWith(setConfigData: adaptedConfig),
+          );
+          configIndex++;
+        } else {
+          updatedSlotPages.add(slotPage);
+        }
+      }
+
+      updatedPages.add(page.copyWith(slotPages: updatedSlotPages));
+      slotIndex++;
+    }
+
+    // Build coach hints from modifications (exercise name → reason)
+    final hints = <String, String>{};
+    for (final mod in adaptation.modifications) {
+      // Keep only the first (most important) hint per exercise
+      hints.putIfAbsent(mod.exerciseName, () => mod.reason);
+    }
+
+    state = state.copyWith(
+      pages: updatedPages,
+      isAdaptedSession: true,
+      adaptation: adaptation,
+      originalSetConfigs: originals,
+      coachHints: hints,
+    );
+    _logger.fine(
+      'Applied adaptation with ${adaptation.modifications.length} modifications, '
+      '${hints.length} coach hints',
+    );
   }
 
   void clear() {

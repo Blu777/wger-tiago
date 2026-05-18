@@ -18,7 +18,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:wger/features/fitness_insights/presentation/screens/fitness_insights_screen.dart';
+import 'package:wger/features/fitness_insights/presentation/screens/fitness_insights_v2_screen.dart';
 import 'package:wger/helpers/material.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
 import 'package:wger/models/nutrition/nutritional_plan.dart';
@@ -85,12 +85,13 @@ class DashboardScreen extends StatelessWidget {
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (_) => const FitnessInsightsScreen(),
+              builder: (_) => const FitnessInsightsV2Screen(),
             ),
           );
         },
         child: const Icon(Icons.analytics_outlined),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: MATERIAL_LG_BREAKPOINT),

@@ -18,6 +18,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wger/features/fitness_insights/presentation/providers/adapted_workout_provider.dart';
+import 'package:wger/features/fitness_insights/presentation/providers/fitness_coach_v2_provider.dart';
+import 'package:wger/features/fitness_insights/presentation/screens/pre_workout_checkin_screen.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
 import 'package:wger/models/exercises/exercise.dart';
 import 'package:wger/models/workouts/day.dart';
@@ -238,9 +241,43 @@ class StartPage extends ConsumerWidget {
           ),
         ),
         const GymModeOptions(),
+        OutlinedButton.icon(
+          icon: const Icon(Icons.health_and_safety),
+          label: const Text('Check-in Pre-Entreno (V2)'),
+          onPressed: () {
+            final dayData = ref.read(gymStateProvider).dayDataDisplay;
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => PreWorkoutCheckinScreen(dayData: dayData),
+              ),
+            );
+          },
+        ),
         FilledButton(
           child: Text(AppLocalizations.of(context).start),
           onPressed: () {
+            // If a pre-workout checkin produced an adaptation, apply it
+            final adaptationState = ref.read(adaptedWorkoutProvider);
+            adaptationState.whenData((adaptation) {
+              if (adaptation.hasModifications) {
+                ref.read(gymStateProvider.notifier).applyAdaptation(adaptation);
+              }
+            });
+
+            // Inject exercise-level coach hints from FitnessInsight
+            // (even for non-adapted sessions)
+            final coachState = ref.read(fitnessCoachV2Provider);
+            coachState.whenData((insight) {
+              final existingHints = ref.read(gymStateProvider).coachHints;
+              final hints = <String, String>{...existingHints};
+              for (final ei in insight.exerciseInsights) {
+                hints.putIfAbsent(ei.exerciseName, () => ei.recommendation);
+              }
+              if (hints.isNotEmpty && hints.length > existingHints.length) {
+                ref.read(gymStateProvider.notifier).setCoachHints(hints);
+              }
+            });
+
             _controller.nextPage(
               duration: const Duration(milliseconds: 200),
               curve: Curves.bounceIn,
