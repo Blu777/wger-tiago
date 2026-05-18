@@ -23,6 +23,7 @@ class FitnessInsightsScreen extends ConsumerStatefulWidget {
 
 class _FitnessInsightsScreenState extends ConsumerState<FitnessInsightsScreen> {
   Future<FitnessInsight>? _insightFuture;
+  List<TrainingSession> _sessions = [];
 
   @override
   void didChangeDependencies() {
@@ -44,6 +45,7 @@ class _FitnessInsightsScreenState extends ConsumerState<FitnessInsightsScreen> {
         sessions.add(mapWorkoutSession(sessionApi.session));
       }
     }
+    _sessions = sessions;
 
     final weights = await ref.read(bodyWeightProvider.future);
 
@@ -226,13 +228,16 @@ class _FitnessInsightsScreenState extends ConsumerState<FitnessInsightsScreen> {
   Widget _recommendationTile(String text) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(Icons.lightbulb_outline, size: 20, color: Colors.amber),
-          const SizedBox(width: 8),
-          Expanded(child: Text(text)),
-        ],
+      child: GestureDetector(
+        onTap: () => _showRecommendationDetail(text),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(Icons.lightbulb_outline, size: 20, color: Colors.amber),
+            const SizedBox(width: 8),
+            Expanded(child: Text(text)),
+          ],
+        ),
       ),
     );
   }
@@ -269,6 +274,130 @@ class _FitnessInsightsScreenState extends ConsumerState<FitnessInsightsScreen> {
             color: color,
           ),
         ),
+        onTap: () => _showExerciseDetail(insight),
+      ),
+    );
+  }
+
+  void _showRecommendationDetail(String text) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (_) => DraggableScrollableSheet(
+        initialChildSize: 0.4,
+        minChildSize: 0.2,
+        maxChildSize: 0.8,
+        expand: false,
+        builder: (_, scrollController) {
+          return Padding(
+            padding: const EdgeInsets.all(20),
+            child: ListView(
+              controller: scrollController,
+              children: [
+                Text(
+                  'Recomendación',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                const SizedBox(height: 12),
+                Text(text),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  void _showExerciseDetail(ExerciseInsight insight) {
+    final history = _sessions
+        .where(
+          (s) => s.exercises.any((e) => e.exerciseName == insight.exerciseName),
+        )
+        .toList();
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (_) => DraggableScrollableSheet(
+        initialChildSize: 0.5,
+        minChildSize: 0.3,
+        maxChildSize: 0.9,
+        expand: false,
+        builder: (_, scrollController) {
+          return Padding(
+            padding: const EdgeInsets.all(20),
+            child: ListView(
+              controller: scrollController,
+              children: [
+                Text(
+                  insight.exerciseName,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Icon(
+                      insight.progressStatus == ExerciseProgressStatus.progressing
+                          ? Icons.trending_up
+                          : insight.progressStatus == ExerciseProgressStatus.regression
+                              ? Icons.trending_down
+                              : Icons.trending_flat,
+                      color: insight.progressStatus == ExerciseProgressStatus.progressing
+                          ? Colors.green
+                          : insight.progressStatus == ExerciseProgressStatus.regression
+                              ? Colors.red
+                              : Colors.orange,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      '${(insight.e1rmChangePercent * 100).toStringAsFixed(1)}%',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'Recomendación',
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+                const SizedBox(height: 4),
+                Text(insight.recommendation),
+                const SizedBox(height: 24),
+                Text(
+                  'Historial',
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+                const SizedBox(height: 8),
+                if (history.isEmpty)
+                  const Text('No hay sesiones registradas para este ejercicio.')
+                else
+                  ...history.map((session) {
+                    final performance = session.exercises
+                        .firstWhere((e) => e.exerciseName == insight.exerciseName);
+                    return Card(
+                      margin: const EdgeInsets.symmetric(vertical: 4),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${session.date.day}/${session.date.month}/${session.date.year}',
+                              style: const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 4),
+                            ...performance.sets.map((set) {
+                              return Text('${set.weight} x ${set.repetitions}');
+                            }),
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
