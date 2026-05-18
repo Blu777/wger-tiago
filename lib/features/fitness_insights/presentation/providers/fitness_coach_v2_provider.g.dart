@@ -67,6 +67,56 @@ abstract class _$TrainingGoalNotifier extends $Notifier<TrainingGoal> {
   }
 }
 
+/// Async gate: resolves to the persisted [TrainingGoal] after SharedPreferences
+/// has been read. [FitnessCoachV2] watches this instead of the raw sync notifier
+/// so it never runs analysis with the default goal before prefs have loaded.
+
+@ProviderFor(trainingGoalReady)
+final trainingGoalReadyProvider = TrainingGoalReadyProvider._();
+
+/// Async gate: resolves to the persisted [TrainingGoal] after SharedPreferences
+/// has been read. [FitnessCoachV2] watches this instead of the raw sync notifier
+/// so it never runs analysis with the default goal before prefs have loaded.
+
+final class TrainingGoalReadyProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<TrainingGoal>,
+          TrainingGoal,
+          FutureOr<TrainingGoal>
+        >
+    with $FutureModifier<TrainingGoal>, $FutureProvider<TrainingGoal> {
+  /// Async gate: resolves to the persisted [TrainingGoal] after SharedPreferences
+  /// has been read. [FitnessCoachV2] watches this instead of the raw sync notifier
+  /// so it never runs analysis with the default goal before prefs have loaded.
+  TrainingGoalReadyProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'trainingGoalReadyProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$trainingGoalReadyHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<TrainingGoal> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<TrainingGoal> create(Ref ref) {
+    return trainingGoalReady(ref);
+  }
+}
+
+String _$trainingGoalReadyHash() => r'475120654f4e46ec95eb709e45c1ede416545041';
+
 @ProviderFor(trainingRepositoryV2)
 final trainingRepositoryV2Provider = TrainingRepositoryV2Provider._();
 
@@ -115,6 +165,55 @@ final class TrainingRepositoryV2Provider
 String _$trainingRepositoryV2Hash() =>
     r'712c1ad3174ebef68741b594c78c9fd7b86ab062';
 
+/// Cached sessions provider — fetches once and holds the result.
+/// Prevents [FitnessCoachV2] from re-fetching on every rebuild.
+
+@ProviderFor(trainingSessions)
+final trainingSessionsProvider = TrainingSessionsProvider._();
+
+/// Cached sessions provider — fetches once and holds the result.
+/// Prevents [FitnessCoachV2] from re-fetching on every rebuild.
+
+final class TrainingSessionsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<TrainingSession>>,
+          List<TrainingSession>,
+          FutureOr<List<TrainingSession>>
+        >
+    with
+        $FutureModifier<List<TrainingSession>>,
+        $FutureProvider<List<TrainingSession>> {
+  /// Cached sessions provider — fetches once and holds the result.
+  /// Prevents [FitnessCoachV2] from re-fetching on every rebuild.
+  TrainingSessionsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'trainingSessionsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$trainingSessionsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<TrainingSession>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<TrainingSession>> create(Ref ref) {
+    return trainingSessions(ref);
+  }
+}
+
+String _$trainingSessionsHash() => r'a62220a2647d5a3ac9465063ad607bd8db3ee04a';
+
 /// V2 coaching pipeline that:
 /// 1. Fetches sessions + body-weight from API.
 /// 2. Runs [AnalyzeTrainingV2] with the user's [TrainingGoal].
@@ -152,7 +251,7 @@ final class FitnessCoachV2Provider
   FitnessCoachV2 create() => FitnessCoachV2();
 }
 
-String _$fitnessCoachV2Hash() => r'0ac71b01c5865b036f6ecf1a6798bf9b96f446ee';
+String _$fitnessCoachV2Hash() => r'52d025c7fe5a0b84ea55f583cdf5c31df14081e5';
 
 /// V2 coaching pipeline that:
 /// 1. Fetches sessions + body-weight from API.

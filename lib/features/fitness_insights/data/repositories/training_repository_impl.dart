@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:wger/features/fitness_insights/data/mappers/training_session_mapper.dart';
 import 'package:wger/features/fitness_insights/data/repositories/training_repository.dart';
 import 'package:wger/features/fitness_insights/domain/entities/training_session.dart';
@@ -41,8 +42,8 @@ class TrainingRepositoryImpl implements ITrainingRepository {
         if (routines.isNotEmpty) {
           routineId = routines.first['id'] as int?;
         }
-      } catch (_) {
-        // If we can't fetch routines, fall back to unfiltered
+      } catch (e, st) {
+        debugPrint('[TrainingRepository] routine fetch failed: $e\n$st');
       }
     }
 
@@ -75,15 +76,26 @@ class TrainingRepositoryImpl implements ITrainingRepository {
         .map((json) => Log.fromJson(json as Map<String, dynamic>))
         .toList();
 
-    // Hydrate the late Exercise field on each log (the API only returns exerciseId)
+    // Hydrate the late Exercise field on each log (the API only returns exerciseId).
+    // Deduplicate IDs and fetch all exercises in parallel to avoid N+1 requests.
+    final uniqueIds = logs.map((l) => l.exerciseId).toSet();
+    final exerciseMap = Map.fromEntries(
+      await Future.wait(
+        uniqueIds.map((id) async {
+          try {
+            final ex = await _exercisesProvider.fetchAndSetExercise(id);
+            return MapEntry(id, ex);
+          } catch (e, st) {
+            debugPrint('[TrainingRepository] exercise fetch failed for id=$id: $e\n$st');
+            return MapEntry(id, null);
+          }
+        }),
+      ),
+    );
     for (final log in logs) {
-      try {
-        final exercise = await _exercisesProvider.fetchAndSetExercise(log.exerciseId);
-        if (exercise != null) {
-          log.exerciseBase = exercise;
-        }
-      } catch (_) {
-        // Exercise not found — mapper will fall back to "Exercise <id>"
+      final exercise = exerciseMap[log.exerciseId];
+      if (exercise != null) {
+        log.exerciseBase = exercise;
       }
     }
 

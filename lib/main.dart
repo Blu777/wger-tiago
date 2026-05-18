@@ -143,6 +143,17 @@ void main() async {
   final exercisesProvider = ExercisesProvider(baseProvider);
   final routinesProvider = RoutinesProvider(baseProvider, exercisesProvider, []);
 
+  // Validate auth state synchronization
+  void validateAuthState() {
+    // Ensure all providers have consistent auth state
+    if (baseProvider.auth != authProvider) {
+      logger.warning('Auth state inconsistency detected between baseProvider and authProvider');
+    }
+  }
+
+  // Listen for auth state changes to validate synchronization
+  authProvider.addListener(validateAuthState);
+
   runApp(
     riverpod.ProviderScope(
       overrides: [

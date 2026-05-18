@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wger/features/body_weight/presentation/providers/body_weight_provider.dart';
@@ -9,6 +10,7 @@ import 'package:wger/features/fitness_insights/domain/entities/adherence_metrics
 import 'package:wger/features/fitness_insights/domain/entities/fitness_insight.dart';
 import 'package:wger/features/fitness_insights/domain/entities/subjective_feedback.dart';
 import 'package:wger/features/fitness_insights/domain/entities/training_goal.dart';
+import 'package:wger/features/fitness_insights/domain/entities/training_session.dart';
 import 'package:wger/features/fitness_insights/domain/usecases/analyze_training_v2.dart';
 import 'package:wger/features/fitness_insights/presentation/providers/session_adherence_provider.dart';
 import 'package:wger/providers/wger_base_riverpod.dart';
@@ -31,7 +33,7 @@ class TrainingGoalNotifier extends _$TrainingGoalNotifier {
   @override
   TrainingGoal build() {
     _loadFromPrefs();
-    return TrainingGoal.hypertrophy; // sensible default
+    return TrainingGoal.hypertrophy; // initial default; overwritten once prefs load
   }
 
   Future<void> _loadFromPrefs() async {
@@ -55,8 +57,25 @@ class TrainingGoalNotifier extends _$TrainingGoalNotifier {
   }
 }
 
+/// Async gate: resolves to the persisted [TrainingGoal] after SharedPreferences
+/// has been read. [FitnessCoachV2] watches this instead of the raw sync notifier
+/// so it never runs analysis with the default goal before prefs have loaded.
+@Riverpod(keepAlive: true)
+Future<TrainingGoal> trainingGoalReady(Ref ref) async {
+  final prefs = await SharedPreferences.getInstance();
+  final stored = prefs.getString(_kTrainingGoalKey);
+  TrainingGoal loaded = TrainingGoal.hypertrophy;
+  if (stored != null) {
+    loaded = TrainingGoal.values.firstWhere(
+      (g) => g.name == stored,
+      orElse: () => TrainingGoal.hypertrophy,
+    );
+  }
+  return loaded;
+}
+
 // ------------------------------------------------------------------
-// Repository (reuses existing impl)
+// Repository + Sessions cache (reuses existing impl)
 // ------------------------------------------------------------------
 
 @riverpod
@@ -64,6 +83,13 @@ ITrainingRepository trainingRepositoryV2(Ref ref) {
   final base = ref.watch(wgerBaseProvider);
   final exercises = ref.watch(exercisesRiverpodProvider);
   return TrainingRepositoryImpl(base, exercises);
+}
+
+/// Cached sessions provider — fetches once and holds the result.
+/// Prevents [FitnessCoachV2] from re-fetching on every rebuild.
+@riverpod
+Future<List<TrainingSession>> trainingSessions(Ref ref) {
+  return ref.watch(trainingRepositoryV2Provider).fetchSessions();
 }
 
 // ------------------------------------------------------------------
@@ -78,15 +104,26 @@ ITrainingRepository trainingRepositoryV2(Ref ref) {
 class FitnessCoachV2 extends _$FitnessCoachV2 {
   @override
   Future<FitnessInsight> build() async {
-    final goal = ref.watch(trainingGoalProvider);
-    final sessions = await ref.watch(trainingRepositoryV2Provider).fetchSessions();
+    // Await persisted goal — never run with the default before prefs load.
+    final goal = await ref.watch(trainingGoalReadyProvider.future);
+
+    // Await adherence history load — never run with empty list on cold start.
+    // sessionAdherenceProvider is a sync Notifier; we await its async loader via
+    // the dedicated gate provider.
+    await ref.watch(sessionAdherenceReadyProvider.future);
+    final adherenceHistory = ref.read(sessionAdherenceProvider);
+
+    final sessions = await ref.watch(trainingSessionsProvider.future);
     final weights = await ref.watch(bodyWeightProvider.future);
 
     // Convert adherence history into synthetic feedback signals.
-    // Low adherence → the user is struggling with recommendations → signal fatigue.
-    final adherenceHistory = ref.read(sessionAdherenceProvider);
+    // Only non-adapted sessions with genuine overrides contribute.
     final syntheticFeedback = <SubjectiveFeedback>[];
     for (final record in adherenceHistory) {
+      // Skip sessions where user wasn't given an adaptation — no signal to extract.
+      if (!record.wasAdapted) {
+        continue;
+      }
       // Map adherence score to inverse fatigue: 100 score → fatigue 1, 0 score → fatigue 10
       final fatigue = ((1 - record.overallScore / 100) * 9 + 1).round().clamp(1, 10);
       // Map adherence score to energy (high adherence = high energy)
@@ -122,7 +159,8 @@ class FitnessCoachV2 extends _$FitnessCoachV2 {
     try {
       final map = jsonDecode(json) as Map<String, dynamic>;
       return _deserializeInsight(map);
-    } catch (_) {
+    } catch (e, st) {
+      debugPrint('[FitnessCoachV2] cache read/deserialize failed: $e\n$st');
       return null;
     }
   }
@@ -132,8 +170,8 @@ class FitnessCoachV2 extends _$FitnessCoachV2 {
       final prefs = await SharedPreferences.getInstance();
       final json = jsonEncode(_serializeInsight(insight));
       await prefs.setString(_kCachedInsightKey, json);
-    } catch (_) {
-      // Caching is best-effort; don't crash the app
+    } catch (e, st) {
+      debugPrint('[FitnessCoachV2] cache write failed: $e\n$st');
     }
   }
 
@@ -156,6 +194,9 @@ class FitnessCoachV2 extends _$FitnessCoachV2 {
       'coachDirective': insight.coachSummary?.directive,
       'coachNote': insight.coachSummary?.note,
       'cachedAt': DateTime.now().toIso8601String(),
+      'adherenceWeeklyFrequency': insight.adherenceMetrics.weeklyFrequency,
+      'adherenceMaxGapDays': insight.adherenceMetrics.maxGapDays,
+      'adherenceConsistencyScore': insight.adherenceMetrics.consistencyScore,
     };
   }
 
@@ -181,10 +222,10 @@ class FitnessCoachV2 extends _$FitnessCoachV2 {
       recommendations: ((map['recommendations'] as List?) ?? []).cast<String>(),
       weeklyWeightChange: map['weeklyWeightChange'] as num?,
       fatigueTrend: map['fatigueTrend'] as num?,
-      adherenceMetrics: const AdherenceMetrics(
-        weeklyFrequency: 0,
-        maxGapDays: 0,
-        consistencyScore: 0,
+      adherenceMetrics: AdherenceMetrics(
+        weeklyFrequency: (map['adherenceWeeklyFrequency'] as num?) ?? 0,
+        maxGapDays: (map['adherenceMaxGapDays'] as num?)?.toInt() ?? 0,
+        consistencyScore: (map['adherenceConsistencyScore'] as num?) ?? 0,
       ),
     );
   }

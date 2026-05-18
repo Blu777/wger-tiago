@@ -334,11 +334,16 @@ class AnalyzeTrainingV2 {
   }
 
   num _calculateE1rm(num weight, num reps) {
-    // Brzycki formula (more accurate for <10 reps)
     if (reps <= 1) {
       return weight.toDouble();
     }
-    return weight * (36 / (37 - reps));
+    // Brzycki formula is accurate up to ~10 reps; beyond that it inflates
+    // e1RM significantly (e.g. 20 reps → ×2.1x). Switch to Epley above 10.
+    if (reps <= 10) {
+      return weight * (36 / (37 - reps));
+    }
+    // Epley: weight × (1 + reps/30) — more conservative for high-rep sets
+    return weight * (1 + reps / 30);
   }
 
   // ================================================================
@@ -372,7 +377,7 @@ class AnalyzeTrainingV2 {
 
     final result = <String, MuscleAnalysis>{};
     for (final muscle in muscleSets.keys) {
-      final totalSets = muscleSets[muscle]!.length;
+      final totalSets = muscleSets[muscle]!.fold<num>(0, (a, b) => a + b);
       final weeklySets = totalSets / weeks;
       final freq = (muscleSessions[muscle]?.length ?? 0) / weeks;
       final vol = muscleVolume[muscle] ?? 0;
@@ -408,33 +413,12 @@ class AnalyzeTrainingV2 {
     required num? fatigueLevel,
     required num dataQualityScore,
   }) {
-    if (exerciseInsights.isEmpty) {
-      // Early data: no trend insights yet. Score based on adherence + quality
-      // instead of quality alone (which produces misleading low scores).
-      final earlyAdherence = (adherence.consistencyScore / 100) * 40;
-      final earlyQuality = (dataQualityScore / 100) * 30;
-      // Base 30 points for showing up at all (encouragement for new users)
-      return (30 + earlyAdherence + earlyQuality).clamp(0, 100);
-    }
-
-    final progressing = exerciseInsights
-        .where((e) => e.progressStatus == ExerciseProgressStatus.progressing)
-        .length;
-    final progressScore = (progressing / exerciseInsights.length) * 40;
-    final adherenceScore = (adherence.consistencyScore / 100) * 25;
-
-    var fatigueScore = 20.0;
-    if (fatigueLevel != null) {
-      fatigueScore = fatigueLevel >= _fatigueHighThreshold
-          ? 5.0
-          : 20.0 - (fatigueLevel * 1.5);
-      if (fatigueScore < 0) {
-        fatigueScore = 0;
-      }
-    }
-
-    final qualityScore = (dataQualityScore / 100) * 15;
-    return progressScore + adherenceScore + fatigueScore + qualityScore;
+    return _computeTrainingScoreBreakdown(
+      exerciseInsights: exerciseInsights,
+      adherence: adherence,
+      fatigueLevel: fatigueLevel,
+      dataQualityScore: dataQualityScore,
+    ).total;
   }
 
   // ================================================================
@@ -543,6 +527,10 @@ class AnalyzeTrainingV2 {
       case TrainingGoal.strength:
         // Strength: primarily e1RM-driven
         if (isStrengthProgressing && !fatHigh) {
+          return FitnessStatus.goodProgress;
+        }
+        // Progressing but fatigued → still good progress, not inconsistent
+        if (isStrengthProgressing && fatHigh) {
           return FitnessStatus.goodProgress;
         }
         if (hasStalled && !isStrengthProgressing) {
@@ -809,7 +797,11 @@ class AnalyzeTrainingV2 {
 
     bool wasRecentlyApplied(ActionItem candidate) {
       for (final past in previousState?.lastActions ?? <ActionItem>[]) {
-        if (past.target == candidate.target && past.type == candidate.type) {
+        final sameTarget = past.target == candidate.target;
+        final sameType = past.type == candidate.type;
+        final similarValue = candidate.value != 0 &&
+            (past.value - candidate.value).abs() < (candidate.value * 0.2);
+        if (sameTarget && sameType && similarValue) {
           return true;
         }
       }
@@ -1163,10 +1155,10 @@ class AnalyzeTrainingV2 {
       final week = s.date.difference(start).inDays ~/ 7;
       weeklyCounts[week] = (weeklyCounts[week] ?? 0) + 1;
     }
-    final modalWeekly = weeklyCounts.values.isNotEmpty
-        ? weeklyCounts.values.reduce((a, b) => a > b ? a : b)
-        : 0;
-    final expectedSessions = weeksTotal * modalWeekly;
+    // Use the mean sessions/week as the expected baseline, not the modal max.
+    // Using max caused one exceptional week to make every other week look inconsistent.
+    final meanWeekly = weeksTotal > 0 ? sessions.length / weeksTotal : 0;
+    final expectedSessions = weeksTotal * meanWeekly;
     final consistency = expectedSessions > 0 ? (sessions.length / expectedSessions) * 100 : 0;
 
     return AdherenceMetrics(

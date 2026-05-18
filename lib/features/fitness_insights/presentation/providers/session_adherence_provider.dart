@@ -11,14 +11,43 @@ part 'session_adherence_provider.g.dart';
 const _kAdherenceHistoryKey = 'fitness_coach_v2_adherence_history';
 const _kMaxHistoryEntries = 30; // Keep last 30 sessions
 
+/// Async gate: resolves once the persisted adherence history has been loaded
+/// into [sessionAdherenceProvider]. [FitnessCoachV2] awaits this before reading
+/// the sync notifier, preventing the race condition on cold start.
+@Riverpod(keepAlive: true)
+Future<void> sessionAdherenceReady(Ref ref) async {
+  final prefs = await SharedPreferences.getInstance();
+  final jsonStr = prefs.getString(_kAdherenceHistoryKey);
+  if (jsonStr == null) {
+    return;
+  }
+  try {
+    final list = jsonDecode(jsonStr) as List;
+    final records = list
+        .map((e) => SessionAdherenceRecord.fromJson(e as Map<String, dynamic>))
+        .toList();
+    ref.read(sessionAdherenceProvider.notifier).loadHistory(records);
+  } catch (_) {
+    // Best effort — corrupt prefs shouldn't crash the app.
+  }
+}
+
 /// Manages adherence tracking: computes planned-vs-executed after each session
 /// and persists a rolling history for the feedback loop.
 @Riverpod(keepAlive: true)
 class SessionAdherenceNotifier extends _$SessionAdherenceNotifier {
   @override
   List<SessionAdherenceRecord> build() {
-    _loadHistory();
+    // Initial load is handled by sessionAdherenceReadyProvider (async gate).
+    // That provider calls loadHistory() once prefs are available, ensuring
+    // FitnessCoachV2 never reads an empty list on cold start.
     return [];
+  }
+
+  /// Called by [sessionAdherenceReadyProvider] once SharedPreferences has been
+  /// read. Replaces the empty initial state with the persisted history.
+  void loadHistory(List<SessionAdherenceRecord> records) {
+    state = records;
   }
 
   /// Record adherence for a completed session.
@@ -75,22 +104,6 @@ class SessionAdherenceNotifier extends _$SessionAdherenceNotifier {
       return 0;
     }
     return totalOverrides / totalExercises;
-  }
-
-  Future<void> _loadHistory() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      final jsonStr = prefs.getString(_kAdherenceHistoryKey);
-      if (jsonStr == null) {
-        return;
-      }
-      final list = jsonDecode(jsonStr) as List;
-      state = list
-          .map((e) => SessionAdherenceRecord.fromJson(e as Map<String, dynamic>))
-          .toList();
-    } catch (_) {
-      // Best effort
-    }
   }
 
   Future<void> _saveHistory(List<SessionAdherenceRecord> records) async {

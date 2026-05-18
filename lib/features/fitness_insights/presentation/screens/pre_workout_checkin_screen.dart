@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wger/features/fitness_insights/domain/entities/pre_workout_checkin.dart';
 import 'package:wger/features/fitness_insights/presentation/providers/adapted_workout_provider.dart';
+import 'package:wger/features/fitness_insights/presentation/providers/fitness_coach_v2_provider.dart';
 import 'package:wger/features/fitness_insights/presentation/screens/adapted_workout_preview_screen.dart';
 import 'package:wger/models/workouts/day_data.dart';
 
@@ -101,18 +102,33 @@ class _PreWorkoutCheckinScreenState
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: FilledButton(
-            onPressed: () {
+          child: _buildCTAButton(context, ref),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCTAButton(BuildContext context, WidgetRef ref) {
+    final coachState = ref.watch(fitnessCoachV2Provider);
+    final isLoading = coachState.isLoading;
+
+    return FilledButton(
+      onPressed: isLoading
+          ? null
+          : () {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_) => const AdaptedWorkoutPreviewScreen(),
                 ),
               );
             },
-            child: const Text('Ver entrenamiento adaptado'),
-          ),
-        ),
-      ),
+      child: isLoading
+          ? const SizedBox(
+              height: 20,
+              width: 20,
+              child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+            )
+          : const Text('Ver entrenamiento adaptado'),
     );
   }
 

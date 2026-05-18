@@ -22,6 +22,7 @@ import 'package:provider/provider.dart' as provider;
 import 'package:wger/core/exceptions/http_exception.dart';
 import 'package:wger/helpers/consts.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
+import 'package:wger/models/workouts/log.dart';
 import 'package:wger/models/workouts/set_config_data.dart';
 import 'package:wger/providers/gym_log_state.dart';
 import 'package:wger/providers/gym_state.dart';
@@ -64,6 +65,8 @@ class _LogFormWidgetState extends ConsumerState<LogFormWidget> {
     final i18n = AppLocalizations.of(context);
     final log = ref.watch(gymLogProvider);
 
+    final gymState = ref.watch(gymStateProvider);
+
     return Form(
       key: _form,
       child: Column(
@@ -74,6 +77,7 @@ class _LogFormWidgetState extends ConsumerState<LogFormWidget> {
             style: Theme.of(context).textTheme.titleLarge,
             textAlign: TextAlign.center,
           ),
+          if (gymState.isAdaptedSession) _buildOriginalPlanChip(context, log),
           if (!_detailed)
             Row(
               children: [
@@ -206,6 +210,52 @@ class _LogFormWidgetState extends ConsumerState<LogFormWidget> {
                     }
                   },
             child: _isSaving ? const FormProgressIndicator() : Text(i18n.save),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Shows a compact chip with the original planned values when the session is
+  /// adapted and the targets differ from the adapted pre-fill. This ensures
+  /// the user always knows what was originally planned vs the coach suggestion.
+  Widget _buildOriginalPlanChip(BuildContext context, Log? log) {
+    if (log == null) {
+      return const SizedBox.shrink();
+    }
+
+    final hasWeightDiff =
+        log.weightTarget != null &&
+        log.weight != null &&
+        (log.weightTarget! - log.weight!).abs() >= 0.5;
+
+    final hasRepsDiff =
+        log.repetitionsTarget != null &&
+        log.repetitions != null &&
+        log.repetitionsTarget != log.repetitions;
+
+    if (!hasWeightDiff && !hasRepsDiff) {
+      return const SizedBox.shrink();
+    }
+
+    final parts = <String>[];
+    if (hasWeightDiff) {
+      parts.add('${log.weightTarget!.toStringAsFixed(1)} kg');
+    }
+    if (hasRepsDiff) {
+      parts.add('${log.repetitionsTarget!.toInt()} reps');
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 4, bottom: 2),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.event_note_outlined, size: 13, color: Colors.grey.shade600),
+          const SizedBox(width: 4),
+          Text(
+            'Planificado: ${parts.join(' × ')}',
+            style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
           ),
         ],
       ),

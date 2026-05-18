@@ -5,14 +5,14 @@ import 'package:wger/features/fitness_insights/domain/entities/action_plan.dart'
 import 'package:wger/features/fitness_insights/domain/entities/exercise_insight.dart';
 import 'package:wger/features/fitness_insights/domain/entities/fitness_insight.dart';
 import 'package:wger/features/fitness_insights/domain/entities/muscle_analysis.dart';
-import 'package:wger/features/fitness_insights/presentation/providers/v2_fitness_insight_provider.dart';
+import 'package:wger/features/fitness_insights/presentation/providers/fitness_coach_v2_provider.dart';
 
 class FitnessInsightsV2Screen extends ConsumerWidget {
   const FitnessInsightsV2Screen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final insightAsync = ref.watch(v2FitnessInsightProvider);
+    final insightAsync = ref.watch(fitnessCoachV2Provider);
 
     return Scaffold(
       appBar: AppBar(

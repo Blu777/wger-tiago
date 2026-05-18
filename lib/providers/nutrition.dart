@@ -21,7 +21,6 @@ import 'dart:convert';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
-import 'package:wger/core/exceptions/http_exception.dart';
 import 'package:wger/core/exceptions/no_such_entry_exception.dart';
 import 'package:wger/core/locator.dart';
 import 'package:wger/database/ingredients/ingredients_database.dart';
@@ -218,12 +217,12 @@ class NutritionPlansProvider with ChangeNotifier {
     _plans.removeAt(existingPlanIndex);
     notifyListeners();
 
-    final response = await baseProvider.deleteRequest(_nutritionalPlansPath, id);
-
-    if (response.statusCode >= 400) {
+    try {
+      await baseProvider.deleteRequest(_nutritionalPlansPath, id);
+    } catch (e) {
       _plans.insert(existingPlanIndex, existingPlan);
       notifyListeners();
-      throw WgerHttpException(response);
+      rethrow;
     }
     //existingPlan = null;
   }
@@ -262,11 +261,12 @@ class NutritionPlansProvider with ChangeNotifier {
     notifyListeners();
 
     // Try to delete
-    final response = await baseProvider.deleteRequest(_mealPath, meal.id!);
-    if (response.statusCode >= 400) {
+    try {
+      await baseProvider.deleteRequest(_mealPath, meal.id!);
+    } catch (e) {
       plan.meals.insert(mealIndex, existingMeal);
       notifyListeners();
-      throw WgerHttpException(response);
+      rethrow;
     }
   }
 
@@ -295,11 +295,12 @@ class NutritionPlansProvider with ChangeNotifier {
     notifyListeners();
 
     // Try to delete
-    final response = await baseProvider.deleteRequest(_mealItemPath, mealItem.id!);
-    if (response.statusCode >= 400) {
+    try {
+      await baseProvider.deleteRequest(_mealItemPath, mealItem.id!);
+    } catch (e) {
       meal.mealItems.insert(mealItemIndex, existingMealItem);
       notifyListeners();
-      throw WgerHttpException(response);
+      rethrow;
     }
   }
 

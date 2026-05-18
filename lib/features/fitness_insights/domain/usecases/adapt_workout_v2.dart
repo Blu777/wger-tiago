@@ -468,8 +468,18 @@ class AdaptWorkoutV2 {
         }
 
       case ActionType.addReps:
-        // addReps: value is the number of extra reps per set
-        break; // reps are not modified at the workout-adaptation level (display-only recommendation)
+        // Reps are not modified in SetConfigData (the wger model doesn't support
+        // per-session rep overrides). Instead, emit a display-only WorkoutModification
+        // so the preview screen surfaces the recommendation to the user.
+        if (adapted.repetitions != null) {
+          modifications.add(WorkoutModification(
+            exerciseName: exerciseName,
+            field: 'reps',
+            originalValue: adapted.repetitions!,
+            adaptedValue: adapted.repetitions! + action.value,
+            reason: 'Coach: ${action.reason}',
+          ));
+        }
 
       case ActionType.maintain:
         break;
