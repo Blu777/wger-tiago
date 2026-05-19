@@ -44,6 +44,15 @@ void main() {
         reason: 'Weight cant be achieved with plates',
       );
     });
+
+    test('Floating point precision edge cases', () {
+      // This case was failing due to floating point precision issues
+      expect(plateCalculator(45, BAR_WEIGHT, AVAILABLE_PLATES), [10, 2.5]);
+      
+      // Test other decimal cases that should work
+      expect(plateCalculator(50, BAR_WEIGHT, AVAILABLE_PLATES), [15]);
+      expect(plateCalculator(55, BAR_WEIGHT, AVAILABLE_PLATES), [15, 2.5]);
+    });
   });
 
   group('Test the plate calculator group', () {

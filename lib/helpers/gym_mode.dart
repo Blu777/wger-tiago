@@ -34,7 +34,9 @@ List<num> plateCalculator(num totalWeight, num barWeight, List<num> plates) {
   totalWeight = (totalWeight - barWeight) / 2;
 
   // Weight can't be divided with the smallest plate
-  if (totalWeight % sortedPlates.first > 0) {
+  // Use tolerance for floating point comparison
+  const double tolerance = 1e-10;
+  if ((totalWeight / sortedPlates.first - (totalWeight / sortedPlates.first).floor()).abs() > tolerance) {
     return [];
   }
 
