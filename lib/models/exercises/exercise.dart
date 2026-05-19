@@ -165,6 +165,17 @@ class Exercise extends Equatable {
   ///       but we can't make sure that no local installation hasn't deleted
   ///       the entry in English.
   Translation getTranslation(String language) {
+    // Guard against empty translations
+    if (translations.isEmpty) {
+      _logger.info('[Exercise] No translations for exercise $id, returning fallback');
+      return const Translation(
+        id: null,
+        languageId: 0,
+        name: 'Unknown exercise',
+        description: 'No translation available',
+      );
+    }
+
     // If the language is in the form en-US, take the language code only
     final languageCode = language.split('-')[0];
 

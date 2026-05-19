@@ -113,10 +113,26 @@ class RoutinesProvider with ChangeNotifier {
 
   /// Return the default weight unit (kg)
   WeightUnit get defaultWeightUnit {
-    return _weightUnits.firstWhere((element) => element.id == WEIGHT_UNIT_KG);
+    final match = _weightUnits.where((e) => e.id == WEIGHT_UNIT_KG);
+    if (match.isEmpty) {
+      debugPrint('[Routines] WeightUnit not found for id=$WEIGHT_UNIT_KG, returning first available');
+      if (_weightUnits.isEmpty) {
+        debugPrint('[Routines] WeightUnits list is empty, returning hardcoded kg fallback');
+        return const WeightUnit(id: WEIGHT_UNIT_KG, name: 'kg');
+      }
+      return _weightUnits.first;
+    }
+    return match.first;
   }
 
-  WeightUnit findWeightUnitById(int id) => _weightUnits.firstWhere((element) => element.id == id);
+  WeightUnit findWeightUnitById(int id) {
+    final match = _weightUnits.where((e) => e.id == id);
+    if (match.isEmpty) {
+      debugPrint('[Routines] WeightUnit not found for id=$id, returning default');
+      return defaultWeightUnit;
+    }
+    return match.first;
+  }
 
   List<RepetitionUnit> get repetitionUnits {
     return [..._repetitionUnits];
@@ -126,12 +142,27 @@ class RoutinesProvider with ChangeNotifier {
     _repetitionUnits = repetitionUnits;
   }
 
-  RepetitionUnit findRepetitionUnitById(int id) =>
-      _repetitionUnits.firstWhere((element) => element.id == id);
+  RepetitionUnit findRepetitionUnitById(int id) {
+    final match = _repetitionUnits.where((e) => e.id == id);
+    if (match.isEmpty) {
+      debugPrint('[Routines] RepetitionUnit not found for id=$id, returning default');
+      return defaultRepetitionUnit;
+    }
+    return match.first;
+  }
 
   /// Return the default weight unit (reps)
   RepetitionUnit get defaultRepetitionUnit {
-    return _repetitionUnits.firstWhere((element) => element.id == REP_UNIT_REPETITIONS_ID);
+    final match = _repetitionUnits.where((e) => e.id == REP_UNIT_REPETITIONS_ID);
+    if (match.isEmpty) {
+      debugPrint('[Routines] RepetitionUnit not found for id=$REP_UNIT_REPETITIONS_ID, returning first available');
+      if (_repetitionUnits.isEmpty) {
+        debugPrint('[Routines] RepetitionUnits list is empty, returning hardcoded reps fallback');
+        return const RepetitionUnit(id: REP_UNIT_REPETITIONS_ID, name: 'repetitions');
+      }
+      return _repetitionUnits.first;
+    }
+    return match.first;
   }
 
   List<Routine> getPlans() {
