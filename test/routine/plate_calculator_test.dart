@@ -41,6 +41,13 @@ void main() {
       expect(
         plateCalculator(101, BAR_WEIGHT, AVAILABLE_PLATES),
         [],
+        reason: 'Weight cant be achieved with plates (40.5 per side, 0.5 remaining)',
+      );
+
+      // Use a weight that really can't be achieved
+      expect(
+        plateCalculator(103, BAR_WEIGHT, AVAILABLE_PLATES),
+        [],
         reason: 'Weight cant be achieved with plates',
       );
     });
@@ -52,6 +59,35 @@ void main() {
       // Test other decimal cases that should work
       expect(plateCalculator(50, BAR_WEIGHT, AVAILABLE_PLATES), [15]);
       expect(plateCalculator(55, BAR_WEIGHT, AVAILABLE_PLATES), [15, 2.5]);
+    });
+
+    test('Common squat weights with full plate set', () {
+      // Test with full KG plate set like in the app
+      final fullKgPlates = [0.5, 1, 1.25, 2, 2.5, 5, 10, 15, 20, 25];
+      
+      // Common squat weights that should work
+      expect(plateCalculator(60, 20, fullKgPlates), [20]); // 60kg: 20 each side
+      expect(plateCalculator(80, 20, fullKgPlates), [25, 5]); // 80kg: 25+5 each side
+      expect(plateCalculator(100, 20, fullKgPlates), [25, 15]); // 100kg: 25+15 each side
+      expect(plateCalculator(120, 20, fullKgPlates), [25, 25]); // 120kg: 25+25 each side
+      expect(plateCalculator(140, 20, fullKgPlates), [25, 25, 10]); // 140kg: 25+25+10 each side
+      expect(plateCalculator(160, 20, fullKgPlates), [25, 25, 20]); // 160kg: 25+25+20 each side
+      expect(plateCalculator(180, 20, fullKgPlates), [25, 25, 25, 5]); // 180kg: 25+25+25+5 each side
+      expect(plateCalculator(200, 20, fullKgPlates), [25, 25, 25, 15]); // 200kg: 25+25+25+15 each side
+    });
+
+    test('Problematic weights that might fail', () {
+      final fullKgPlates = [0.5, 1, 1.25, 2, 2.5, 5, 10, 15, 20, 25];
+      
+      // Test weights that require smaller plates
+      expect(plateCalculator(22.5, 20, fullKgPlates), [1.25]); // 22.5kg: 1.25 each side
+      expect(plateCalculator(25, 20, fullKgPlates), [2.5]); // 25kg: 2.5 each side
+      expect(plateCalculator(27.5, 20, fullKgPlates), [2.5, 1.25]); // 27.5kg: 2.5+1.25 each side
+      expect(plateCalculator(30, 20, fullKgPlates), [5]); // 30kg: 5 each side
+      expect(plateCalculator(32.5, 20, fullKgPlates), [5, 1.25]); // 32.5kg: 5+1.25 each side
+      expect(plateCalculator(35, 20, fullKgPlates), [5, 2.5]); // 35kg: 5+2.5 each side
+      expect(plateCalculator(37.5, 20, fullKgPlates), [5, 2.5, 1.25]); // 37.5kg: 5+2.5+1.25 each side
+      expect(plateCalculator(40, 20, fullKgPlates), [10]); // 40kg: 10 each side
     });
   });
 

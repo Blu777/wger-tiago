@@ -33,18 +33,29 @@ List<num> plateCalculator(num totalWeight, num barWeight, List<num> plates) {
   // Remove the bar and divide by two to get weight on each side
   totalWeight = (totalWeight - barWeight) / 2;
 
-  // Weight can't be divided with the smallest plate
-  // Use tolerance for floating point comparison
-  const double tolerance = 1e-10;
-  if ((totalWeight / sortedPlates.first - (totalWeight / sortedPlates.first).floor()).abs() > tolerance) {
-    return [];
-  }
-
   // Iterate through the plates, beginning with the biggest ones
   for (final plate in sortedPlates.reversed) {
     while (totalWeight >= plate) {
       totalWeight -= plate;
       result.add(plate);
+    }
+  }
+
+  // Check if we can achieve the remaining weight with the smallest plate
+  // Use tolerance for floating point comparison
+  const double tolerance = 1e-10;
+  if (totalWeight > tolerance) {
+    // Check if remaining weight can be achieved with available plates
+    bool canAchieveRemaining = false;
+    for (final plate in sortedPlates) {
+      if ((totalWeight / plate - (totalWeight / plate).floor()).abs() < tolerance) {
+        canAchieveRemaining = true;
+        break;
+      }
+    }
+    
+    if (!canAchieveRemaining) {
+      return []; // Can't achieve exact weight with available plates
     }
   }
 
