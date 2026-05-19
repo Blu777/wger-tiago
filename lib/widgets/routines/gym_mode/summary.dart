@@ -22,6 +22,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
+import 'package:wger/features/fitness_insights/presentation/providers/fitness_coach_v2_provider.dart';
+import 'package:wger/features/fitness_insights/presentation/providers/session_adherence_provider.dart';
 import 'package:wger/features/trophies/presentation/providers/trophy_provider.dart';
 import 'package:wger/helpers/date.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
@@ -76,6 +78,33 @@ class _WorkoutSummaryState extends ConsumerState<WorkoutSummary> {
 
     final trophyNotifier = ref.read(trophyProvider.notifier);
     await trophyNotifier.fetchUserTrophies(language: languageCode);
+
+    // Record adherence for the feedback loop
+    _recordAdherence(gymState);
+  }
+
+  void _recordAdherence(GymModeState gymState) {
+    if (!gymState.isAdaptedSession || gymState.adaptation == null) {
+      return;
+    }
+
+    // Collect today's logs from the routine
+    final todayLogs = _routine.sessions
+        .where((s) => s.session.date.isSameDayAs(clock.now()))
+        .expand((s) => s.logs)
+        .toList();
+
+    if (todayLogs.isEmpty) {
+      return;
+    }
+
+    ref.read(sessionAdherenceProvider.notifier).recordSession(
+      adaptation: gymState.adaptation!,
+      sessionLogs: todayLogs,
+    );
+
+    // Invalidate the coach so next analysis includes fresh adherence data
+    ref.invalidate(fitnessCoachV2Provider);
   }
 
   @override

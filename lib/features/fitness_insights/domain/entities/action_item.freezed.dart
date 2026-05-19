@@ -19,7 +19,8 @@ mixin _$ActionItem {
  String get target;/// Numeric value associated with the action (kg, sets, %, etc.).
  num get value;/// Impact priority (1 = highest, 3 = lowest).
  int get priority;/// Human-readable justification for the action.
- String get reason;
+ String get reason;/// Detailed explanation shown when the user taps the action.
+ String get detailReason;
 /// Create a copy of ActionItem
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,16 +31,16 @@ $ActionItemCopyWith<ActionItem> get copyWith => _$ActionItemCopyWithImpl<ActionI
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ActionItem&&(identical(other.type, type) || other.type == type)&&(identical(other.target, target) || other.target == target)&&(identical(other.value, value) || other.value == value)&&(identical(other.priority, priority) || other.priority == priority)&&(identical(other.reason, reason) || other.reason == reason));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ActionItem&&(identical(other.type, type) || other.type == type)&&(identical(other.target, target) || other.target == target)&&(identical(other.value, value) || other.value == value)&&(identical(other.priority, priority) || other.priority == priority)&&(identical(other.reason, reason) || other.reason == reason)&&(identical(other.detailReason, detailReason) || other.detailReason == detailReason));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,type,target,value,priority,reason);
+int get hashCode => Object.hash(runtimeType,type,target,value,priority,reason,detailReason);
 
 @override
 String toString() {
-  return 'ActionItem(type: $type, target: $target, value: $value, priority: $priority, reason: $reason)';
+  return 'ActionItem(type: $type, target: $target, value: $value, priority: $priority, reason: $reason, detailReason: $detailReason)';
 }
 
 
@@ -50,7 +51,7 @@ abstract mixin class $ActionItemCopyWith<$Res>  {
   factory $ActionItemCopyWith(ActionItem value, $Res Function(ActionItem) _then) = _$ActionItemCopyWithImpl;
 @useResult
 $Res call({
- ActionType type, String target, num value, int priority, String reason
+ ActionType type, String target, num value, int priority, String reason, String detailReason
 });
 
 
@@ -67,13 +68,14 @@ class _$ActionItemCopyWithImpl<$Res>
 
 /// Create a copy of ActionItem
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? type = null,Object? target = null,Object? value = null,Object? priority = null,Object? reason = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? type = null,Object? target = null,Object? value = null,Object? priority = null,Object? reason = null,Object? detailReason = null,}) {
   return _then(_self.copyWith(
 type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as ActionType,target: null == target ? _self.target : target // ignore: cast_nullable_to_non_nullable
 as String,value: null == value ? _self.value : value // ignore: cast_nullable_to_non_nullable
 as num,priority: null == priority ? _self.priority : priority // ignore: cast_nullable_to_non_nullable
 as int,reason: null == reason ? _self.reason : reason // ignore: cast_nullable_to_non_nullable
+as String,detailReason: null == detailReason ? _self.detailReason : detailReason // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -156,10 +158,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ActionType type,  String target,  num value,  int priority,  String reason)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ActionType type,  String target,  num value,  int priority,  String reason,  String detailReason)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ActionItem() when $default != null:
-return $default(_that.type,_that.target,_that.value,_that.priority,_that.reason);case _:
+return $default(_that.type,_that.target,_that.value,_that.priority,_that.reason,_that.detailReason);case _:
   return orElse();
 
 }
@@ -177,10 +179,10 @@ return $default(_that.type,_that.target,_that.value,_that.priority,_that.reason)
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ActionType type,  String target,  num value,  int priority,  String reason)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ActionType type,  String target,  num value,  int priority,  String reason,  String detailReason)  $default,) {final _that = this;
 switch (_that) {
 case _ActionItem():
-return $default(_that.type,_that.target,_that.value,_that.priority,_that.reason);}
+return $default(_that.type,_that.target,_that.value,_that.priority,_that.reason,_that.detailReason);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -194,10 +196,10 @@ return $default(_that.type,_that.target,_that.value,_that.priority,_that.reason)
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ActionType type,  String target,  num value,  int priority,  String reason)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ActionType type,  String target,  num value,  int priority,  String reason,  String detailReason)?  $default,) {final _that = this;
 switch (_that) {
 case _ActionItem() when $default != null:
-return $default(_that.type,_that.target,_that.value,_that.priority,_that.reason);case _:
+return $default(_that.type,_that.target,_that.value,_that.priority,_that.reason,_that.detailReason);case _:
   return null;
 
 }
@@ -209,7 +211,7 @@ return $default(_that.type,_that.target,_that.value,_that.priority,_that.reason)
 
 
 class _ActionItem implements ActionItem {
-  const _ActionItem({required this.type, required this.target, required this.value, this.priority = 2, required this.reason});
+  const _ActionItem({required this.type, required this.target, required this.value, this.priority = 2, required this.reason, this.detailReason = ''});
   
 
 /// Type of action.
@@ -222,6 +224,8 @@ class _ActionItem implements ActionItem {
 @override@JsonKey() final  int priority;
 /// Human-readable justification for the action.
 @override final  String reason;
+/// Detailed explanation shown when the user taps the action.
+@override@JsonKey() final  String detailReason;
 
 /// Create a copy of ActionItem
 /// with the given fields replaced by the non-null parameter values.
@@ -233,16 +237,16 @@ _$ActionItemCopyWith<_ActionItem> get copyWith => __$ActionItemCopyWithImpl<_Act
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ActionItem&&(identical(other.type, type) || other.type == type)&&(identical(other.target, target) || other.target == target)&&(identical(other.value, value) || other.value == value)&&(identical(other.priority, priority) || other.priority == priority)&&(identical(other.reason, reason) || other.reason == reason));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ActionItem&&(identical(other.type, type) || other.type == type)&&(identical(other.target, target) || other.target == target)&&(identical(other.value, value) || other.value == value)&&(identical(other.priority, priority) || other.priority == priority)&&(identical(other.reason, reason) || other.reason == reason)&&(identical(other.detailReason, detailReason) || other.detailReason == detailReason));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,type,target,value,priority,reason);
+int get hashCode => Object.hash(runtimeType,type,target,value,priority,reason,detailReason);
 
 @override
 String toString() {
-  return 'ActionItem(type: $type, target: $target, value: $value, priority: $priority, reason: $reason)';
+  return 'ActionItem(type: $type, target: $target, value: $value, priority: $priority, reason: $reason, detailReason: $detailReason)';
 }
 
 
@@ -253,7 +257,7 @@ abstract mixin class _$ActionItemCopyWith<$Res> implements $ActionItemCopyWith<$
   factory _$ActionItemCopyWith(_ActionItem value, $Res Function(_ActionItem) _then) = __$ActionItemCopyWithImpl;
 @override @useResult
 $Res call({
- ActionType type, String target, num value, int priority, String reason
+ ActionType type, String target, num value, int priority, String reason, String detailReason
 });
 
 
@@ -270,13 +274,14 @@ class __$ActionItemCopyWithImpl<$Res>
 
 /// Create a copy of ActionItem
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? type = null,Object? target = null,Object? value = null,Object? priority = null,Object? reason = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? type = null,Object? target = null,Object? value = null,Object? priority = null,Object? reason = null,Object? detailReason = null,}) {
   return _then(_ActionItem(
 type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as ActionType,target: null == target ? _self.target : target // ignore: cast_nullable_to_non_nullable
 as String,value: null == value ? _self.value : value // ignore: cast_nullable_to_non_nullable
 as num,priority: null == priority ? _self.priority : priority // ignore: cast_nullable_to_non_nullable
 as int,reason: null == reason ? _self.reason : reason // ignore: cast_nullable_to_non_nullable
+as String,detailReason: null == detailReason ? _self.detailReason : detailReason // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

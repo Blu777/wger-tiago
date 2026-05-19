@@ -82,7 +82,7 @@ class WgerBaseProvider {
       HttpHeaders.userAgentHeader: auth.getAppNameHeader(),
     };
 
-    if (includeAuth) {
+    if (includeAuth && auth.token != null) {
       out[HttpHeaders.authorizationHeader] = 'Token ${auth.token}';
     }
 
@@ -95,6 +95,9 @@ class WgerBaseProvider {
 
   /// Helper function to make a URL.
   Uri makeUrl(String path, {int? id, String? objectMethod, Map<String, dynamic>? query}) {
+    if (auth.serverUrl == null) {
+      throw ArgumentError('Server URL cannot be null when making API requests');
+    }
     return makeUri(auth.serverUrl!, path, id, objectMethod, query);
   }
 
@@ -121,6 +124,7 @@ class WgerBaseProvider {
 
     while (true) {
       try {
+        _logger.info('API Request: GET $uri');
         final response = await _safeRequest(
           () => client
               .get(uri, headers: getDefaultHeaders(includeAuth: true, language: language))
@@ -128,6 +132,7 @@ class WgerBaseProvider {
           normalizeNetworkErrors: false,
         );
 
+        _logger.info('API Response: ${response.statusCode} for $uri');
         if (response.statusCode >= 400) {
           // Retry on server errors (5xx); e.g. 502 might be transient
           if (response.statusCode >= 500 && attempt < maxRetries) {
@@ -138,7 +143,15 @@ class WgerBaseProvider {
           throw WgerHttpException(response);
         }
 
-        return json.decode(utf8.decode(response.bodyBytes)) as dynamic;
+        try {
+          final responseBody = utf8.decode(response.bodyBytes);
+          if (responseBody.isEmpty) {
+            throw WgerHttpException.fromMap({'empty_response': 'API returned empty response'});
+          }
+          return json.decode(responseBody) as dynamic;
+        } on FormatException catch (e) {
+          throw WgerHttpException.fromMap({'json_decode_error': 'Invalid JSON response: ${e.message}'});
+        }
       } catch (e) {
         final isRetryable =
             e is SocketException || e is http.ClientException || e is TimeoutException;
@@ -189,6 +202,7 @@ class WgerBaseProvider {
     Uri uri, {
     Duration timeout = DEFAULT_TIMEOUT,
   }) async {
+    _logger.info('API Request: POST $uri');
     final response = await _safeRequest(
       () => client
           .post(
@@ -199,12 +213,20 @@ class WgerBaseProvider {
           .timeout(timeout),
     );
 
+    _logger.info('API Response: ${response.statusCode} for $uri');
     // Something wrong with our request
     if (response.statusCode >= 400) {
       throw WgerHttpException(response);
     }
 
-    return json.decode(response.body);
+    try {
+      if (response.body.isEmpty) {
+        throw WgerHttpException.fromMap({'empty_response': 'API returned empty response'});
+      }
+      return json.decode(response.body);
+    } on FormatException catch (e) {
+      throw WgerHttpException.fromMap({'json_decode_error': 'Invalid JSON response: ${e.message}'});
+    }
   }
 
   /// PATCHEs an existing object
@@ -213,6 +235,7 @@ class WgerBaseProvider {
     Uri uri, {
     Duration timeout = DEFAULT_TIMEOUT,
   }) async {
+    _logger.info('API Request: PATCH $uri');
     final response = await _safeRequest(
       () => client
           .patch(
@@ -223,12 +246,20 @@ class WgerBaseProvider {
           .timeout(timeout),
     );
 
+    _logger.info('API Response: ${response.statusCode} for $uri');
     // Something wrong with our request
     if (response.statusCode >= 400) {
       throw WgerHttpException(response);
     }
 
-    return json.decode(response.body);
+    try {
+      if (response.body.isEmpty) {
+        throw WgerHttpException.fromMap({'empty_response': 'API returned empty response'});
+      }
+      return json.decode(response.body);
+    } on FormatException catch (e) {
+      throw WgerHttpException.fromMap({'json_decode_error': 'Invalid JSON response: ${e.message}'});
+    }
   }
 
   /// DELETEs an existing object

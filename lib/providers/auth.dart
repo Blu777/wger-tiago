@@ -53,9 +53,19 @@ class AuthProvider with ChangeNotifier {
   String? serverVersion;
   PackageInfo? applicationVersion;
   Map<String, String> metadata = {};
-  AuthState state = AuthState.loggedOut;
+  AuthState _state = AuthState.loggedOut;
   bool _serverConfigWarning = false;
   bool get serverConfigWarning => _serverConfigWarning;
+
+  AuthState get state => _state;
+  
+  set state(AuthState newState) {
+    if (_state != newState) {
+      _logger.info('Auth state changed: $_state -> $newState');
+      _state = newState;
+      notifyListeners();
+    }
+  }
 
   static const MIN_APP_VERSION_URL = 'min-app-version';
   static const SERVER_VERSION_URL = 'version';
@@ -84,8 +94,18 @@ class AuthProvider with ChangeNotifier {
 
   /// Server application version
   Future<void> setServerVersion() async {
+    if (serverUrl == null) {
+      throw ArgumentError('Server URL cannot be null when fetching server version');
+    }
     final response = await client.get(makeUri(serverUrl!, SERVER_VERSION_URL));
-    serverVersion = json.decode(response.body);
+    try {
+      if (response.body.isEmpty) {
+        throw WgerHttpException.fromMap({'empty_response': 'Server version API returned empty response'});
+      }
+      serverVersion = json.decode(response.body);
+    } on FormatException catch (e) {
+      throw WgerHttpException.fromMap({'json_decode_error': 'Invalid server version response: ${e.message}'});
+    }
   }
 
   /// (flutter) Application version
@@ -101,6 +121,12 @@ class AuthProvider with ChangeNotifier {
 
   /// Checking if there is a new version of the application.
   Future<bool> applicationUpdateRequired([String? version]) async {
+    if (serverUrl == null) {
+      throw ArgumentError('Server URL cannot be null when checking application update');
+    }
+    if (applicationVersion == null) {
+      throw ArgumentError('Application version must be set before checking for updates');
+    }
     final applicationCurrentVersion = version ?? applicationVersion!.version;
     final response = await client.get(makeUri(serverUrl!, MIN_APP_VERSION_URL));
     final currentVersion = Version.parse(applicationCurrentVersion);
@@ -162,6 +188,9 @@ class AuthProvider with ChangeNotifier {
   /// be completed conclusively), `false` when a mismatch is detected.
   Future<bool> serverConfigSane() async {
     try {
+      if (serverUrl == null) {
+        return false;
+      }
       final baseUri = Uri.parse(serverUrl!);
       final response = await client.get(
         Uri.parse('$serverUrl/api/v2/exercise/?limit=1'),
@@ -265,9 +294,19 @@ class AuthProvider with ChangeNotifier {
         throw WgerHttpException(response);
       }
 
-      final responseData = json.decode(response.body);
-
-      token = responseData['token'];
+      try {
+        if (response.body.isEmpty) {
+          throw WgerHttpException.fromMap({'empty_response': 'Login API returned empty response'});
+        }
+        final responseData = json.decode(response.body);
+        
+        if (responseData['token'] == null) {
+          throw WgerHttpException.fromMap({'missing_token': 'Login response missing token field'});
+        }
+        token = responseData['token'];
+      } on FormatException catch (e) {
+        throw WgerHttpException.fromMap({'json_decode_error': 'Invalid login response: ${e.message}'});
+      }
     }
 
     await initVersions(serverUrl);

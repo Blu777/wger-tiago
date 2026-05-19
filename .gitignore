@@ -171,3 +171,13 @@ ios/Runner.app.dSYM.zip
 /.claude/
 /vendor/bundle/ruby/
 /lib/l10n/generated/
+
+# Personal/development files
+/errores.md
+
+# Build logs
+release-*.log
+
+# Keystore files (security)
+**/android/app/*.jks
+**/android/app/*.keystore

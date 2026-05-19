@@ -21,6 +21,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 import 'package:mockito/mockito.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:version/version.dart';
 import 'package:wger/helpers/consts.dart';
 import 'package:wger/providers/auth.dart';
@@ -41,6 +42,13 @@ void main() {
     mockClient = MockClient();
     authProvider = AuthProvider(mockClient);
     authProvider.serverUrl = 'http://localhost';
+    // Mock application version for tests
+    authProvider.applicationVersion = PackageInfo(
+      appName: 'wger',
+      packageName: 'de.wger.flutter',
+      version: '2.0.0',
+      buildNumber: '202',
+    );
   });
 
   group('min application version check', () {

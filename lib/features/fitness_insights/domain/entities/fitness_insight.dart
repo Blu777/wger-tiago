@@ -80,5 +80,11 @@ sealed class FitnessInsight with _$FitnessInsight {
 
     /// Optional human-readable summary (populated by a formatter service).
     String? summaryText,
+
+    /// Number of sessions in the analysis window.
+    @Default(0) int sessionCount,
+
+    /// Number of unique exercises found in the analysis window.
+    @Default(0) int uniqueExerciseCount,
   }) = _FitnessInsight;
 }

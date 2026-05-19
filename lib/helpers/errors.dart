@@ -28,13 +28,13 @@ import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:wger/core/exceptions/http_exception.dart';
+import 'package:wger/helpers/consts.dart';
+import 'package:wger/helpers/logs.dart';
 import 'package:wger/l10n/generated/app_localizations.dart';
 import 'package:wger/main.dart';
 import 'package:wger/models/workouts/log.dart';
+import 'package:wger/providers/auth.dart';
 import 'package:wger/providers/routines.dart';
-
-import 'consts.dart';
-import 'logs.dart';
 
 void showHttpExceptionErrorDialog(WgerHttpException exception, {BuildContext? context}) {
   final logger = Logger('showHttpExceptionErrorDialog');
@@ -50,6 +50,19 @@ void showHttpExceptionErrorDialog(WgerHttpException exception, {BuildContext? co
     }
     return;
   }
+
+  // Add enhanced error context
+  String authContext = 'Unknown';
+  try {
+    final authProvider = dialogContext.read<AuthProvider>();
+    authContext = 'Authenticated: ${authProvider.isAuth}, Server: ${authProvider.serverUrl ?? "Not set"}';
+  } catch (e) {
+    authContext = 'Auth context unavailable';
+  }
+
+  logger.severe('HTTP Error Details: ${exception.errors}');
+  logger.severe('User Context: $authContext');
+  logger.severe('Error Type: ${exception.type}');
 
   showDialog(
     context: dialogContext,

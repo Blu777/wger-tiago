@@ -1,10 +1,16 @@
-# Mobile app for wger
+# Mobile app for wger (Tiago Fork)
+
+**Current Version:** 2.0.0+202
 
 wger is a free, open-source flutter application that manages and tracks/logs
 your exercises and personal workouts, weight, and diet plans. This is the mobile
 app written with Flutter, it talks via REST with the main server.
 
-If you want to contribute, hop on the Discord server and say hi!
+This is a personal fork (`wger-tiago`) with custom modifications and improvements.
+
+For the original project, visit: https://github.com/wger-project/flutter
+
+If you want to contribute to the original project, hop on the Discord server and say hi!
 
 
 <p align="center">
@@ -70,7 +76,8 @@ as expected. We can't fix what we don't know about, so please report liberally.
 If you're not sure if something is a bug or not, feel free to file a bug anyway.
 
 * **Discord:** <https://discord.gg/rPWFv6W>
-* **Issue tracker:** <https://github.com/wger-project/flutter/issues>
+* **Issue tracker (original):** <https://github.com/wger-project/flutter/issues>
+* **This fork:** <https://github.com/tn200/wger-tiago>
 * **Mastodon:** <https://fosstodon.org/@wger>
 
 ## License

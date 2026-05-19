@@ -140,15 +140,32 @@ void main() async {
   // Application
   final authProvider = AuthProvider();
   final baseProvider = WgerBaseProvider(authProvider);
+  final exercisesProvider = ExercisesProvider(baseProvider);
+  final routinesProvider = RoutinesProvider(baseProvider, exercisesProvider, []);
+
+  // Validate auth state synchronization
+  void validateAuthState() {
+    // Ensure all providers have consistent auth state
+    if (baseProvider.auth != authProvider) {
+      logger.warning('Auth state inconsistency detected between baseProvider and authProvider');
+    }
+  }
+
+  // Listen for auth state changes to validate synchronization
+  authProvider.addListener(validateAuthState);
 
   runApp(
     riverpod.ProviderScope(
       overrides: [
         wgerBaseProvider.overrideWithValue(baseProvider),
+        exercisesRiverpodProvider.overrideWithValue(exercisesProvider),
+        routinesRiverpodProvider.overrideWithValue(routinesProvider),
       ],
       child: MainApp(
         authProvider: authProvider,
         baseProvider: baseProvider,
+        exercisesProvider: exercisesProvider,
+        routinesProvider: routinesProvider,
       ),
     ),
   );
@@ -157,10 +174,14 @@ void main() async {
 class MainApp extends StatelessWidget {
   final AuthProvider authProvider;
   final WgerBaseProvider baseProvider;
+  final ExercisesProvider exercisesProvider;
+  final RoutinesProvider routinesProvider;
 
   const MainApp({
     required this.authProvider,
     required this.baseProvider,
+    required this.exercisesProvider,
+    required this.routinesProvider,
   });
 
   Widget _getHomeScreen(AuthProvider auth) {
@@ -187,20 +208,8 @@ class MainApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<AuthProvider>.value(value: authProvider),
-        ChangeNotifierProxyProvider<AuthProvider, ExercisesProvider>(
-          create: (context) => ExercisesProvider(baseProvider),
-          update: (context, base, previous) =>
-              previous ?? ExercisesProvider(baseProvider),
-        ),
-        ChangeNotifierProxyProvider2<AuthProvider, ExercisesProvider, RoutinesProvider>(
-          create: (context) => RoutinesProvider(
-            baseProvider,
-            Provider.of(context, listen: false),
-            [],
-          ),
-          update: (context, auth, exercises, previous) =>
-              previous ?? RoutinesProvider(baseProvider, exercises, []),
-        ),
+        ChangeNotifierProvider<ExercisesProvider>.value(value: exercisesProvider),
+        ChangeNotifierProvider<RoutinesProvider>.value(value: routinesProvider),
         ChangeNotifierProxyProvider<AuthProvider, NutritionPlansProvider>(
           create: (context) => NutritionPlansProvider(
             baseProvider,

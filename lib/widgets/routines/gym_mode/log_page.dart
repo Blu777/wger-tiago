@@ -117,6 +117,43 @@ class LogPage extends ConsumerWidget {
             ),
           ),
         ),
+        if (gymState.isAdaptedSession)
+          Container(
+            width: double.infinity,
+            color: Colors.orange.withAlpha(30),
+            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.tune, size: 14, color: Colors.orange.shade700),
+                const SizedBox(width: 4),
+                Text(
+                  'Valores adaptados – podés modificarlos manualmente',
+                  style: TextStyle(fontSize: 11, color: Colors.orange.shade700),
+                ),
+              ],
+            ),
+          ),
+        if (_coachHintForExercise(gymState, log) != null)
+          Container(
+            width: double.infinity,
+            color: Colors.blue.withAlpha(20),
+            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+            child: Row(
+              children: [
+                Icon(Icons.psychology, size: 14, color: Colors.blue.shade700),
+                const SizedBox(width: 6),
+                Expanded(
+                  child: Text(
+                    _coachHintForExercise(gymState, log)!,
+                    style: TextStyle(fontSize: 11, color: Colors.blue.shade700),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
+          ),
         if (log.exercise.showPlateCalculator) const LogsPlatesWidget(),
         if (slotEntryPage.setConfigData!.comment.isNotEmpty)
           Text(slotEntryPage.setConfigData!.comment, textAlign: TextAlign.center),
@@ -147,6 +184,27 @@ class LogPage extends ConsumerWidget {
         NavigationFooter(_controller),
       ],
     );
+  }
+
+  String? _coachHintForExercise(GymModeState gymState, Log log) {
+    if (gymState.coachHints.isEmpty) {
+      return null;
+    }
+    const languageCode = 'es';
+    String exerciseName;
+    try {
+      exerciseName = log.exercise.getTranslation(languageCode).name;
+    } catch (_) {
+      try {
+        exerciseName = log.exercise.getTranslation('en').name;
+      } catch (_) {
+        if (log.exercise.translations.isEmpty) {
+          return null;
+        }
+        exerciseName = log.exercise.translations.first.name;
+      }
+    }
+    return gymState.coachHints[exerciseName];
   }
 }
 
