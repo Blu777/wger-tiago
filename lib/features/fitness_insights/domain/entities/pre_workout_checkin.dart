@@ -35,7 +35,7 @@ extension PlannedSportActivityExtension on PlannedSportActivity {
       case PlannedSportActivity.competitiveMatch:
         return 0.40;
       case PlannedSportActivity.intensiveTraining:
-        return 0.35;
+        return 0.45;
     }
   }
 

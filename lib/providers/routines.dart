@@ -734,14 +734,26 @@ class RoutinesProvider with ChangeNotifier {
       throw StateError('Routine ${newLog.routineId} not found');
     }
 
-    // If there is no session known locally, just re-fetch everything
-    try {
-      final session = plan.sessions.firstWhere((element) => element.session.id == newLog.sessionId);
-      session.logs.add(newLog);
-      notifyListeners();
-    } on StateError {
-      await fetchAndSetRoutineFull(newLog.routineId);
+    // Append to existing local session, or create a minimal shell if not found.
+    // Avoids a destructive full re-fetch that would break GymModeState pages.
+    final existingSession = plan.sessions
+        .where((element) => element.session.id == newLog.sessionId)
+        .firstOrNull;
+
+    if (existingSession != null) {
+      existingSession.logs.add(newLog);
+    } else {
+      plan.sessions.add(
+        WorkoutSessionApi(
+          session: WorkoutSession(
+            id: newLog.sessionId,
+            routineId: newLog.routineId,
+          ),
+          logs: [newLog],
+        ),
+      );
     }
+    notifyListeners();
 
     return newLog;
   }

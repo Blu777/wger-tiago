@@ -28,7 +28,9 @@ import 'package:wger/models/exercises/exercise.dart';
 import 'package:wger/models/workouts/day_data.dart';
 import 'package:wger/models/workouts/log.dart';
 import 'package:wger/models/workouts/routine.dart';
+import 'package:wger/models/workouts/session_api.dart';
 import 'package:wger/models/workouts/set_config_data.dart';
+import 'package:wger/models/workouts/slot_data.dart';
 import 'package:wger/providers/gym_log_state.dart';
 
 part 'gym_state.g.dart';
@@ -609,12 +611,11 @@ class GymStateNotifier extends _$GymStateNotifier {
       return;
     }
 
-    final log = Log.fromSetConfigData(slotEntryPage.setConfigData!);
-    final routineId = state.routine.id;
-    if (routineId != null) {
-      log.routineId = routineId;
-    }
-    log.iteration = state.iteration;
+    final log = Log.fromSetConfigData(
+      slotEntryPage.setConfigData!,
+      routineId: state.routine.id!,
+      iteration: state.iteration,
+    );
 
     // In adapted sessions, the setConfigData already holds adapted values
     // (weight/reps as defaults). Override the targets with original values
@@ -741,10 +742,68 @@ class GymStateNotifier extends _$GymStateNotifier {
       return page.copyWith(slotPages: updatedSlotPages);
     }).toList();
 
-    // TODO: this should not be done in-place!
-    state.routine.replaceExercise(originalExerciseId, newExercise);
+    final routine = state.routine;
+    final newExerciseId = newExercise.id;
+    if (newExerciseId == null) {
+      state = state.copyWith(pages: updatedPages);
+      return;
+    }
+
+    // Build new session lists with replaced exercise references
+    final updatedSessions = routine.sessions.map((s) {
+      final updatedLogs = s.logs.map((log) {
+        if (log.exerciseId == originalExerciseId) {
+          return log.copyWith(exerciseId: newExerciseId)..exerciseBase = newExercise;
+        }
+        return log;
+      }).toList();
+      return WorkoutSessionApi(session: s.session, logs: updatedLogs);
+    }).toList();
+
+    // Build new dayData / dayDataGym with replaced configs
+    List<DayData> replaceDayData(List<DayData> source) {
+      return source.map((day) {
+        final updatedSlots = day.slots.map((slot) {
+          final updatedConfigs = slot.setConfigs.map((config) {
+            if (config.exerciseId == originalExerciseId) {
+              return config.copyWith(exerciseId: newExerciseId, exercise: newExercise);
+            }
+            return config;
+          }).toList();
+          return SlotData(
+            comment: slot.comment,
+            isSuperset: slot.isSuperset,
+            exerciseIds: slot.exerciseIds,
+            setConfigs: updatedConfigs,
+          );
+        }).toList();
+        return DayData(
+          iteration: day.iteration,
+          date: day.date,
+          label: day.label,
+          day: day.day,
+          slots: updatedSlots,
+        );
+      }).toList();
+    }
+
+    final updatedRoutine = Routine(
+      id: routine.id,
+      name: routine.name,
+      created: routine.created,
+      start: routine.start,
+      end: routine.end,
+      fitInWeek: routine.fitInWeek,
+      description: routine.description,
+      days: routine.days,
+      dayData: replaceDayData(routine.dayData),
+      dayDataGym: replaceDayData(routine.dayDataGym),
+      sessions: updatedSessions,
+    );
+
     state = state.copyWith(
       pages: updatedPages,
+      routine: updatedRoutine,
     );
     _logger.fine('Replaced exercise $originalExerciseId with ${newExercise.id}');
   }
@@ -762,7 +821,6 @@ class GymStateNotifier extends _$GymStateNotifier {
         if (firstSlotPage.setConfigData == null) {
           continue;
         }
-        final setConfigData = firstSlotPage.setConfigData!;
 
         final List<SlotPageEntry> newSlotPages = [];
         for (var i = 1; i <= 4; i++) {
@@ -775,7 +833,7 @@ class GymStateNotifier extends _$GymStateNotifier {
                 textRepr: '-/-',
                 exerciseId: newExercise.id ?? 0,
                 exercise: newExercise,
-                slotEntryId: setConfigData.slotEntryId,
+                slotEntryId: null,
               ),
             ),
           );
@@ -879,6 +937,11 @@ class GymStateNotifier extends _$GymStateNotifier {
 
       validUntil: clock.now().add(DEFAULT_DURATION),
       startTime: null,
+
+      isAdaptedSession: false,
+      adaptation: null,
+      originalSetConfigs: const {},
+      coachHints: const {},
     );
   }
 }

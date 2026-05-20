@@ -35,7 +35,7 @@ class SetConfigData {
   late Exercise exercise;
 
   @JsonKey(required: true, name: 'slot_entry_id')
-  late int slotEntryId;
+  int? slotEntryId;
 
   @JsonKey(required: true)
   late SlotEntryType type;

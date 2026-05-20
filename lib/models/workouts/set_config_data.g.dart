@@ -34,7 +34,7 @@ SetConfigData _$SetConfigDataFromJson(Map<String, dynamic> json) {
   );
   return SetConfigData(
     exerciseId: (json['exercise'] as num).toInt(),
-    slotEntryId: (json['slot_entry_id'] as num).toInt(),
+    slotEntryId: (json['slot_entry_id'] as num?)?.toInt(),
     type:
         $enumDecodeNullable(_$SlotEntryTypeEnumMap, json['type']) ??
         SlotEntryType.normal,

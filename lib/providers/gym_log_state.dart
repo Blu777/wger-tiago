@@ -48,6 +48,10 @@ class GymLogNotifier extends _$GymLogNotifier {
     state = state?.copyWith(repetitions: repetitions);
   }
 
+  void setRir(num? rir) {
+    state = state?.copyWith(rir: rir);
+  }
+
   void setRepetitionUnit(RepetitionUnit repetitionUnit) {
     state = state?.copyWith(repetitionsUnitObj: repetitionUnit);
   }

@@ -152,7 +152,7 @@ void main() {
         // no weightUnit or repetitionsUnit objects — mirrors addExerciseAfterPage()
       );
 
-      final log = Log.fromSetConfigData(setConfig);
+      final log = Log.fromSetConfigData(setConfig, routineId: 1, iteration: 1);
 
       expect(log.weightUnitId, WEIGHT_UNIT_KG);
       expect(log.repetitionsUnitId, REP_UNIT_REPETITIONS_ID);
@@ -167,7 +167,7 @@ void main() {
         repetitionsUnitId: REP_UNIT_TILL_FAILURE_ID,
       );
 
-      final log = Log.fromSetConfigData(setConfig);
+      final log = Log.fromSetConfigData(setConfig, routineId: 1, iteration: 1);
 
       expect(log.weightUnitId, WEIGHT_UNIT_LB);
       expect(log.repetitionsUnitId, REP_UNIT_TILL_FAILURE_ID);
@@ -183,7 +183,7 @@ void main() {
         rir: 2,
       );
 
-      final log = Log.fromSetConfigData(setConfig);
+      final log = Log.fromSetConfigData(setConfig, routineId: 1, iteration: 1);
 
       expect(log.weight, 80);
       expect(log.weightTarget, 80);

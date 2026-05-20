@@ -64,7 +64,7 @@ class LogPage extends ConsumerWidget {
       return Container();
     }
 
-    final log = ref.read(gymLogProvider);
+    final log = ref.watch(gymLogProvider);
 
     // Mark done sets
     final decorationStyle = slotEntryPage.logDone
@@ -214,7 +214,7 @@ class LogsPlatesWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final plateWeightsState = ref.watch(plateCalculatorProvider);
-    final log = ref.read(gymLogProvider);
+    final log = ref.watch(gymLogProvider);
     
     // Set the current log weight in the plate calculator
     if (log?.weight != null) {

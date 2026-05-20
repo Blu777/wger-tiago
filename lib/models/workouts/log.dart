@@ -111,25 +111,30 @@ class Log {
     DateTime? date,
   }) : date = date ?? DateTime.now();
 
-  Log.fromSetConfigData(SetConfigData setConfig) {
-    date = DateTime.now();
-    sessionId = null;
-
-    slotEntryId = setConfig.slotEntryId;
-    exerciseBase = setConfig.exercise;
-
-    weight = setConfig.weight;
-    weightTarget = setConfig.weight;
-    weightUnitId = setConfig.weightUnitId ?? WEIGHT_UNIT_KG;
-    weightUnitObj = setConfig.weightUnit;
-
-    repetitions = setConfig.repetitions;
-    repetitionsTarget = setConfig.repetitions;
-    repetitionsUnitId = setConfig.repetitionsUnitId ?? REP_UNIT_REPETITIONS_ID;
-    repetitionsUnitObj = setConfig.repetitionsUnit;
-
-    rir = setConfig.rir;
-    rirTarget = setConfig.rir;
+  factory Log.fromSetConfigData(
+    SetConfigData setConfig, {
+    required int routineId,
+    required int iteration,
+  }) {
+    final log = Log(
+      exerciseId: setConfig.exerciseId,
+      routineId: routineId,
+      iteration: iteration,
+      slotEntryId: setConfig.slotEntryId,
+      weight: setConfig.weight,
+      weightTarget: setConfig.weight,
+      weightUnitId: setConfig.weightUnitId ?? WEIGHT_UNIT_KG,
+      repetitions: setConfig.repetitions,
+      repetitionsTarget: setConfig.repetitions,
+      repetitionsUnitId: setConfig.repetitionsUnitId ?? REP_UNIT_REPETITIONS_ID,
+      rir: setConfig.rir,
+      rirTarget: setConfig.rir,
+      date: DateTime.now(),
+    );
+    log.exercise = setConfig.exercise;
+    log.weightUnitObj = setConfig.weightUnit;
+    log.repetitionsUnitObj = setConfig.repetitionsUnit;
+    return log;
   }
 
   Log copyWith({
@@ -170,19 +175,18 @@ class Log {
       date: date ?? this.date,
     );
 
-    if (sessionId != null) {
-      out.sessionId = sessionId;
-    }
+    out.sessionId = sessionId ?? this.sessionId;
 
-    if (repetitionsUnitObj != null) {
-      out.repetitionsUnitObj = repetitionsUnitObj;
+    out.repetitionsUnitObj = repetitionsUnitObj ?? this.repetitionsUnitObj;
+    if (repetitionsUnitObj != null && repetitionsUnitId == null) {
       out.repetitionsUnitId = repetitionsUnitObj.id;
     }
 
-    if (weightUnitObj != null) {
-      out.weightUnitObj = weightUnitObj;
+    out.weightUnitObj = weightUnitObj ?? this.weightUnitObj;
+    if (weightUnitObj != null && weightUnitId == null) {
       out.weightUnitId = weightUnitObj.id;
     }
+
     out.exerciseBase = exercise;
 
     return out;
@@ -283,30 +287,6 @@ class Log {
 
     return LogTargetStatus.lessThanTarget;
   }
-
-  /// Override the equals operator
-  ///
-  /// Two logs are considered equal if their content is equal. This is used e.g.
-  /// in lists where we want to have unique values
-  @override
-  //ignore: avoid_equals_and_hash_code_on_mutable_classes
-  bool operator ==(o) {
-    return o is Log &&
-        exerciseId == o.exerciseId &&
-        weight == o.weight &&
-        weightUnitId == o.weightUnitId &&
-        repetitions == o.repetitions &&
-        repetitionsUnitId == o.repetitionsUnitId &&
-        rir == o.rir;
-  }
-
-  @override
-  //ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode =>
-      Object.hash(exerciseId, weight, weightUnitId, repetitions, repetitionsUnitId, rir);
-
-  //@override
-  //int get hashCode => super.hashCode;
 
   @override
   String toString() {

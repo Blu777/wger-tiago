@@ -75,7 +75,6 @@ class _GymModeState extends ConsumerState<GymMode> {
       widget._args.iteration,
     );
     await gymViewModel.loadPrefs();
-    gymViewModel.calculatePages();
 
     return initialPage;
   }

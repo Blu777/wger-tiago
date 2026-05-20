@@ -143,10 +143,9 @@ class _LogFormWidgetState extends ConsumerState<LogFormWidget> {
               key: const ValueKey('rir-input-widget'),
               log?.rir,
               onChanged: (value) {
-                if (log == null) {
-                  return;
-                }
-                log.rir = value == '' ? null : num.parse(value);
+                ref.read(gymLogProvider.notifier).setRir(
+                  value == '' ? null : num.parse(value),
+                );
               },
             ),
           SwitchListTile(
