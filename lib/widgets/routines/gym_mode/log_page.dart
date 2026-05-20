@@ -214,6 +214,12 @@ class LogsPlatesWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final plateWeightsState = ref.watch(plateCalculatorProvider);
+    final log = ref.read(gymLogProvider);
+    
+    // Set the current log weight in the plate calculator
+    if (log?.weight != null) {
+      ref.read(plateCalculatorProvider.notifier).setWeight(log!.weight!);
+    }
 
     return Container(
       color: Theme.of(context).colorScheme.onInverseSurface,

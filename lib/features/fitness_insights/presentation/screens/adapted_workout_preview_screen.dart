@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wger/features/fitness_insights/domain/entities/pre_workout_checkin.dart' show PlannedSportActivity;
 import 'package:wger/features/fitness_insights/domain/entities/workout_modification.dart';
 import 'package:wger/features/fitness_insights/presentation/providers/adapted_workout_provider.dart';
 
@@ -72,6 +73,7 @@ class AdaptedWorkoutPreviewScreen extends ConsumerWidget {
     final checkin = adaptation.checkin;
     final modCount = adaptation.modifications.length;
 
+    final sport = checkin.plannedSportActivity;
     return Card(
       elevation: 2,
       child: Padding(
@@ -106,6 +108,31 @@ class AdaptedWorkoutPreviewScreen extends ConsumerWidget {
                 ),
               ],
             ),
+            if (sport != PlannedSportActivity.none) ...[
+              const SizedBox(height: 12),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: BoxDecoration(
+                  color: Colors.orange.withAlpha(30),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.sports_soccer, color: Colors.orange, size: 18),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        sport.label,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ],
         ),
       ),

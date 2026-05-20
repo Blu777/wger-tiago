@@ -63,6 +63,13 @@ class _PreWorkoutCheckinScreenState
     ref.read(adaptedWorkoutProvider.notifier).updateCheckin(_checkin);
   }
 
+  void _updateSportActivity(PlannedSportActivity activity) {
+    setState(() {
+      _checkin = _checkin.copyWith(plannedSportActivity: activity);
+    });
+    ref.read(adaptedWorkoutProvider.notifier).updateCheckin(_checkin);
+  }
+
   @override
   Widget build(BuildContext context) {
     final muscles = _muscles;
@@ -86,6 +93,8 @@ class _PreWorkoutCheckinScreenState
           ),
           const SizedBox(height: 24),
           _fatigueCard(),
+          const SizedBox(height: 16),
+          _sportActivityCard(),
           const SizedBox(height: 24),
           if (muscles.isNotEmpty) ...[
             Text(
@@ -172,6 +181,74 @@ class _PreWorkoutCheckinScreenState
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _sportActivityCard() {
+    final selected = _checkin.plannedSportActivity;
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                const Icon(Icons.sports_soccer),
+                const SizedBox(width: 8),
+                Text(
+                  'Actividad después del entreno',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ],
+            ),
+            const SizedBox(height: 4),
+            Text(
+              '¿Tenés algo planificado más tarde hoy?',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Colors.grey[600],
+                  ),
+            ),
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: PlannedSportActivity.values.map((activity) {
+                final isSelected = selected == activity;
+                return ChoiceChip(
+                  label: Text(activity.label),
+                  selected: isSelected,
+                  onSelected: (_) => _updateSportActivity(activity),
+                  selectedColor: Theme.of(context).colorScheme.primaryContainer,
+                );
+              }).toList(),
+            ),
+            if (selected != PlannedSportActivity.none) ...[
+              const SizedBox(height: 8),
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.orange.withAlpha(30),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.info_outline, color: Colors.orange, size: 16),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        'Se reducirá el volumen ${(selected.volumeReductionFactor * 100).toInt()}%'
+                        '${selected.weightReductionFactor > 0 ? ' y el peso ${(selected.weightReductionFactor * 100).toInt()}%' : ''} para conservar energía.',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ],
         ),
       ),

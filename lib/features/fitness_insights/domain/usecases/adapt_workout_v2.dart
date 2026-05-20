@@ -54,7 +54,7 @@ class _FieldLocks {
 /// V2 workout adaptation driven by [FitnessInsight] from the coaching system.
 ///
 /// Priority order (highest → lowest):
-///   1. **Safety** – pain / extreme fatigue caps or reduces intensity
+///   1. **Safety** – pain / extreme fatigue / sport activity caps or reduces intensity
 ///   2. **Phase** – deload / intensification global adjustments
 ///   3. **Trend** – per-exercise progression / regression signals
 ///   4. **ActionPlan** – fine-tuning from the coaching pipeline
@@ -65,12 +65,15 @@ class _FieldLocks {
 /// - No adaptation when `dataQualityScore < 30`.
 /// - Bodyweight exercises (no equipment) skip weight changes.
 /// - All changes clamped to safe ranges (weight ±30%, sets ±2).
+/// - When [nrOfSets] is null, a default of 3 sets is assumed for delta calculations.
 class AdaptWorkoutV2 {
   // Safety thresholds
   static const _painHighThreshold = 7;
   static const _painMediumThreshold = 5;
   static const _fatigueHighThreshold = 8;
   static const _fatigueMediumThreshold = 6;
+
+  static const _defaultSets = 3;
 
   // Guardrails
   static const _minDataQuality = 30; // skip adaptation below this
@@ -161,8 +164,7 @@ class AdaptWorkoutV2 {
 
         // Extreme fatigue → reduce sets
         if (checkin.fatigue >= _fatigueHighThreshold &&
-            adapted.nrOfSets != null &&
-            adapted.nrOfSets! > 1) {
+            (adapted.nrOfSets == null || adapted.nrOfSets! > 1)) {
           adapted = _modifySets(
             adapted: adapted,
             delta: -1,
@@ -190,6 +192,42 @@ class AdaptWorkoutV2 {
             modifications: modifications,
             originalWeight: originalWeight,
           );
+        }
+
+        // Sport activity planned for later today → conserve energy
+        final sport = checkin.plannedSportActivity;
+        if (sport != PlannedSportActivity.none) {
+          final volReduction = sport.volumeReductionFactor;
+          final wReduction = sport.weightReductionFactor;
+
+          if (volReduction > 0 &&
+              (adapted.nrOfSets == null || adapted.nrOfSets! > 1)) {
+            final effectiveSets = adapted.nrOfSets ?? _defaultSets;
+            final setsToRemove = (effectiveSets * volReduction).ceil().clamp(1, _maxSetsDelta);
+            adapted = _modifySets(
+              adapted: adapted,
+              delta: -setsToRemove,
+              exerciseName: exerciseName,
+              reason: '${sport.label} más tarde → conservar energía: -$setsToRemove series',
+              priority: _Priority.safety,
+              locks: locks,
+              modifications: modifications,
+              originalSets: originalSets,
+            );
+          }
+
+          if (wReduction > 0 && adapted.weight != null && !isBodyweight) {
+            adapted = _modifyWeight(
+              adapted: adapted,
+              factor: 1 - wReduction,
+              exerciseName: exerciseName,
+              reason: '${sport.label} más tarde → reducir ${(wReduction * 100).toInt()}% peso',
+              priority: _Priority.safety,
+              locks: locks,
+              modifications: modifications,
+              originalWeight: originalWeight,
+            );
+          }
         }
 
         // =============================================================
@@ -350,11 +388,12 @@ class AdaptWorkoutV2 {
     required List<WorkoutModification> modifications,
     required num? originalSets,
   }) {
-    if (adapted.nrOfSets == null || !locks.canModify('sets', priority)) {
+    if (!locks.canModify('sets', priority)) {
       return adapted;
     }
 
-    var newSets = adapted.nrOfSets! + delta;
+    final effectiveSets = adapted.nrOfSets ?? _defaultSets;
+    var newSets = effectiveSets + delta;
 
     // Clamp total deviation from original to ±_maxSetsDelta
     if (originalSets != null) {
@@ -366,14 +405,14 @@ class AdaptWorkoutV2 {
     }
 
     // Skip if no effective change
-    if (newSets == adapted.nrOfSets) {
+    if (newSets == effectiveSets) {
       return adapted;
     }
 
     modifications.add(WorkoutModification(
       exerciseName: exerciseName,
       field: 'sets',
-      originalValue: adapted.nrOfSets!,
+      originalValue: effectiveSets,
       adaptedValue: newSets,
       reason: reason,
     ));
